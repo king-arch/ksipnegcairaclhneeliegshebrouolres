@@ -1,0 +1,33 @@
+<template name="privacy">
+	<body class="row page_wh" > 
+	  <!-- {{> header}} -->
+	  {{> privacy_policy}}
+	</body>
+ </template>
+
+ <template name="privacy_policy">
+
+<div id="loader" class="loading"></div>
+    <div class="row" style="background-color: #fff">
+         <div class="col m12 l12 s12">
+
+            <div class="section profile-info">
+              <h3>Privacy Policy
+                <span class="pointer" id="edit_privacy" style="font-size: 15px !important; margin-bottom: 10px !important; ">
+              </span>
+            </h3>
+              <div class="divider"></div>
+            </div>
+            <span id="temp_data"></span>
+            <div id="no_privacy_added" class="row hidden_element_class" style="width: 100%; margin-bottom: 0px;">
+                <div class="col m12 s12 l12">
+                    <p class="blank_boxes_data_small"> No Privacy Added</p>
+                </div>
+            </div>
+
+          
+         </div>
+         
+      </div>
+
+ </template>

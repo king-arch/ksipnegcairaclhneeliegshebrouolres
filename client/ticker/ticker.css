@@ -1,0 +1,22 @@
+
+
+#ticker {
+ /*border:1px solid #222;*/
+ padding:3px;
+ height: 24px;
+ overflow: hidden;
+}
+#ticker li {
+ height: 24px;
+}
+
+
+#ticker2 {
+ /*border:1px solid #222;*/
+ padding:3px;
+ height: 150px;
+ overflow: hidden;
+}
+#ticker2 li {
+ height: 150px;
+}

@@ -1,0 +1,369 @@
+<template name="signup" >
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119353328-1"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  var url = window.location.href;
+
+  gtag('config', 'UA-119353328-1',{
+  'page_title' :  "Sign up",
+  'page_path': url,
+  });
+</script>
+
+<body class="row main_body_bg over_on_bd email_padding_page" style="background-color: rgb(1, 16, 44) ! important; "> 
+   {{> dme}}
+   
+
+    
+
+</body>
+
+</template>
+
+<template name="dme">
+  <div id="loader" class="loading"></div>
+  <div class="row_nomargin_padd ">
+<div class="row row_nomargin_padd email_padding_page" style="display: none;">
+    <div class="col s8" >
+      <ul class="tabs" >
+
+        <li class="tab col s2"><a href="#test3" class="active disableClick" >Step 1</a></li>
+        <li class="tab col s2"><a href="#test5" class="disableClick" >Step 2</a></li>
+         <li class="tab col s2"><a href="#test4" class="disableClick" >Step 3</a></li>
+          <li class="tab col s2"><a href="#test6" class="disableClick">Step 4</a></li>
+           <li class="tab col s2"><a href="#test7" class="disableClick">Step 5</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col s12 m12 l1 visible-lg"> &nbsp;</div>
+
+    <div id="test3" class="col s12 m12 l12">
+    <section class="section email_section">
+        <div class="row">
+          <p class="email_heading">
+            <span>Add your location</span>
+            <span class="pull-right col m2 s2 l2 next_btn btn btn-home format_join join_btn_signup height_sub mouse_ani" id="adderss_field" type="submit" name="action"><a href="#" style="color: #fff !important;">  Next </a></span>
+          </p><br/> <br/>
+          <p class="email_sub_heading justify">Connect with people in the most exciting way. The people, events, stories and news we show you will be more relevant if you add your location.</p>
+        </div>
+        <div class="row">
+         <div class="input-field col s12 m3 l1 visible-lg">
+            <p><a class="btn btn-floating pulse email_page_icon"><i class="fa fa-map-marker"></i></a></p>
+          </div>
+        
+         <div class="input-field col s12 m12 l11" >
+<!--           <label for="title" class="email_sub_heading_two">Map</label><br/>
+ -->            <!-- <input placeholder="Enter location" class="login_input_box validate"  id="autocomplete10" type="text"> -->
+            <form action="#">
+<!--           <label for="title">Map</label><br/>
+ -->            <input placeholder="Enter location"  id="autocomplete10" type="text" class="validate login_input_box">
+                  <input name="lat" type="hidden" id="lat" value="">
+                  <input name="lng" type="hidden" id="long" value="">
+                  <input name="country" type="hidden" id="country" value="">
+            </form>
+          </div>
+
+        </div>
+
+  <!--        <div class="row">
+          <p>
+            We 'll import your address book to suggest connections ad help you manage your contacts <a href="#">Learn more</a>
+          </p> 
+        </div> -->
+
+       
+      </section>
+    </div>
+
+
+    <div id="test4" class="col s12 m12 l12">
+    <section class="section email_section">
+        <div class="row">
+          <p class="email_heading"> <spam><!-- Let's understand y -->How are you differently ABLED</spam>  
+           
+             <span class="pull-right col m2 s2 l2 next_btn btn btn-home format_join join_btn_signup height_sub mouse_ani" id="disability" type="submit" name="action"><a href="#" style="color: #fff !important;">  Next </a></span>
+           </p><br/> <br/>
+          <p class="email_sub_heading"> Special Neighborhood is a platform where people can connect, communicate, collaborate and create.</p>
+        </div>
+        <div class="row">
+<!--           <p class="email_sub_heading">How are you differently Abled?</p><br/>
+ -->         <div class="col s12" style="padding: 0px !important;">
+            <form action="#">
+              <p >
+                <input type="checkbox" class="filled-in" id="Hearin"  />
+                <label for="Hearin" class="email_sub_heading_three">Hearing </label>
+              </p>
+              <p>
+                <input type="checkbox"  class="filled-in" id="Speech" />
+                <label for="Speech" class="email_sub_heading_three" >Speech</label>
+              </p>
+              <p>
+                <input type="checkbox" class="filled-in" id="Visually"  />
+                <label for="Visually" class="email_sub_heading_three">Visually Impaired </label>
+              </p>
+              <p>
+                <input type="checkbox" class="filled-in email_sub_heading_three" id="Physical" />
+                <label for="Physical" class="email_sub_heading_three">Physical Handicap </label>
+              </p> 
+              <p>
+                <input type="checkbox" class="filled-in" id="not_disabled" />
+                <label for="not_disabled" class="email_sub_heading_three">I am not differently ABLED</label>
+              </p>
+            </form>
+        
+          </div>
+          <!--  <div class="row">
+          <div class="input-field col s12">
+             <label for="textarea1" class="email_sub_heading_three">Special Note</label>
+            <textarea id="special_note" class="materialize-textarea" data-length="120"></textarea>
+           
+          </div>
+        </div> -->
+        
+
+        </div>
+      
+      </section>
+    </div>
+
+
+
+       <div id="test5" class="col s12 m12 l12">
+     
+      <section class="section email_section">
+        
+        <div class="row">
+          <p class="email_heading"><span>Add Mobile Number </span> 
+
+             <span class="pull-right col m2 s2 l2 next_btn btn btn-home format_join join_btn_signup height_sub mouse_ani" id="contact_no_button" type="submit" name="action"><a href="#" id="contact_no_button" style="color: #fff !important;">  Next </a></span>
+
+
+            </p><br/> <br/>
+        <p class="email_sub_heading"> This helps us to confirm your identity and secure your account. </p>
+          <!-- <p class="">Lorem ipsum </p> -->
+        </div>
+        <div class="row">
+         <div class="input-field col s12 m3 l1 visible-lg">
+            <p><a class="btn btn-floating pulse email_page_icon"><i class="fa fa-phone"></i></a></p>
+          </div>
+           <div class="input-field col  s12 m12 l2"> 
+                    <input placeholder="Country code" id="countrycode" onkeypress="return isNumberKey(event)" type="text"  maxlength="3"  class="email_sub_heading_two add_nuber_input validate">
+                     <!--<div id="edit_edu_start_month" class="ui selection dropdown">
+                                           <input type="hidden" name="test" value=""/>
+                                           <div class="text">Test</div>
+                                           <i class="dropdown icon"></i>
+                                           <div class="menu">
+                                               <div class="item" data-value="">Acedamic</div>
+                                               <div class="item" data-value="Jan">Professional</div>
+                                               <div class="item" data-value="Feb">Trip </div>
+                                               <div class="item" data-value="Mar">Training</div>
+                                               <div class="item" data-value="Apr">Seminar</div>
+                                               <div class="item" data-value="May">Sports</div>
+                                               <div class="item" data-value="Jun">Placement</div>
+                                               <div class="item" data-value="Jul">Cultural</div>
+                                               <div class="item" data-value="Aug">Examination</div>
+                                               <div class="item" data-value="Sep">Sep</div>
+                                               <div class="item" data-value="Oct">Oct</div>
+                                               <div class="item" data-value="Nov">Nov</div>
+                                               <div class="item" data-value="Dec">Dec</div>
+                                           </div>
+                    </div>-->
+        </div>
+        <script type="text/javascript">
+                    $("#edit_edu_start_month").dropdown("set selected","");
+           </script>
+         <div class="input-field col  s12 m12 l9">
+<!--            <label for="email_sub_heading_two">Contact no</label><br/>
+ -->            <input placeholder="Contact Number" onkeypress="return isNumberKey(event)" id="contact_no" type="text"  maxlength="10"  class="email_sub_heading_two add_nuber_input validate">
+          </div>
+        </div>
+
+         
+      </section>
+     </div>
+     <div id="test6" class="col s12 m12 l12">
+    <section class="section email_section">
+    
+        <div class="row">
+        <p class="email_heading"><span>Add profile picture</span> 
+          <a href="#"><span class="pull-right col m2 s2 l2 next_btn btn btn-home format_join join_btn_signup height_sub mouse_ani"  type="submit" id="submit_image" name="action">Next
+            
+          </span></a></p>
+         <p class="email_sub_heading"> Your picture will help people identify and connect with you. </p>
+        </div>
+        <div class="row">
+         <div class="input-field col s12 m3 l1 visible-lg">
+            <p><a class="btn btn-floating pulse email_page_icon"><i class="fa fa-user"></i></a></p>
+          </div>
+        
+        <div class="file-field input-field" style="padding: 0px;" >    </div>
+        <br/> <br/>
+      <div class="btn" style="display:none; height:200px; width:200px;" >
+      </div > 
+
+
+<input type="file" id="upload_cover" accept="image/*" />
+
+     <input type="hidden" data-target="crop_cover_image" class="btn modal-trigger" id="cover_pic_modal" >
+
+            <div id="crop_cover_image" class="modal modal-fixed-footer">
+               <div class="modal-content">
+                  <h2>Crop cover Pic</h2>
+                  <div id="divcrop_cover"> <img id="my_image_cover"  > </div>
+               </div>
+               <div class="modal-footer"> 
+                  <button class="modal-action modal-close waves-effect waves-green btn-flat " id="crop_cover_image_selection" >Crop</button>
+               </div>
+            </div>
+
+  <script type="text/javascript">
+ $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+</script>
+
+<img src={{profilepic_image}} id="profile_image" style="height:300px; width: 300px;" >
+   <!--    <div class="file-path-wrapper" style="padding: 0px;" >
+       
+        <input type="file" id="fileInput" accept="image/*" >
+        <input class="file-path validate login_input_box" type="text" placeholder="Click here to upload image" >
+           <div id="defaultbox" style="display: none;" >
+              <img id="my_image" src='/uploads/default/Default_group.png'>
+       
+            </div>
+        <div id="divcrop">
+              <img id="my_image2">
+         </div>
+        </div> -->
+<!--               <div class="image-cropper">
+          <input type="file" id="imageLoader" name="imageLoader" class="join_btn_signup" style="color: #fff !important;" />
+          <div class="error">Invalid file.  Needs to be at least 100x100 pixels.</div>
+          <div class="">
+          <div class="canvasCon">
+              <canvas id="imageCanvas" width="300" height="300"></canvas>
+              <div class="canvasScreenTop"></div>
+              <div class="canvasScreenBottom"></div>
+              <div class="canvasScreenLeft"></div>
+              <div class="canvasScreenRight"></div>
+              <div class="toolbar">
+                  <div class="instructions">Click and drag to move.  Hold shift key to scale.</div>
+                  <button id="crop" class="crop_btn_signup">Crop</button>
+                  <button id="reset" class="resert_btn_signup">Reset</button>
+              </div>
+          </div>
+              <div class="cropResult"><img width="100" height="100"/></div></div>
+          <canvas id="cropCanvas" width="100" height="100"></canvas>
+          </div> -->
+
+
+    
+   <div id="show_cropping_options" style="margin-top: 20px; color: #fff !important;">
+
+
+           <!--   <span class="pull-right col m2 s2 l2 next_btn btn btn-home format_join join_btn_signup height_sub mouse_ani" id="submit_image" type="submit" name="action"  style="margin-top: 20px !important;">
+              <a href="#" id="crop_image" style="color: #fff !important; display: none;">  Crop </a>
+            </span>
+ -->
+
+<!--     <button class="cancel_btns  col m12 s12 l6 next_btn"  id="crop_cancel">Cancel</button>
+ -->    <!--  <button class="crop_btns " id="crop_image">Crop</button> -->
+    
+    </div>
+  <!-- Modal Structure -->
+  <div id="image_dialog" class="modal"> 
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+        </div>
+<!--          <div class="row">
+          <p>
+            <span class="pull-left"><a href="#">Continue</a></span>
+            <span class="pull-right"><a href="#">Skip</a></span>
+          </p>
+        </div> -->
+     <!--     <div class="row">
+          <p>
+            We 'll import your address book to suggest connections ad help you manage your contacts <a href="#">Learn more</a>
+          </p> 
+
+        </div> -->
+
+        <div class="row">
+       
+          <span style="display:none;" id="spinnerimg">{{> spinner}}</span>
+          
+       </div>  
+      </section>
+    </div>
+    <div id="test7" class="col s12 m12 l12">
+    <section class="section email_section">
+      
+      
+        <div class="row">
+        
+         <div class="input-field col s12 m12 l6 visible-lg">
+           <p><img src="http://bitovn.com/images/profile-image.png" class="img-responsive"></p>
+          </div>
+        
+         <div class="input-field col s12 m12 l6">
+            <p class="email_heading"> <span>Profile Headline</span>  
+              <span class="pull-right col m2 s2 l2 next_btn btn btn-home format_join join_btn_signup height_sub mouse_ani" id="profile_headline" type="submit" name="action"><a href="#" style="color: #fff !important;">  Finish </a></span>
+              </p><br/> <br/> 
+            <p class="email_sub_heading">The headline is limited to 110 characters and works as a brief biography of who you are and what you do.</p><br/> <br/>
+            <div class="input-field ">
+<!--              <label for="textarea1" class="email_sub_heading">Profile Headline</label>
+ -->            <textarea id="textarea1" placeholder="Profile Headline" class="materialize-textarea email_sub_heading frmt_inpt" data-length="120" style="padding: 5px !important;" maxlength="110"></textarea>
+          </div>
+          </div>
+        </div>
+         
+
+      </section>
+    
+    
+</div>
+  </div>
+  <br/> <br/><br/><br/><br/><br/>
+ <div class="row visible-lg" style="padding:50px 10px 20px 10px; margin-bottom: 0px !important; margin-top: 35% !important;">
+     
+      <div class="col m12 l12 s12" >
+        <p class="text-right login_forgot_pass">
+          <span style="color: #fff !important;">Powered by <a href="#" style="color: #fff !important;"><strong>BITOVN</strong></a> - The neural network
+          </span> 
+        </p>
+      </div>
+  </div>
+  <div class="row hidden-lg" style="padding:50px 10px 20px 10px; margin-bottom: 0px !important; margin-top: 45% !important;">
+      
+      <div class="col m12 l12 s12" >
+        <p class="text-center login_forgot_pass">
+          <span style="color: #fff !important;">Powered by <a href="#" style="color: #fff !important;"><strong>BITOVN</strong></a> - The neural network
+          </span> 
+        </p>
+      </div>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+    $('ul.tabs').tabs();
+  });
+     function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+         return true;
+      }
+  </script>
+
+ </template>

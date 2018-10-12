@@ -1,0 +1,276 @@
+<template name="add_professional_details">
+   <head>
+      <title>Search</title>
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1">      
+      <link rel = "stylesheet"
+         href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel = "stylesheet" 
+         href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+      <script type = "text/javascript"
+         src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
+      </script> 
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js">
+      </script> 
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/jquery.geocomplete.min.js">
+      </script> 
+   </head>
+   <!-- <body style="background-color: #F5F5F5 !important;"> -->
+      <body>
+    <!--   {{> header}} -->
+      {{> add_professional}}
+   </body>
+</template>
+<template name="add_professional">
+    <div style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Professional Detail</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset" id="form_profjr" >
+               <div class="row" style="margin-bottom: 0px !important">
+                  <div class="input-field col s12 m12 l6">
+                     <p class="heading_create_inside">Company Name <sup><span class="red_start"> * </span></sup> </p>
+                     <input id="company_name" type="text" class="validate frmt_inpt">
+                     <!-- <label for="company_name" class="profile_modal_header_mame">Company Name <sup><span class="red_start"> * </span></sup></label> -->
+                  </div>
+                  <div class="input-field col s12 m12 l6">
+                     <p class="heading_create_inside">Job Title <sup><span class="red_start"> * </span></sup> </p>
+                     <input id="job_title" type="text" class="validate frmt_inpt">
+                     <!-- <label for="job_title" class="profile_modal_header_mame">Job Title <sup><span class="red_start"> * </span></sup></label> -->
+                  </div>
+               </div>
+               <div class="row" style="margin-bottom: 0px;">
+                  <div class="input-field col s12 m12 l6">
+                     <p class="heading_create_inside">When (Select month)<sup><span class="red_start"> * </span></sup></p>
+                     <div id="start_month" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                        <input type="hidden" name="test" value=""/>
+                        <div class="text">Select Month</div>
+                        <!-- <i class="dropdown icon"></i> -->
+                        <div class="menu">
+                           <div class="item" data-value="">...</div>
+                           <div class="item" data-value="Jan">Jan</div>
+                           <div class="item" data-value="Feb">Feb</div>
+                           <div class="item" data-value="Mar">Mar</div>
+                           <div class="item" data-value="Apr">Apr</div>
+                           <div class="item" data-value="May">May</div>
+                           <div class="item" data-value="Jun">Jun</div>
+                           <div class="item" data-value="Jul">Jul</div>
+                           <div class="item" data-value="Aug">Aug</div>
+                           <div class="item" data-value="Sep">Sep</div>
+                           <div class="item" data-value="Oct">Oct</div>
+                           <div class="item" data-value="Nov">Nov</div>
+                           <div class="item" data-value="Dec">Dec</div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- <div class="input-field col s3 m3 l3 "> -->
+                  <!--                   <p> Start Date <sup><span class="red_start"> * </span></sup></p>--> 
+                  <!--                  <select id="start_month" class="frmt_inpt" >
+                     <option value disabled selected>Select Month</option>
+                     <option value='Jan'>Jan</option>
+                     <option value='Feb'>Feb</option>
+                     <option value='Mar'>Mar</option>
+                     <option value='Apr'>Apr</option>
+                     <option value='May'>May</option>
+                     <option value='Jun'>Jun</option>
+                     <option value='Jul'>Jul</option>
+                     <option value='Aug'>Aug</option>
+                     <option value='Sep'>Sep</option>
+                     <option value='Oct'>Oct</option>
+                     <option value='Nov'>Nov</option>
+                     <option value='Dec'>Dec</option>
+                     </select>
+                     -->               <!-- </div> -->
+                  <div class="input-field col s12 m12 l6">
+                     <p class="heading_create_inside">When (Select year)<sup><span class="red_start"> * </span></sup></p>
+                     <!-- <select id="start_year" class="selectpicker fluid form-control profile_modal_header_input" ></select> -->
+                     <div id="start_year" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                        <input type="hidden" name="test" value=""/>
+                        <div class="text">Select Year</div>
+                        <!--                      <i class="dropdown icon"></i>
+                           -->                     
+                        <div class="menu">
+                           <div class="item" data-value="">...</div>
+                           <div class="item" data-value="2000">2000</div>
+                           <div class="item" data-value="2001">2001</div>
+                           <div class="item" data-value="2002">2002</div>
+                           <div class="item" data-value="2003">2003</div>
+                           <div class="item" data-value="2004">2004</div>
+                           <div class="item" data-value="2005">2005</div>
+                           <div class="item" data-value="2006">2006</div>
+                           <div class="item" data-value="2007">2007</div>
+                           <div class="item" data-value="2008">2008</div>
+                           <div class="item" data-value="2009">2009</div>
+                           <div class="item" data-value="2010">2010</div>
+                           <div class="item" data-value="2011">2011</div>
+                           <div class="item" data-value="2012">2012</div>
+                           <div class="item" data-value="2013">2013</div>
+                           <div class="item" data-value="2014">2014</div>
+                           <div class="item" data-value="2015">2015</div>
+                           <div class="item" data-value="2016">2016</div>
+                           <div class="item" data-value="2017">2017</div>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="onchecked_profjr_end_date" >
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside"> End Month <sup><span class="red_start"> * </span></sup></p>
+                        <!--     <select id="end_month" class="selectpicker fluid form-control profile_modal_header_input" >
+                           <option value disabled selected>Select Month</option>
+                           <option value='Jan'>Jan</option>
+                           <option value='Feb'>Feb</option>
+                           <option value='Mar'>Mar</option>
+                           <option value='Apr'>Apr</option>
+                           <option value='May'>May</option>
+                           <option value='Jun'>Jun</option>
+                           <option value='Jul'>Jul</option>
+                           <option value='Aug'>Aug</option>
+                           <option value='Sep'>Sep</option>
+                           <option value='Oct'>Oct</option>
+                           <option value='Nov'>Nov</option>
+                           <option value='Dec'>Dec</option>
+                           </select> -->
+                        <div id="end_month" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Month</div>
+                           <!--                      <i class="dropdown icon"></i>
+                              -->                     
+                           <div class="menu">
+                              <div class="item" data-value="">...</div>
+                              <div class="item" data-value="Jan">Jan</div>
+                              <div class="item" data-value="Feb">Feb</div>
+                              <div class="item" data-value="Mar">Mar</div>
+                              <div class="item" data-value="Apr">Apr</div>
+                              <div class="item" data-value="May">May</div>
+                              <div class="item" data-value="Jun">Jun</div>
+                              <div class="item" data-value="Jul">Jul</div>
+                              <div class="item" data-value="Aug">Aug</div>
+                              <div class="item" data-value="Sep">Sep</div>
+                              <div class="item" data-value="Oct">Oct</div>
+                              <div class="item" data-value="Nov">Nov</div>
+                              <div class="item" data-value="Dec">Dec</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside"> End Year</p>
+                        <!-- <select id="end_year" class="selectpicker fluid form-control" ></select> -->
+                        <div id="end_year" class="ui selection dropdown frmt_inpt " style="width: 100%;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Year</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">...</div>
+                              <div class="item" data-value="2000">2000</div>
+                              <div class="item" data-value="2001">2001</div>
+                              <div class="item" data-value="2002">2002</div>
+                              <div class="item" data-value="2003">2003</div>
+                              <div class="item" data-value="2004">2004</div>
+                              <div class="item" data-value="2005">2005</div>
+                              <div class="item" data-value="2006">2006</div>
+                              <div class="item" data-value="2007">2007</div>
+                              <div class="item" data-value="2008">2008</div>
+                              <div class="item" data-value="2009">2009</div>
+                              <div class="item" data-value="2010">2010</div>
+                              <div class="item" data-value="2011">2011</div>
+                              <div class="item" data-value="2012">2012</div>
+                              <div class="item" data-value="2013">2013</div>
+                              <div class="item" data-value="2014">2014</div>
+                              <div class="item" data-value="2015">2015</div>
+                              <div class="item" data-value="2016">2016</div>
+                              <div class="item" data-value="2017">2017</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="onchecked_profjr_end_date_show" class="display_hide input-field col s3" >
+                    <!--  <p> Present </p> -->
+                  </div>
+               </div>
+               <div class="row" style="margin-bottom: 0px;">
+            <form action="#" class="col s12 m12 l6">
+            <p class="login_forgot_pass" style="margin-top: 10px !important">
+            <input type="checkbox" id="check_experience" />
+            <label for="check_experience">Curently Pursuing</label>
+            </p>
+            </form>
+            </div>
+            <div class="row" style="margin-bottom: 0px !important">
+               <div class="input-field col s12 m12 l12">
+                  <p class="heading_create_inside">Job Location <sup><span class="red_start"> * </span></sup> </p>
+                  <input id="autocomplete6" type="text" class="validate frmt_inpt">
+               </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px !important">
+               <div class="input-field col s12 m12 l6">
+                  <p class="heading_create_inside">Skill Used <sup><span class="red_start"> * </span></sup> </p>
+                  <input id="skill_used" type="text" class="validate frmt_inpt">
+               </div>
+               <div class="input-field col s12 m12 l6">
+                  <p class="heading_create_inside">Job Type <sup><span class="red_start"> * </span></sup> </p>
+                 
+                  <div id="job_type" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                     <input type="hidden" name="test" value=""/>
+                     <div class="text">Select Job Type</div>
+                     <!--                      <i class="dropdown icon"></i>
+                        -->                     
+                     <div class="menu">
+                        <div class="item" data-value="">Select Job Type</div>
+                        <div class="item" data-value="Permanent">Permanent</div>
+                        <div class="item" data-value="Contract">Contract</div>
+                        <div class="item" data-value="Freelance">Freelance</div>
+                        <div class="item" data-value="Ineternship">Ineternship</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px !important">
+               <div class="input-field col s12 m12 l12">
+                  <p class="heading_create_inside">Key Responsibilities <sup><span class="red_start"> * </span></sup> </p>
+                  <textarea id="key_responsibilities" class="materialize-textarea frmt_inpt" data-length="120"></textarea>
+               </div>
+            </div>
+         
+            <div class="row">
+               <div class="input-field col s12 m12 l12">
+                  <p class="login_forgot_pass"> Fields marked with  <sup><span class="red_start"> * </span></sup> are mandatory</p>
+               </div>
+            </div>
+            <input type="hidden" class="add_profjr" >
+            </form>
+         </div>
+      </div>
+      <div class="modal-footer">
+         <a class="waves-effect waves-light btn close_modal cncl_btn_profile close_modal" id="close_add_profjr">Cancel</a>
+         <a class="add_profjr waves-effect waves-light btn save_btn_profile" id="add_profjr">Save</a>
+      </div>
+   </div>
+  
+ <script type="text/javascript"> 
+      $("#job_type").dropdown("set selected","");
+      $("#start_month").dropdown("set selected","");
+      $("#end_month").dropdown("set selected","");
+      $("#start_year").dropdown("set selected","");
+      $("#end_year").dropdown("set selected","");
+       $('.close_modal').click(function(){
+        window.location = "/profile";
+  });
+   </script>
+
+  
+
+
+
+   <script type="text/javascript">
+      $('#form_profjr').keypress(function(e){
+                     var code = e.keyCode || e.which;
+                     if( code === 13 ) {
+                     e.preventDefault();
+                     $(".add_profjr").click();
+                     };
+               });
+   </script> 
+
+</template>

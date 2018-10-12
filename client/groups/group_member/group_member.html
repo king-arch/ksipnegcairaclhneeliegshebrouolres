@@ -1,0 +1,181 @@
+<template name="Group_member_page">
+   <head>
+      <title>Create Event</title>
+   </head>
+   <!-- <body style="background-color: #F5F5F5 !important;"> -->
+   <body>
+   {{> header}}
+   {{> Group_member}}
+ </body>
+</template>
+<template name="Group_member">
+   <div class="page_wh">
+      <div class="">
+         <div class="row">
+            <ul class="nav nav-pills nav-stacked col m3 l3 s12 left_row hidden-md hidden-xs visible-lg">
+               <h3>Members</h3>
+               <!-- <h2 >Connection</h2> -->
+               <li class="active"><a href="#connection" data-toggle="pill" >Members ({{connection_counts}})</a></li>
+               <li><a href="#request" data-toggle="pill" >Request ({{request_counts}})</a></li>
+               <!-- <li><a href="#ignore" data-toggle="pill">Ignored ({{ignore}})</a></li> -->
+            </ul>
+            
+            <div class="col m12 l9 s12 tab-content right_row">
+               <div class="tab-pane active" id="connection">
+                  <div id="custom-search-input">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">All members ({{connection_counts}})</p>
+                     </div>
+                 <!--     <div class="input-group col m12 l5 s12">
+                        <div id="imaginary_container">
+                           <div class="input-group stylish-input-group">
+                              <input type="text" class="form-control margin_inpu_search"  placeholder="Search connection by name" id="search_all_text_conn" >
+                              <span class="input-group-addon search_format_iocn">
+                              <button type="submit" id="search_connection_all">
+                              <span class="glyphicon glyphicon-search"></span>
+                              </button>  
+                              </span>
+                           </div>
+                        </div>
+                     </div> -->
+                  </div>
+                  <script type="text/javascript">
+                     $('#search_all_text_conn').keypress(function(e){
+                         var code = e.keyCode || e.which;
+                     
+                         if( code === 13 ) {
+                             e.preventDefault();
+                             $( "#search_connection_all" ).click();
+                         };
+                     });
+                  </script> 
+               
+                  <div class="row" >
+                     <!-- {{#each show_connections}} -->
+                     {{#each show_group_members}}
+                     <div class="col m12 l4 s12">
+                        <div class="card row_nomargin_padd text-center" style="padding: 0px;">
+                           
+                           <div class="card-content" style="padding: 0px;">
+                           	<div class="text-center padding_image_right col m12 l12 s12">
+				                      	 	<img class="img_connection ui medium image" src={{profile_pic}} alt="No image" >
+				                      	 </div>
+                              <span class="card-title activator event_name">{{name}}</span>
+                              <p class="activator event_type">{{headline_online_only}}</p>
+                              <p class="event_type activator"><i class="fa fa-map-marker"></i> {{location_country}} 
+                                <!-- <p class="connected_since_text"><span style="color: #23527c;">Connected since</span> {{connected_since}}</p> -->
+                              </p>
+                           </div>
+                          <!--  <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                              <div class="col m12 l12 s12 icon_for_site ignore_req" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a></div>
+                              
+                           </div> -->
+                          
+                        </div>
+                     </div>
+                 
+                     <!-- {{/each}} -->
+                        {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen"> 0 Connection in connection list</p>
+                           </div>
+                        </div>
+                     {{/each}}
+                  </div>
+                
+               </div>
+               <div class="tab-pane" id="request">
+                  <div class="row">
+                        <div class="col m12 l12 s12">
+                           <p class="heading_create">Request ({{request_counts}})</p>
+                        </div>
+                  </div>
+                  <div class="row">
+                     <ul class="collection ">
+                        <!-- {{#each show_pending}} -->
+                        {{#each show_requests}}
+                        <li>
+                           <div class="col m12 l4 s12">
+                              <div class="card box effect1 row_nomargin_padd text-center" style="padding-top: 0px;">
+                                 <div class="card-content">
+                                    <div class="text-center padding_image_right col m12 l12 s12">
+                                       <img class="img_connection ui medium image" src={{profile_pic}} alt="No image" >
+                                    </div>
+                                    <p class="card-title activator event_name">{{name}} </p>
+                                    <p class="activator event_type">{{headline_online_only}}</p>
+                                    <p class="event_type activator"> 	<i class="fa fa-map-marker"></i> {{location_country}} </p>
+                                 </div>
+                                 <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                                <!--     <div class="col m6 l6 s12 ignore_req request_ignore_status" id="request_ignore_status">Ignore</div> -->
+                                    <div class="col m12 l12 s12 accept_req change_group_req_status" id="request_accept_status">Accept</div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <!-- {{/each}} -->
+                        {{else}}
+                          <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen"> You don't have any request</p>
+                           </div>
+                        </div>
+                        {{/each}}
+                     </ul>
+                  </div>
+               </div>
+
+            </div>
+            <!-- tab content -->
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown({
+                   inDuration: 300,
+                   outDuration: 225,
+                   constrainWidth: false, // Does not change width of dropdown to that of the activator
+                   hover: true, // Activate on hover
+                   gutter: 0, // Spacing from edge
+                   belowOrigin: false, // Displays dropdown below the button
+                   alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                   stopPropagation: false // Stops event propagation
+                 }
+               );
+                    
+               
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('open');
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('close');
+            </script>
+         </div>
+      </div>
+   </div>
+   <!-- <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+   <ul class="row nav navbar-nav" style="width: 100%; margin-bottom: 0px;">
+      <li class="col m4 s4 text-center" style="border-right: 1px solid #ccc; padding:20px;">
+        <a href="#connection" style="color: #fff !important; background-color: #333 !important;">
+          <span style="font-size: 45px; line-height: 10px;">({{connection}})</span>
+          <br/>
+          <span id="all_connections" style="font-size: 35px !important;">All</span>
+        </a>
+      </li>
+      <li class="col m4 s4 text-center" style="border-right: 1px solid #ccc; padding:20px;">
+        <a href="#request" style="color: #fff !important; background-color: #333 !important;">
+          <span style="font-size: 45px; line-height: 10px;">({{request}})</span>
+          <br/>
+         <span id="request_connections" style="font-size: 35px !important;">Request</span>
+        </a>
+      </li>
+       <li class="col m4 s4 text-center" style="border-right: 1px solid #ccc; padding:20px;">
+        <a href="#ignore" style="color: #fff !important; background-color: #333 !important;">
+          <span style="font-size: 45px; line-height: 10px;">({{ignore}})</span>
+          <br/>
+          <span id="ignore_connections" style="font-size: 35px !important;">Ignore</span>
+        </a>
+      </li>
+   </ul>
+</div> -->
+
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</template>

@@ -1,0 +1,98 @@
+<template name="audio_chat">
+    
+<script src="./node_modules/rtcmulticonnection/RTCMultiConnection.js"></script>
+<button id="btn-open-room">Open Room</button>
+<button id="btn-join-room">Join Room</button><hr>
+
+<script type="text/javascript">
+var connection = new RTCMultiConnection();
+
+// this line is VERY_important
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+connection.resources.firebaseio = 'https://webrtc.firebaseIO.com/';
+// all below lines are optional; however recommended.
+
+connection.session = {
+    audio: true,
+    video: false
+};
+
+connection.sdpConstraints.mandatory = {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: false
+};
+
+connection.onstream = function(event) {
+    document.body.appendChild(event.mediaElement);
+};
+var videoSessionCallerId = Session.get("audioSessionCallerId");
+var videoSessionPickerId = Session.get("audioSessionPickerId");
+var chatRoom = Session.get("audioSessionChatRoomId");
+var videoSessionId = Session.get("audioSessionId");
+// var videoAcceptStatus = Session.get("videoAcceptStatus");
+var callerId = "";
+var pickerId = "";
+var current_user = "";
+
+
+Meteor.call('maintain_audio_session',videoSessionId,videoSessionCallerId,videoSessionPickerId,chatRoom,function(error,result){
+if(error){
+alert("call failed");
+}else{ 
+  if(result=="Inserted"){
+    callerId= videoSessionId.split("=")[1];
+    current_user=callerId;
+        connection.open(videoSessionId);
+  }else{
+    pickerId = videoSessionId.split("=")[2];
+    current_user = pickerId;
+        connection.join(videoSessionId);
+  }
+}
+});    
+
+$(window).on('beforeunload', function() {
+  console.log("beforeunload called");
+    changeVideoSessionStatus(videoSessionId,current_user,"away"); 
+  return 'Your own message goes here...';
+});
+function changeVideoSessionStatus(videoSessionId,current_user,status){
+  Meteor.call('change_audio_chat_user_availability',videoSessionId,current_user,status,function(error,result){
+             if(error){
+              console.log('failed');
+             }else{
+                console.log(result);
+             }                  
+            });
+}
+window.myApp = {
+  onFocus: function () {
+    changeVideoSessionStatus(videoSessionId,current_user,"available"); 
+      },
+  onBlur: function () {
+      changeVideoSessionStatus(videoSessionId,current_user,"away");  
+     }
+};
+
+if(window.addEventListener) {
+    window.addEventListener('load', function () {
+    window.addEventListener('focus', window.myApp.onFocus);
+    window.addEventListener('blur', window.myApp.onBlur);
+  });
+}
+else if(window.attachEvent) {
+    window.attachEvent('onload', function () {
+    window.attachEvent('onfocus', window.myApp.onFocus);
+    window.attachEvent('onblur', window.myApp.onBlur); 
+  });
+}
+else {
+  window.onload = function () {
+    window.onfocus = window.myApp.onFocus;
+    window.onblur = window.myApp.onBlur;   
+  };
+}
+</script>
+
+</template>

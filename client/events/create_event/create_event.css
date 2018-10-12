@@ -1,0 +1,9 @@
+.cropper-example-lena
+{
+	width:100% !important;
+}
+
+.stop_scrolling {
+  height: 100%;
+  overflow: hidden;
+}

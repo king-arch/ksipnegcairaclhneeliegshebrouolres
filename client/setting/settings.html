@@ -1,0 +1,241 @@
+
+<template name="settings">
+   <body class="body_bg" >
+   {{> header}}
+   {{> settings_page}}
+ </body>
+</template>
+
+<template name="settings_page">
+   <div class="page_wh">
+      <div class="">
+         <div class="row">
+          <div class=" col m3 l3 s12">
+            <ul class="nav nav-pills nav-stacked left_row hidden-md hidden-xs visible-lg" id="setting_container">
+               <h3>Settings</h3>
+                <li class="active"><a href="#fntincrease" data-toggle="pill" >Font </a></li>
+               <li class=""><a href="#request" data-toggle="pill" >Color </a></li>
+               <li class=""><a href="#special_features" data-toggle="pill" >Special Features </a></li>
+
+             {{#if logged_in_user_isadmin}}
+                 <li ><a href="#change_privacy" data-toggle="pill" >Privacy Agreement and Cookies</a></li>
+              {{/if}}
+
+              {{#if check_if_user_uses_socialMediaPlugin}}
+                 <li ><a href="#change_password" data-toggle="pill" >Change password</a></li>
+              {{/if}}
+    
+            </ul>
+            </div>
+            <div class="col m12 l9 s12 tab-content right_row">
+              <div class="tab-pane active" id="fntincrease">
+                <div class="row">
+                   <p class="heading_create">Font Increase</p>
+
+                   
+                   
+                   <div class="row">
+                    <div class="col m6 s6 l5"> &nbsp;</div>
+                    <div class="col m6 s6 l1 increase_font increase_fonted" id="increase_font" style="margin-right: 10px !important;">
+                    <span><a style="display: -moz-inline-box; color: #fff !important;"> A<sup><i class="icon_header_top fa fa-plus" ></i></sup></a></span>
+                  </div>
+                      <div class="col m6 s6 l1 dec_font" id="decrease_font">
+                  <span><a  style="display: -moz-inline-box; color: #338EA7 !important;" >A<sup><i class="icon_header_top fa fa-minus"></i></sup></a></span>
+                  </div>
+                   <div class="col m6 s6 l5"> &nbsp;</div>
+                   </div>
+                </div>                                  
+              </div>
+         
+                               
+             <div class="tab-pane" id="change_password">
+                               
+                       
+              <div class="row">
+                <p class="heading_create">Change Password</p>
+                  <div class="input-field col s6 m6 l6">
+                    <p class="heading_create_inside"> Old password</p>
+                    <input value="" type="text" name="old_password" id="old_password" class="validate frmt_inpt"> 
+                  </div>
+              </div> 
+
+              <div class="row">
+                  <div class="input-field col s6 m6 l6">
+                    <p class="heading_create_inside"> New password</p>
+                    <input value="" type="text" name="new_password" id="new_password" class="validate frmt_inpt">
+                  </div>
+        
+                    <div class="input-field col s6 m6 l6">
+                       <p class="heading_create_inside"> Re-type new password</p>
+                       <input value="" type="text" name="retype_new_password" id="retype_new_password" class="validate frmt_inpt">
+                    </div>
+                </div>  
+
+ <div class="row">
+    <div class="col s12 m12 l10"> &nbsp;  </div>
+        <div class="col s12 m12 l2"><a class="waves-effect waves-light save_button" id="Reset_password" > Reset</a> </div>
+  </div>
+
+                                              <div>
+                                              </div>
+                                              </div>
+
+
+    <div class="tab-pane" id="change_privacy">
+                               
+                       
+                <div class="row">
+                  <p class="heading_create">Change privacy, cookies & user agreement</p>
+                </div> 
+
+                <div class="row">
+                  <button id="privacy" class="waves-effect waves-light increase_font increase_fonted"  >Edit privacy</button>
+                </div>  
+
+                <div class="row">
+                  <button id="cookies"  class="waves-effect waves-light increase_font increase_fonted" >Edit cookies</button>
+                </div>  
+
+                <div class="row">
+                  <button id="useragreement" class="waves-effect waves-light increase_font increase_fonted" >Edit user agreement</button>
+                </div>  
+            <div>
+            </div>
+    </div>
+
+
+
+               <div class="tab-pane" id="request">
+                        <div class="row">
+                          <p class="heading_create">Change Theme</p>
+                           <div class="col m4 s6 l4 active" >
+                              <p class="border_setttings_bg_lightorange div_activ_bg_color"  id="c1"> <img src="/images/pink.png">  </p> 
+                           </div>
+                          <div class="col m4 s6 l4">
+                              <p class="border_setttings_bg_lightgray " id="c2"> <img src="/images/cyan.png"> </p> 
+                           </div>
+                            <div class="col m4 s6 l4"  >
+                              <p class="border_setttings_bg_lightskyblue " id="c3"> <img src="/images/gray.png"> </p> 
+                           </div>
+                        </div>
+                  </div>
+
+
+               <div class="tab-pane" id="special_features">
+                        <div class="row">
+                          <p class="heading_create">Special disability features</p>
+
+
+                           <div class="col m12 s12 l12 active" >                       
+                             <p><strong>Firefox browser extensions:</strong></p>
+<ul>
+<li style="font-weight: 400;"><a href="https://addons.mozilla.org/en-US/firefox/addon/read-aloud/" target="_blank" ><span style="font-weight: 400;">Read Aloud</span></a><span style="font-weight: 400;">: Read out loud the current web-page and view the text while reading it.</span></li>
+<li style="font-weight: 400;"><a href="https://addons.mozilla.org/en-US/firefox/addon/text-to-voice/" target="_blank" ><span style="font-weight: 400;">Text to Voice</span></a><span style="font-weight: 400;">: Select text, click the button on the browser and this add-on speaks the selected text for you.</span></li>
+<li style="font-weight: 400;"><a href="https://addons.mozilla.org/en-US/firefox/addon/tranquility-1/" target="_blank" ><span style="font-weight: 400;">Tranquility Reader</span></a><span style="font-weight: 400;">: Makes a Web Page easily readable by removing distractions.</span></li>
+<li style="font-weight: 400;"><a href="https://addons.mozilla.org/en-US/firefox/addon/zoom/" target="_blank" ><span style="font-weight: 400;">Zoom</span></a><span style="font-weight: 400;">: Zoom in or out on web content using the zoom button for more comfortable reading. </span></li>
+<li style="font-weight: 400;"><a href="https://addons.mozilla.org/en-US/firefox/addon/rgblind/" target="_blank" ><span style="font-weight: 400;">RGBlind</span></a><span style="font-weight: 400;">: Simulate color blindness in your web browser.</span></li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Chrome browser extensions:</strong></p>
+<ul>
+<li style="font-weight: 400;"><a href="https://chrome.google.com/webstore/detail/read-aloud-a-text-to-spee/hdhinadidafjejdhmfkjgnolgimiaplp" target="_blank" ><span style="font-weight: 400;">Read Aloud</span></a><span style="font-weight: 400;">: Read out loud the current web-page and view the text while reading it.</span></li>
+<li style="font-weight: 400;"><a href="https://chrome.google.com/webstore/detail/select-and-speak-text-to/gfjopfpjmkcfgjpogepmdjmcnihfpokn" target="_blank" ><span style="font-weight: 400;">Text to Speech</span></a><span style="font-weight: 400;">: Select text, click the button on the browser and this add-on speaks the selected text for you.</span></li>
+<li style="font-weight: 400;"><a href="https://chrome.google.com/webstore/detail/just-read/dgmanlpmmkibanfdgjocnabmcaclkmod" target="_blank" ><span style="font-weight: 400;">Just Read</span></a><span style="font-weight: 400;">: Makes a Web Page easily readable by removing distractions.</span></li>
+<li style="font-weight: 400;"><a href="https://chrome.google.com/webstore/detail/zoom-for-google-chrome/lajondecmobodlejlcjllhojikagldgd" target="_blank" ><span style="font-weight: 400;">Zoom</span></a><span style="font-weight: 400;">: Zoom in or out on web content using the zoom button for more comfortable reading.</span></li>
+
+<li style="font-weight: 400;"><a href="https://chrome.google.com/webstore/detail/colorblinding/dgbgleaofjainknadoffbjkclicbbgaa" target="_blank" ><span style="font-weight: 400;">Colorblinding</span></a><span style="font-weight: 400;">: Simulate color blindness in your web browser.</span></li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Operating systems free help programs:</strong></p>
+
+
+
+<ul>
+<li style="font-weight: 400;"><a href="https://www.nvaccess.org/download/#latest-build" target="_blank" ><span style="font-weight: 400;">NonVisual Desktop Access(NVDA)</span></a><span style="font-weight: 400;">: Windows screen reader which reads the text by hovering on the screen. Also portable to get it to a usb stick while changing pc stations. (Download instruction: Select Skip donation and just press the Download button under donation without completing anything. The file will be instantly downloaded).</span></li>
+</ul>
+<ul>
+<li style="font-weight: 400;"><a href="http://www.apple.com/accessibility/voiceover/" target="_blank" ><span style="font-weight: 400;">Apple VoiceOver</span></a><span style="font-weight: 400;">(OS X): Apple VoiceOver includes options to magnify, keyboard control and verbal descriptions in English to describe what is happening on screen. It also reads aloud file content as well as web pages, E-mail messages and word processing files whilst providing a relatively accurate narrative of the user&rsquo;s workspace.</span></li>
+
+</ul>
+<ul>
+<li><strong><a href="http://emacspeak.sourceforge.net/" target="_blank" ><span style="font-weight: 400;">Emacspeak</span></a> <span style="font-weight: 400;">(Linux): Emacspeak is a free speech interface that allows visually impaired users to interact independently and efficiently with the computer. Its technology enables it to produce rich aural representation of electronic information. Emacspeak offers audible interface of the different aspects of the Internet such as browsing and messaging as well as local and remote information via a consistent and well-integrated user interface.</span></strong></li>
+</ul>
+
+<ul>
+
+  <li style="font-weight: 400;"><a href="http://projects.gnome.org/orca/" target="_blank" ><span style="font-weight: 400;">ORCA</span></a><span style="font-weight: 400;">(Linux): ORCA is a very popular Linux based screen reader. Recently it has been included with the Ubuntu installation CD, and with a couple of initial key presses it allows blind people to have audible interaction.</span></li>
+</ul>
+<ul>
+  <li style="font-weight: 400;"><a href="http://mielke.cc/brltty/" target="_blank" ><span style="font-weight: 400;">BRLTTY</span></a><span style="font-weight: 400;">(Linux): BRLTTY is a background process (daemon) which provides access to the Linux/Unix console (when in text mode) for a blind person using a refreshable braille display. It drives the braille display, and provides complete screen review functionality. Some speech capability has also been incorporated.</span></li>
+
+<!-- 
+<li style="font-weight: 400;">
+<a href="http://projects.gnome.org/orca/" target="_blank" >ORCA</a><span style="font-weight: 400;"> (Linux): ORCA is a very popular Linux based screen reader. Recently it has been included with the Ubuntu installation CD, and with a couple of initial key presses it allows blind people to have audible interaction.</span>
+</li> -->
+
+<!-- <li style="font-weight: 400;">
+<a href="http://mielke.cc/brltty/" target="_blank" >BRLTTY</a><span style="font-weight: 400;"> (Linux): BRLTTY is a background process (daemon) which provides access to the Linux/Unix console (when in text mode) for a blind person using a refreshable braille display. It drives the braille display, and provides complete screen review functionality. Some speech capability has also been incorporated.</span>
+</li> -->
+</ul>
+<p>&nbsp;</p>
+                           </div>
+
+
+                        </div>
+                  </div>
+                
+               </div>
+
+            <!-- tab content -->
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown({
+                   inDuration: 300,
+                   outDuration: 225,
+                   constrainWidth: false, // Does not change width of dropdown to that of the activator
+                   hover: true, // Activate on hover
+                   gutter: 0, // Spacing from edge
+                   belowOrigin: false, // Displays dropdown below the button
+                   alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                   stopPropagation: false // Stops event propagation
+                 }
+               );
+                    
+               
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('open');
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('close');
+            </script>
+         </div>
+      </div>
+   </div>
+    <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+   <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+      <li class="col m4 s4 text-center total_number_bg_padding" id="all_connections">
+        <a class="total_number_bg">
+          <span class="numbr_below" >{{connection}}</span>
+         
+          <span href="#connection"   class="total_number_name">All</span>
+        </a>
+      </li>
+      <li class="col m4 s4 text-center total_number_bg_padding" id="request_connections" >
+        <a class="total_number_bg">
+         <span class="numbr_below">{{request}}</span>
+         
+         <span href="#request" class="total_number_name">Request</span>
+        </a>
+      </li>
+       <li class="col m4 s4 text-center total_number_bg_padding_last" id="ignore_connections">
+        <a class="total_number_bg">
+          <span class="numbr_below">{{ignore}}</span>
+          
+          <span href="#ignore"  class="total_number_name">Ignore</span>
+        </a>
+      </li>
+   </ul>
+</div>
+
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</template>

@@ -1,0 +1,587 @@
+<template name="blog_listing">
+      <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script> 
+
+   <!-- <body style="background-color: #F5F5F5 !important;"> -->
+   <body class="body_bg">
+      {{> header}}
+      <!-- {{#if Template.subscriptionsReady}} -->
+      {{> bloglist}}
+      <!-- {{else}} -->
+      <!-- <div class="loading"  id="loading_div" ></div> -->
+      <!-- {{/if}} -->
+   </body>
+</template>
+<template name="bloglist">
+   {{#if user_is_admin}}
+   <div class="page_wh">
+
+      <div class="">
+         <div class="row">
+            <div class="col m3 l3 s12">
+            <ul class="nav nav-pills nav-stacked left_row hidden-md hidden-xs visible-lg">
+               <h3>BLOG</h3>
+               <li>
+                  <p class="create_event_btn" id="create_blog_btn">CREATE BLOG</p>
+               </li>
+               <li class="active"><a href="#tdevent" id="all_blogs" data-toggle="pill">All ({{all_blogs_count}})</a></li>
+               <li><a href="#tdevent" id="draft_listing" data-toggle="pill">Draft ({{draft_blog_count}})</a></li>
+               <li><a href="#tdevent" id="published_by_me" data-toggle="pill">Published by me ({{blog_published_by_me_count}})</a></li>
+               <li><a href="#tdevent" id="coming_soon" data-toggle="pill"> Coming soon ({{coming_soon_count}})</a></li>
+            </ul>
+         </div>
+            <!--  <div class="fixed-action-btn horizontal hidden-lg">
+               <a class="btn-floating btn-large red floating_btn_all">
+               <i class="fa fa-plus fa-2x"></i>
+               </a>
+               <ul>
+                  <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+                  <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+                  <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+                  <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+               </ul>
+               </div> -->
+            <div class="col m12 l9 s12 tab-content right_row">
+               <div class="tab-pane active" id="tdevent">
+                  <div id="row custom-search-input">
+                     <div class="col m12 l7 s12">
+                        <p class="heading_create" id="headline">All Blogs </p>
+                     </div>
+                     <div class="input-group col m12 l5 s12">
+                        <div id="imaginary_container">
+                           <div class="input-group stylish-input-group">
+                              <input type="text" class="form-control margin_inpu_search"  placeholder="Search blog by name" id="search_all_text_conn" >
+                              <span class="input-group-addon search_format_iocn">
+                              <button type="submit" id="search_blogs">
+                              <span class="glyphicon glyphicon-search"></span>
+                              </button>  
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="row" style="margin-top: 10px;" >
+                     {{#each fetchBlogData_for_admin}}
+                     <div class="col s12 m6 l4">
+                        <div class="card" style="padding-top: 0;">
+                           <div class="card-image">
+                              <img src="{{blog_image}}" class="banner_image_for_all pointer">
+                           </div>
+                           <div class="card-content">
+                              <span class="card-title event_name pointer">{{trim_content blog_title}} </span>
+                              <p class="event_type">{{changeDateFormat}}</p>
+                              <!--<p>I am a very simple card. I am good at containing small bits of information.
+                                 I am convenient because I require little markup to use effectively.</p>-->
+                           </div>
+                           <div class="card-action ">
+                              <ul class="collection ">
+                                 <!--  <li><img class="circle visible-lg Show_author" src="{{blog_creator_image}}" style="width: 40px !important; height: 40px !important;"><span><a href="javascript:void(0)"  style="margin-left: 6px !important; color: #23527C !important;" class="blog_writer_name event_type redirect_to_profile Show_author"><span class="hidden-lg "><b>Author: </b></span>{{blog_creator_name}}</a><br/>
+                                    <span style="margin-left: 6px !important;">{{headline}}</span>
+                                    </span></li> -->
+                                 {{#each blog_creator_details}}
+                                 <li><img class="circle visible-lg" src="{{profile_pic}}" style="width: 40px !important; height: 40px !important;">
+                                    <span>
+                                    <a href="#"  style="margin-left: 6px !important; color: #23527C !important;" class="blog_writer_name event_type redirect_to_profile">
+                                    <span class="hidden-lg"><b>Author: </b></span>
+                                    {{name}}
+                                    </a>
+                                    <br/>
+                                    <span style="padding-left: 46px !important;" class="visible-lg new_headline_hub" >{{trim_content headline}}</span>
+                                    </span>
+                                 </li>
+                                 {{/each}}
+                                
+                              </ul>
+                              <div class="card_padding_sp visible-lg" style="padding-bottom: 20px !important;">
+                                 <span class="pull-left">
+                                 <span style="margin-right: 10px;">
+                                 <i class="fa fa-comment-o" title="Comment"></i>{{fetch_count_total_level_zero_comments blog_id}} 
+                                 </span>
+                                 <span>
+                                 <i class="fa fa-thumbs-o-up" title="Like"></i>{{show_like_count blog_id}} 
+                                 </span>
+                                 </span>
+
+                                <!--  <span class="pull-right">
+                                 {{#if check_for_blog_creator_and_current_login_user blog_creator_id}}
+                                 <span style="margin-right: 10px;">
+                                 <i class="fa fa-pencil edit_blog_btn pointer" title="Edit"></i> 
+                                 </span>
+                                 <span>
+                                 <i class="fa fa-trash remove_blog_btn pointer" title="Delete"></i>
+                                 </span>
+                                 {{/if}}
+                                 </span> -->
+
+                                 <span class=" pull-right">
+                                 <div class="btn-group show-on-hover">
+                                         <button aria-expanded="false" style="width: 100% !important; border: 0px !important; background-color: #fff;" data-toggle="dropdown" class="dropdown-toggle" type="button"><i style="color:#000 !important; margin-right: 0px; margin-top: 0px;" class="fa fa-ellipsis-v"> </i></button>
+                                          <ul style="width: 100%; left: 0 !important;" role="menu" class="dropdown-menu">
+                                           <li>
+                                              {{#if check_blog_inactive_or_not }}
+                                              <a id="activate" class="remove_post" style="text-align:left !important;"> Deactivate</a>
+                                                {{else}}
+                                                <a id="in_activate" class="remove_post" style="text-align:left !important;"> Activate</a>
+                                                {{/if}}
+                                           </li>
+                                           {{#if check_for_blog_creator_and_current_login_user blog_creator_id}}
+                                           <li><a  class="edit_blog_btn" style="text-align:left !important;"> Edit</a></li>
+                                            <li><a  class="remove_blog_btn" style="text-align:left !important;"> Delete</a></li>
+                                             {{/if}} 
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                      </div>
+                           </div>
+                           <div class="clearfix"></div>
+                        </div>
+                     </div>
+                     {{else}}
+                     <div class="row">
+                        <div class="col m12 s12 l12">
+                           <p  class="noreq_screen none_listing"> No Blogs Found.  </p>
+                        </div>
+                     </div>
+                     {{/each}}
+                  </div>
+               </div>
+               <div class="tab-pane" id="upevent">
+                  <h5>Created by me ({{ignore}})</h5>
+               </div>
+               <div class="tab-pane" id="bymeevent">
+                  <h5>Created by me ({{ignore}})</h5>
+               </div>
+               <div class="tab-pane" id="bymeevent">
+                  <h5>Published by me ({{ignore}})</h5>
+               </div>
+               <div class="tab-pane" id="followers">
+                  <div class="row">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Followers ({{followers_count}})</p>
+                     </div>
+                  </div>
+                  {{#each fetch_all_followers}}
+                  <div class="col m6 l4 s12">
+                     <div class="card row_nomargin_padd text-center">
+                        <div class="card-content">
+                           {{#each get_user_info follower}}
+                           <div class="text-center padding_image_right redirect_to_profile col m12 l12 s12">
+                              <img class="img_connection ui medium pointer image " src="{{profile_pic}}" alt="No image" >
+                           </div>
+                           <span class="card-title activator pointer event_name"><span class="redirect_to_profile">{{name}}</span></span>
+                           <p class="activator event_type pointer">{{trim_content headline}}</p>
+                           <p class="event_type activator">
+                              <i class="fa fa-map-marker"></i> {{trim_content location}}<!-- p class="connected_since_text"><span style="color: #23527c;">Connected since</span> {{connected_since}}</p> -->
+                           </p>
+                           <div class="clearfix"></div>
+                           <p class="card_padding_spe visible-lg">
+                              <span class="pull-left"><i class="fa fa-handshake-o"></i>  &nbsp;&nbsp;{{mutual_connections user_id}}  
+                              </span>
+                              <span class="pull-right">
+                              <i class="fa fa-rss" title="Blogs"></i>&nbsp;&nbsp;{{blogs_written user_id}} 
+                              </span>
+                              <!-- <span class="pull-right">
+                                 <span style="margin-right: 10px;">
+                                   <i class="fa fa-pencil" title="edit"></i> 
+                                    </span>
+                                    <span>
+                                   <i class="fa fa-trash" title="del"></i>
+                                    </span>
+                                    </span> -->
+                           </p>
+                           {{/each}}
+                        </div>
+                        <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                           <!-- <div class="col m12 l12 s12 icon_for_site ignore_req change_follow_status" id="remove_connection" > {{check_for_follower}} </div> -->
+                           {{#if equals check_for_follower 'Follow Back'}}
+                           <div class="col m12 l12 s12 unfollow_one icon_for_site ignore_req change_follow_status" id="remove_connection " > Follow Back </div>
+                           {{else}}
+                           <div class="col m12 l12 s12 icon_for_site ignore_req change_follow_status unfollow_one" id="remove_connection unfollow_one"> Following </div>
+                           {{/if}}
+                        </div>
+                     </div>
+                  </div>
+                  {{else}}
+                  <div class="row">
+                     <div class="col m12 s12 l12">
+                        <p  class="noreq_screen none_listing"> No Followers</p>
+                     </div>
+                  </div>
+                  {{/each}}
+               </div>
+               <div class="tab-pane" id="following">
+                  <div class="row">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Following ({{following_count}})</p>
+                     </div>
+                  </div>
+                  {{#each fetch_all_following}}                  
+                  <div class="col m6 l4 s12">
+                     <div class="card row_nomargin_padd text-center">
+                        <div class="card-content">
+                           {{#each get_user_info following}}
+                           <div class="text-center redirect_to_profile padding_image_right col m12 l12 s12">
+                              <img class="img_connection pointer ui medium image" src="{{profile_pic}}" alt="No image" >
+                           </div>
+                           <span class="card-title pointer redirect_to_profile activator event_name">{{name}}</span>
+                           <p class="activator event_type pointer">{{trim_content headline}}</p>
+                           <p class="event_type activator">
+                              <i class="fa fa-map-marker"></i> {{trim_content location}}<!-- p class="connected_since_text"><span style="color: #23527c;">Connected since</span> {{connected_since}}</p> -->
+                           </p>
+                           <div class="clearfix"></div>
+                           <p class="card_padding_spe visible-lg">
+                              <span class="pull-left">
+                              <i class="fa fa-handshake-o"></i> &nbsp;&nbsp;{{mutual_connections user_id}}  
+                              </span>
+                              <span class="pull-right">
+                              <i class="fa fa-rss"></i>&nbsp;&nbsp;{{blogs_written user_id}} 
+                              </span>
+                           </p>
+                           {{/each}}
+                        </div>
+                        <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                           <div class="col m12 l12 s12 icon_for_site ignore_req unfollow_users" id="remove_connection" style="background-color: #fff !important;
+                              color: #333 !important;" > Unfollow </div>
+                        </div>
+                     </div>
+                  </div>
+                  {{else}}
+                  <div class="row">
+                     <div class="col m12 s12 l12">
+                        <p  class="noreq_screen none_listing"> No Following</p>
+                     </div>
+                  </div>
+                  {{/each}}
+               </div>
+            </div>
+            <!-- tab content -->
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown({
+                   inDuration: 300,
+                   outDuration: 225,
+                   constrainWidth: false, // Does not change width of dropdown to that of the activator
+                   hover: true, // Activate on hover
+                   gutter: 0, // Spacing from edge
+                   belowOrigin: false, // Displays dropdown below the button
+                   alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                   stopPropagation: false // Stops event propagation
+                 }
+               );
+                    
+               
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('open');
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('close');
+            </script>
+         </div>
+      </div>
+   </div>
+   <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+      <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+         <li class="col m4 s4 text-center total_number_bg_padding" id="display_all_blogs">
+            <a class="total_number_bg">
+            <span class="numbr_below" >{{all_blogs_count}}</span>
+            <span href="#connection"   class="total_number_name">All</span>
+            </a>
+         </li>
+         <li class="col m4 s4 text-center total_number_bg_padding" id="display_followers" >
+            <a class="total_number_bg">
+            <span class="numbr_below">{{followers_count}}</span>
+            <span href="#request" class="total_number_name">Followers</span>
+            </a>
+         </li>
+         <li class="col m4 s4 text-center total_number_bg_padding_last" id="display_following">
+            <a class="total_number_bg">
+            <span class="numbr_below">{{following_count}}</span>
+            <span href="#ignore"  class="total_number_name">Following</span>
+            </a>
+         </li>
+      </ul>
+   </div>
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   {{else}}
+   <div class="page_wh row">
+      
+            {{> ticker}}
+            <ul class="nav nav-pills nav-stacked col m3 l3 s12 left_row hidden-md hidden-xs visible-lg" id="blog_container">
+               <h3>BLOG</h3>
+               <li>
+                  <p class="create_event_btn" id="create_blog_btn">CREATE BLOG</p>
+               </li>
+               <li class="active"><a href="#tdevent" id="all_blogs" data-toggle="pill">All ({{all_blogs_count}})</a></li>
+               <li><a href="#tdevent" id="draft_listing" data-toggle="pill">Draft ({{draft_blog_count}})</a></li>
+               <li><a href="#tdevent" id="published_by_me" data-toggle="pill">Published by me ({{blog_published_by_me_count}})</a></li>
+               <li><a href="#tdevent" id="coming_soon" data-toggle="pill"> Coming soon ({{coming_soon_count}})</a></li>
+               <li><a href="#followers" data-toggle="pill"> Followers ({{followers_count}})</a></li>
+               <li><a href="#following" data-toggle="pill"> Following ({{following_count}})</a></li>
+            </ul>
+            <!--  <div class="fixed-action-btn horizontal hidden-lg">
+               <a class="btn-floating btn-large red floating_btn_all">
+               <i class="fa fa-plus fa-2x"></i>
+               </a>
+               <ul>
+                  <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+                  <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+                  <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+                  <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+               </ul>
+               </div> -->
+            <div class="col m12 l9 s12 tab-content right_row">
+               <div class="tab-pane active" id="tdevent">
+                  <div id="row custom-search-input">
+                     <div class="col m12 l7 s12">
+                        <p class="heading_create" id="headline">All Blogs </p>
+                     </div>
+                     <div class="input-group col m12 l5 s12">
+                        <div id="imaginary_container">
+                           <div class="input-group stylish-input-group">
+                              <input type="text" class="form-control margin_inpu_search"  placeholder="Search blog by name" id="search_all_text_conn" >
+                              <span class="input-group-addon search_format_iocn">
+                              <button type="submit" id="search_blogs">
+                              <span class="glyphicon glyphicon-search"></span>
+                              </button>  
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="row" style="margin-top: 10px;" >
+                     {{#each fetchBlogData}}
+                     <div class="col s12 m6 l4">
+                        <div class="card" style="padding-top: 0;">
+                           <div class="card-image">
+                              <img src="{{blog_image}}" class="banner_image_for_all pointer">
+                           </div>
+                           <div class="card-content">
+                              <span class="card-title event_name pointer">{{trim_content blog_title}} </span>
+                              <p class="event_type">{{changeDateFormat}}</p>
+                              <!--<p>I am a very simple card. I am good at containing small bits of information.
+                                 I am convenient because I require little markup to use effectively.</p>-->
+                           </div>
+                           <div class="card-action ">
+                              {{#each blog_creator_details}}
+                              <ul class="collection">
+                                 <li><img class="circle visible-lg" src="{{profile_pic}}" style="width: 40px !important; height: 40px !important;">
+                                    <span>
+                                    <a href="#"  style="margin-left: 6px !important; color: #23527C !important;" class="blog_writer_name event_type redirect_to_profile">
+                                    <span class="hidden-lg"><b>Author: </b></span>
+                                    {{name}}
+                                    </a>
+                                    <br/>
+                                    <span style="padding-left: 46px !important;" class="visible-lg new_headline_hub">{{trim_content headline}}</span>
+                                    </span>
+                                 </li>
+                              </ul>
+                              {{/each}}
+                              <div class="card_padding_sp visible-lg" style="padding-bottom: 20px !important;">
+                                 <span class="pull-left">
+                                 <span style="margin-right: 10px;">
+                                 <i class="fa fa-comment-o" title="Comment"></i> {{fetch_count_total_level_zero_comments blog_id}} 
+                                 </span>
+                                 <span>
+                                 <i class="fa fa-thumbs-o-up" title="Like"></i> {{show_like_count blog_id}} 
+                                 </span>
+                                 </span>
+                                 <span class="pull-right">
+                                 {{#if check_for_blog_creator_and_current_login_user blog_creator_id}}
+                                 <span style="margin-right: 10px;">
+                                 <i class="fa fa-pencil edit_blog_btn pointer" title="Edit"></i> 
+                                 </span>
+                                 <span>
+                                 <i class="fa fa-trash remove_blog_btn pointer" title="Delete"></i>
+                                 </span>
+                                 {{/if}}
+                                 </span>
+                              </div>
+                           </div>
+                           <div class="clearfix"></div>
+                        </div>
+                     </div>
+                     {{else}}
+                     <div class="row">
+                        <div class="col m12 s12 l12">
+                           <p  class="noreq_screen none_listing"> No Blogs Found.  </p>
+                        </div>
+                     </div>
+                     {{/each}}
+                  </div>
+               </div>
+               <div class="tab-pane" id="upevent">
+                  <h5>Created by me ({{ignore}})</h5>
+               </div>
+               <div class="tab-pane" id="bymeevent">
+                  <h5>Created by me ({{ignore}})</h5>
+               </div>
+               <div class="tab-pane" id="bymeevent">
+                  <h5>Published by me ({{ignore}})</h5>
+               </div>
+               <div class="tab-pane" id="followers">
+                  <div class="row">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Followers ({{followers_count}})</p>
+                     </div>
+                  </div>
+                  {{#each fetch_all_followers}}
+                  <div class="col m6 l4 s12 pointer">
+                     <div class="card row_nomargin_padd text-center" style="    box-shadow: none !important;
+                        border: 1px solid #ccc;">
+                        <div class="card-content">
+                           {{#each get_user_info follower}}
+                           <div class="text-center padding_image_right redirect_to_profile col m12 l12 s12">
+                              <img class="img_connection ui medium image " src="{{profile_pic}}" alt="No image" >
+                           </div>
+                           <span class="card-title activator event_name"><span class="redirect_to_profile">{{name}}</span></span>
+                           <p class="activator event_type">{{trim_content headline}}</p>
+                           <p class="event_type activator">
+                              <i class="fa fa-map-marker"></i> {{trim_content location}}<!-- p class="connected_since_text"><span style="color: #23527c;">Connected since</span> {{connected_since}}</p> -->
+                           </p>
+                           <div class="clearfix"></div>
+                           <p class="card_padding_spe visible-lg">
+                              <span class="pull-left"  title="Mutual Connections">
+                              <i class="fa fa-handshake-o"></i> 
+                               <a href="" style="color: #333 !important">&nbsp;&nbsp;{{mutual_connections user_id}}  </a>
+                              </span>
+                              <span class="pull-right"  title="Blogs Written">
+                              <i class="fa fa-rss"></i> 
+                              <a href="" style="color: #333 !important"> &nbsp;&nbsp;{{blogs_written user_id}} 
+                              </a>
+                              </span>
+                              <!-- <span class="pull-right">
+                                 <span style="margin-right: 10px;">
+                                   <i class="fa fa-pencil" title="edit"></i> 
+                                    </span>
+                                    <span>
+                                   <i class="fa fa-trash" title="del"></i>
+                                    </span>
+                                    </span> -->
+                           </p>
+                           {{/each}}
+                        </div>
+                        <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                           {{#if equals check_for_follower 'Follow Back'}}
+                           <div class="col m12 l12 unfollow_one s12 icon_for_site ignore_req change_follow_status" id="remove_connection" style=" background-color:#fff !important; 
+                              color: #338EA7 !important;
+                              border: 1px solid #338EA7 !important;" > Follow Back </div>
+                           {{else}}
+                           <div class="col m12 l12 s12 unollow_one icon_for_site ignore_req change_follow_status" id="remove_connection" style="background-color:#338EA7 !important; 
+                              color: #fff !important;"> Following </div>
+                           {{/if}}
+                        </div>
+                     </div>
+                  </div>
+                  {{else}}
+                  <div class="row">
+                     <div class="col m12 s12 l12">
+                        <p  class="noreq_screen none_listing"> No Followers</p>
+                     </div>
+                  </div>
+                  {{/each}}
+               </div>
+               <div class="tab-pane" id="following">
+                  <div class="row">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Following ({{following_count}})</p>
+                     </div>
+                  </div>
+                  {{#each fetch_all_following}}                  
+                  <div class="col m6 l4 s12">
+                     <div class="card row_nomargin_padd text-center" style="    box-shadow: none !important;
+                        border: 1px solid #ccc;">
+                        <div class="card-content pointer">
+                           {{#each get_user_info following}}
+                           <div class="text-center redirect_to_profile padding_image_right col m12 l12 s12">
+                              <img class="img_connection ui medium image" src="{{profile_pic}}" alt="No image" >
+                           </div>
+                           <span class="card-title redirect_to_profile activator event_name">{{name}}</span>
+                           <p class="activator event_type">{{trim_content headline}}</p>
+                           <p class="event_type activator">
+                              <i class="fa fa-map-marker"></i> {{trim_content location}}<!-- p class="connected_since_text"><span style="color: #23527c;">Connected since</span> {{connected_since}}</p> -->
+                           </p>
+                           <div class="clearfix"></div>
+                           <p class="card_padding_spe visible-lg">
+                              <span class="pull-left" title="Mutual Connections">
+                               <i class="fa fa-handshake-o"></i>
+                               <a href="" style="color: #333 !important" >
+                                 &nbsp;&nbsp;{{mutual_connections user_id}}  
+                              </a>
+                              </span>
+                              <span class="pull-right" title="Blogs Written">
+                              <i class="fa fa-rss"></i>
+
+                               <a href="" style="color: #333 !important">
+                                &nbsp;&nbsp;{{blogs_written user_id}} 
+                              </a>
+                              </span>
+                           </p>
+                           {{/each}}
+                        </div>
+                        <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                           <div class="col m12 l12 s12 icon_for_site ignore_req unfollow_users pointer" id="remove_connection" style=" background-color:#fff !important; 
+                              color: #338EA7 !important;
+                              border: 1px solid #338EA7 !important;"> Unfollow </div>
+                        </div>
+                     </div>
+                  </div>
+                  {{else}}
+                  <div class="row">
+                     <div class="col m12 s12 l12">
+                        <p  class="noreq_screen none_listing"> No Following</p>
+                     </div>
+                  </div>
+                  {{/each}}
+               </div>
+            </div>
+            <!-- tab content -->
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown({
+                   inDuration: 300,
+                   outDuration: 225,
+                   constrainWidth: false, // Does not change width of dropdown to that of the activator
+                   hover: true, // Activate on hover
+                   gutter: 0, // Spacing from edge
+                   belowOrigin: false, // Displays dropdown below the button
+                   alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                   stopPropagation: false // Stops event propagation
+                 }
+               );
+                    
+               
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('open');
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('close');
+            </script>
+         </div>
+     
+   <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+      <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+         <li class="col m4 s4 text-center total_number_bg_padding" id="display_all_blogs">
+            <a class="total_number_bg">
+            <span class="numbr_below" >{{all_blogs_count}}</span>
+            <span href="#connection"   class="total_number_name">All</span>
+            </a>
+         </li>
+         <li class="col m4 s4 text-center total_number_bg_padding" id="display_followers" >
+            <a class="total_number_bg">
+            <span class="numbr_below">{{followers_count}}</span>
+            <span href="#request" class="total_number_name">Followers</span>
+            </a>
+         </li>
+         <li class="col m4 s4 text-center total_number_bg_padding_last" id="display_following">
+            <a class="total_number_bg">
+            <span class="numbr_below">{{following_count}}</span>
+            <span href="#ignore"  class="total_number_name">Following</span>
+            </a>
+         </li>
+      </ul>
+   </div>
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   {{/if}}
+</template>

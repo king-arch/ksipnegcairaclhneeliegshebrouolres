@@ -1,0 +1,140 @@
+<template name="video_chat">
+    
+<script src="./node_modules/rtcmulticonnection/RTCMultiConnection.js"></script>
+
+<div id="videos-container" class="containermain"></div>
+
+    <div id="call_btns" class="p_btn"> 
+        <button id="btn_vis" type="button" class="btn-circle"><i class="glyphicon glyphicon-earphone"></i></button>  
+    </div>
+
+
+<script src="https://cdn.webrtc-experiment.com/getMediaElement.js"></script>
+
+
+
+<script type="text/javascript">
+var connection = new RTCMultiConnection();
+
+// this line is VERY_important
+connection.socketURL = 'https://bitovn.herokuapp.com:443/';
+//connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+// connection.resources.firebaseio = 'https://webrtc.firebaseIO.com/';
+// all below lines are optional; however recommended.
+
+connection.session = {
+    audio: true,
+    video: true
+};
+
+connection.sdpConstraints.mandatory = {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: true
+};
+connection.videosContainer = document.getElementById('videos-container');
+connection.onstream = function(event) {
+/*  console.log("Event "+ event);
+  alert(event);
+    document.body.appendChild( event.mediaElement );*/
+      var width = parseInt(connection.videosContainer.clientWidth / 2) - 20;
+                var mediaElement = getMediaElement(event.mediaElement, {
+                    title: event.userid,
+                    buttons: ['full-screen'],
+                    width: width,
+                    showOnMouseEnter: false
+                });
+                if(connection.videosContainer.childElementCount == 0){
+              mediaElement.className += " userone"; //   connection.videosContainer.addClass("usertwo");  
+                connection.videosContainer.appendChild(mediaElement);
+document.getElementById("btn_vis").className += " btn_visible_call ";
+                }else{
+
+            mediaElement.className += " usertwo"; //   connection.videosContainer.addClass("usertwo");  
+                connection.videosContainer.appendChild(mediaElement);
+                }
+
+
+
+
+                setTimeout(function() {
+                    mediaElement.media.play();
+                }, 5000);
+                mediaElement.id = event.streamid;
+                var id  = mediaElement.id;
+            
+};
+
+
+var videoSessionCallerId = Session.get("videoSessionCallerId");
+var videoSessionPickerId = Session.get("videoSessionPickerId");
+var chatRoom = Session.get("videoSessionChatRoomId");
+var videoSessionId = Session.get("videoSessionId");
+// var videoAcceptStatus = Session.get("videoAcceptStatus");
+var callerId = "";
+var pickerId = "";
+var current_user = "";
+
+
+Meteor.call('maintain_video_session',videoSessionId,videoSessionCallerId,videoSessionPickerId,chatRoom,function(error,result){
+if(error){
+alert("call failed");
+}else{ 
+  if(result=="Inserted"){
+
+    callerId= videoSessionId.split("=")[1];
+    current_user=callerId;
+        connection.open(videoSessionId);
+  }else{
+    alert("Updated");
+    pickerId = videoSessionId.split("=")[2];
+    current_user = pickerId;
+        connection.join(videoSessionId);
+  }
+}
+});    
+
+$(window).on('beforeunload', function() {
+  console.log("beforeunload called");
+    changeVideoSessionStatus(videoSessionId,current_user,"away"); 
+  return 'Your own message goes here...';
+});
+function changeVideoSessionStatus(videoSessionId,current_user,status){
+  Meteor.call('change_video_chat_user_availability',videoSessionId,current_user,status,function(error,result){
+             if(error){
+              console.log('failed');
+             }else{
+                console.log(result);
+             }                  
+            });
+}
+window.myApp = {
+  onFocus: function () {
+    changeVideoSessionStatus(videoSessionId,current_user,"available"); 
+      },
+  onBlur: function () {
+      changeVideoSessionStatus(videoSessionId,current_user,"away");  
+     }
+};
+
+if(window.addEventListener) {
+    window.addEventListener('load', function () {
+    window.addEventListener('focus', window.myApp.onFocus);
+    window.addEventListener('blur', window.myApp.onBlur);
+  });
+}
+else if(window.attachEvent) {
+    window.attachEvent('onload', function () {
+    window.attachEvent('onfocus', window.myApp.onFocus);
+    window.attachEvent('onblur', window.myApp.onBlur); 
+  });
+}
+else {
+  window.onload = function () {
+    window.onfocus = window.myApp.onFocus;
+    window.onblur = window.myApp.onBlur;   
+  };
+}
+</script>
+
+</template>

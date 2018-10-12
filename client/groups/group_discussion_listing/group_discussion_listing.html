@@ -1,0 +1,356 @@
+
+<template name="group_discussion_listing">
+    
+    <head>
+      <title>Event Listing</title>
+    </head>
+    <!-- <body style="background-color: #F5F5F5 ! important;"> -->
+    <body>
+      {{> header}}
+      
+      {{#each show_group_details}}
+
+<div class="page_wh">
+              <div class="row">
+                {{> ticker}} 
+                      <div class="col m12 l9 s12 right_row row_margin_right row_margin_btn"> 
+                        <p class="event_title_detail discussion_tittle_detail visible-lg"><span><img src={{grp_image}} style="width: 200px; float: left; margin-right: 10px !important; margin-bottom: 20px !important;"></span>
+                          <a href="javascript:void(0)" class="show_group_details" >{{grp_title}} </a>
+                          <br/><br/>
+                          <p class="event_names_for_name" style="color: black;"><span class="grp_detail_name_type_">{{grp_type}}</span></p></p>
+                         <hr/>
+                          <div class="col m12 s12 l12">
+                              <div class="ui small comments ">
+  {{#each logged_in_user}}
+  <div class="comment">
+    <a class="avatar">
+      <img src={{profile_pic}} class="circle pointer redirect_click_1" >
+    </a>
+    <div class="content">
+    <a class="author pointer redirect_click_1 redirect_click_1"> Me </a>
+
+      <div class="text new_headline_hub">
+        {{headline}} 
+      </div>
+      
+    </div>
+  </div>
+  {{/each}}
+
+  <form class="ui reply form">
+    <div class="field">
+      <textarea class="textarea" placeholder="Enter discussion title" style="margin-bottom:10px; min-height: 50px !important; " id="discussion_title" ></textarea>
+      <textarea class="textarea" placeholder="Add some details here" id="discussion_detail" ></textarea>
+
+      <div class="summary new_headline_hub_para div_hide_class" id="url_metadata_div" style="border:1px solid #ccc !important;">
+                     <img id="metadata_info_image"  class="link_image" >
+                     <h4 class="h5_hub" style="margin: 10px 10px 10px 0px !important;" id="metadata_info_heading"> </h4>
+                     <p class="h5_hub_para" style="margin: 10px 10px 10px 0px !important; text-align: left !important;" 
+                      id="metadata_info_sub_heading"></p>
+                  </div>
+      <input type="hidden" value={{grp_id}} id="get_hidden_grp_id">
+      <input type="hidden" value={{admin}} id="get_hidden_admin" >
+    </div>
+    <div class="ui blue labeled submit icon button " style="  background-color: #338EA7 !important; padding: 10px 30px !important;" id="submit_discussion" >
+      Post
+    </div>
+  </form>
+  <h3 class="ui  header blog_description"><p id="discussion_total_count" >{{show_discussion_total_count}}</p></h3>
+   
+     {{#each show_discussion}}
+
+  <div class="comment" style="border:1px solid #ccc !important; padding: 10px;">
+   
+
+{{#each show_commenter_info}}
+    
+    <a class="avatar" >     
+        <img src={{profile_pic}} class="redirect_click_1 pointer circle" >      
+    </a>
+
+{{/each}} 
+ 
+    <div class="content">
+      {{#each show_discussion_creator}}
+
+           <a class="author pointer redirect_click_1">{{name}}</a>
+
+       {{/each}}
+      <div class="metadata">
+        <span class="reply">{{calculate_time_difference created_At}}</span>
+      </div>
+      
+    
+
+<script type="text/javascript">
+ $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+</script>
+    </div>
+    <div class="clearfix"></div>
+                                                      {{#if check_if_post_by_is_user discussion_creator }}
+                        
+                        <span class="card-title pull-right" >
+ <div class="btn-group show-on-hover" >
+                                                      <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                                   <!--      <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li> -->
+                                  <li><a href="javascript:void(0)" style="text-align:left !important;" 
+                                                          class="remove_post" id="{{discussion_id}}"> Delete</a>
+                                  <!-- <input type="hidden" akh="con="{{../post_id}}" id="getIdForPostId_"{{User_id}} > -->
+                                                        </li>
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                      {{/if}}
+      <div class="text justify blog_description">
+        <p style="margin-top: 20px;"><a href="javascript:void(0)" class="author grps_dis_titl go_to_discussion_detail_page ">{{discussion_title}}</a>  </p>
+
+      <p class="grps_dis_descr">
+      {{#if check_discussion_detail_for_br_tag}}
+        <!-- sssss -->
+          {{#each BreakAsArray}}
+             {{tag}}<br/>
+          {{/each}}
+        
+        {{else}}
+        {{discussion_detail}}
+        
+      {{/if}}
+
+        </p>
+      </div>
+     {{#if equals discussion_type 'url_metadata'}}
+          <a href="{{posted_url}}" target="_blank" > 
+            <div class="summary new_headline_hub_para" style="border:1px solid #ccc !important;">
+               <img src="{{featured_image}}" class="link_image" >
+               <h4 class="h5_hub" style="margin: 10px 10px 10px 0px !important;"> {{featured_title}}</h4>
+               <p class="h5_hub_para" style="margin: 10px 10px 10px 0px !important; text-align: left !important;"> {{source}}</p>
+            </div>
+          </a>
+     {{/if}}
+
+      <div class="actions new_headline_hub_like">
+        <!-- <a href="#Show_liked_list" class="modal-trigger trigger_helper reply like_Button_event Show_liked_list"  >
+          {{show_like_count_comment}}</a>
+        <a class="reply">Comment ({{show_count}})</a> -->
+
+        <a class="reply like_button_discussion"  >{{Like_unlike_txt_discussion}}</a>
+
+        <a href="#Show_liked_list_for_discussion" class="modal-trigger trigger_helper reply like_Button_event Show_liked_list_for_discussion">({{show_like_count_discussion}})</a>
+
+        <a class="reply focus_on_click" >Comment ({{show_count}}) </a>
+</div>
+
+  {{#each show_comment_lvl0}}
+
+  <div class="comment parent_div">
+
+{{#each show_commenter_info_2}}
+    <a class="avatar " >     
+        <img src={{profile_pic}} class="circle" >   
+    </a>
+{{/each}}  
+
+<div class="content">
+      {{#each show_commenter_info_2}}
+          <a class="author redirect_click_1" >{{name}}</a>
+      {{/each}}
+
+      <div class="metadata">
+          <span class="reply"> {{calculate_time_difference createdAt}} </span>
+      </div>
+
+      <div class="" id="show_comment_{{comment_id}}" >
+         <p>{{comment_txt}}
+         <span class="metadata reply">
+          {{#if check_for_edited comment_id}}(Edited) 
+                        {{/if}}
+                        </span>
+      </p>
+      </div>
+
+                             {{#if check_if_commented_by_is_user comment_by }}
+                        <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+
+                                          <div class="btn-group show-on-hover" >
+                                                      <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" 
+                                                          class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                      {{/if}}
+                    <!-- <i class="fa fa-camera"></i> -->
+                    <span>
+
+                      <textarea data-toggle="modal" class="loader_visiblity_block hidden_comment edit_box_styling" 
+                      value={{comment_txt}}  id="hidden_comment_{{comment_id}}"
+                      data-target="#modalhubtop" resize="none" placeholder="Edit ..." ></textarea>
+                    </span>
+
+      <div class="actions" style="margin-top: 5px !important;">
+        <a class="reply like_button_comments" > {{Like_unlike_txt}} </a>
+        <a href="#Show_liked_list" class="modal-trigger trigger_helper reply like_Button_event Show_liked_list"  >({{show_like_count_comment}})</a> 
+      </div>
+    </div>
+
+  </div>
+  {{/each}}
+  <div class="ui fluid icon input" style="margin-top: 10px;">
+
+  <input placeholder="Enter your comment here ..." class="secomdcomment comment_input_first" type="text" id="commentlvl0_discussion_{{discussion_id}}" >
+
+      <button class="submit_comment_discussion_details" style="background-color: transparent;
+    border: none; margin-left: -5% !important;
+    color: #868383; display : none"  > <i class="fa fa-paper-plane-o"></i> </button>
+      </div>
+  </div>
+
+     {{/each}}
+
+</div>
+                           </div> 
+                      </div>
+
+                      <div class="col m12 l3 s12 hidden-xs hidden-md"> 
+                       <div class="section visible-lg">
+      <h5>
+        About
+         <div class="divider"></div>
+      </h5>
+      <p>
+<p ><span>
+
+  {{#if check_grp_discription_length}}
+      <p>{{grp_discription_txt}}...<span id="show_group_details" class="show_group_details pointer" style="color:#4183c4;">Show More</span></p>
+
+      {{else}}
+
+      {{grp_discription}}
+  {{/if}}
+
+ </span></p>
+      </p>
+   </div>
+                      
+
+<!-- start here -->
+      <div class="section">
+        <h5>
+          <span id="route_to_member" class="pointer"> Members ({{show_all_group_members_count}})</span>
+            <div class="divider"></div>
+            </h5>
+
+            <p class="head-format"><a class="font_plus_class_b" href="#"></a></p>
+                  <div class="row"  style="margin-bottom:0px; ">
+                      <span >
+                          {{#each all_memeber}}       
+                                  <img src={{profile_pic}} style="" alt="No Image" class="circle pointer img_member member_groups redirect_click_1" >    
+                                 {{else}}    
+                                  <h4><p>No members Yet</p> </h4>  
+                          {{/each}}  
+                      </span> 
+                </div>  
+      </div>
+<!-- end here-->
+<script type="text/javascript">
+ $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+</script>
+
+
+                      </div>
+              </div>
+      </div>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <div id="Show_liked_list" class=" modal_2 modal modal-fixed-footer modal_invitees modal_content_height">
+        <div class="modal-header modal_header_create_event">
+      <p class="modal_heading_p" style="margin-bottom: 0px;"><span style="margin-right: 20px;" class="closed_modal_window" ><i class="fa fa-chevron-left"></i> </span> List of people liked here</p>
+        </div>
+
+    <div class="modal-content">
+       <ul class="collection">
+   
+    {{#each show_liked_list }}
+          {{#each fetch_user_information}}
+        <li class="collection-item avatar " style="margin-bottom: 10px;">
+          <img src="{{profile_pic}}" alt="" class="circle modal_invitees_img_page pointer redirect_click_1">
+          <p class="invitees_name pointer redirect_click_1 blue_text_color">{{name}}</p>
+          <p class="invitees_headline pointer redirect_click_1">{{headline}}
+           <span style="float: right;">
+         <!--  <input type="checkbox" class="inviteuser invitees_headline_label" name="inviteuser[]" value="{{user_id}}" id="{{_id}}" />
+          <label class="invitees_headline_label" for="{{_id}}"></label> -->
+            </span>
+
+          </p>
+        </li>
+
+    {{/each}}
+                {{else}}
+                    <p> No likes :) </p>
+    {{/each}}
+   
+  </ul>
+    </div>
+    <div class="modal-footer modal_footer_last">
+       <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat closed_modal_window ">Ok</a>
+
+   </div>
+  </div>
+
+
+    <div id="Show_liked_list_for_discussion" class=" modal_2 modal modal-fixed-footer modal_invitees modal_content_height">
+        <div class="modal-header modal_header_create_event">
+      <p class="modal_heading_p" style="margin-bottom: 0px;"><span style="margin-right: 20px;" class="closed_modal_window" ><i class="fa fa-chevron-left"></i> </span> List of people liked here</p>
+        </div>
+
+    <div class="modal-content">
+       <ul class="collection">
+   
+    {{#each Show_liked_list_for_discussion }}
+          {{#each fetch_user_information_for_discussion}}
+        <li class="collection-item avatar " style="margin-bottom: 10px;">
+          <img src="{{profile_pic}}" alt="" class="circle modal_invitees_img_page pointer redirect_click_1">
+          <p class="invitees_name pointer redirect_click_1 blue_text_color">{{name}}</p>
+          <p class="invitees_headline pointer redirect_click_1">{{headline}}
+           <span style="float: right;">
+         <!--  <input type="checkbox" class="inviteuser invitees_headline_label" name="inviteuser[]" value="{{user_id}}" id="{{_id}}" />
+          <label class="invitees_headline_label" for="{{_id}}"></label> -->
+            </span>
+
+          </p>
+        </li>
+
+    {{/each}}
+                {{else}}
+                    <p> No likes :) </p>
+    {{/each}}
+   
+  </ul>
+    </div>
+    <div class="modal-footer modal_footer_last">
+       <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat closed_modal_window ">Ok</a>
+
+   </div>
+  </div>
+
+  <script type="text/javascript">
+ $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>
+      
+{{/each}}
+</body>
+</template>
+

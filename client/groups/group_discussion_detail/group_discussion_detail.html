@@ -1,0 +1,370 @@
+
+<template name="group_discussion_detail">
+    <head>
+      <title>Event Listing</title>
+    </head>      
+        <!-- <body style="background-color: #F5F5F5 ! important;"> -->
+        <body>
+  {{> header}}
+  {{#each show_Discussion_details}}
+<div class="page_wh">
+              <div class="row"  >
+                      {{> ticker}}   
+                      <div class="col m12 l9 s12 right_row row_margin_right row_margin_btn"> 
+                        <p class="event_title_detail discussion_tittle_detail"><a href="#">{{discussion_title}} </a></p>
+                        <!-- <p style="margin-bottom: 0px !important;">{{discussion_detail}}</p> -->
+
+      {{#if check_discussion_detail_for_br_tag}}
+        <!-- sssss -->
+          {{#each BreakAsArray}}
+             {{tag}}<br/>
+          {{/each}}
+        
+        {{else}}
+        {{discussion_detail}}
+        
+      {{/if}}
+
+        
+
+                             {{#if equals discussion_type 'url_metadata'}}
+          <a href="{{posted_url}}" target="_blank" > 
+            <div class="summary new_headline_hub_para" style="border:1px solid #ccc !important;">
+               <img src="{{featured_image}}" class="link_image" >
+               <h4 class="h5_hub" style="margin: 10px 10px 10px 0px !important;"> {{featured_title}}</h4>
+               <p class="h5_hub_para" style="margin: 10px 10px 10px 0px !important; text-align: left !important;"> {{source}}</p>
+            </div>
+          </a>
+     {{/if}}
+                        {{#each show_group_discussion_creater}} 
+                          <span class="event_names_for_name" style="margin-left: 0px !important;">
+                                <a href="#"  class="discussion_writer_name redirect_click_1 pointer redirect_click_1">{{name}} (Discussion Creator) </a> </span><br/>
+                        {{/each}}
+                        <!-- <p ><span>{{discussion_detail}} </span></p> -->
+             <!--  {{#each show_group_discussion_creater}} 
+                       
+                        <ul class="pull-left col m12 l9 s12 collection">
+                            <li>
+                              <img class="img_collection_detail_event" src={{profile_pic}}>
+                              <span class="event_names_for_name"><a href="#"  class="blog_writer_name event_names_for_all redirect_click_1">{{name}} (Discussion Creator)</a></span><br/>
+                               <span class="event_names_for_headlline">{{headline}}</span>
+                            </li>
+                         </ul>
+
+              {{/each}}
+              -->
+                        <hr>
+                        
+                          <div class="col m12 s12 l12">
+
+<div class="ui small comments ">
+
+  {{#each logged_in_user}}                                 
+  <div class="comment">
+    <a class="avatar">
+      <img src={{profile_pic}} class="pointer redirect_click_1 circle" >
+    </a>   
+    <div class="content">
+      <a class="author pointer redirect_click_1 pointer redirect_click_1">Me</a>     
+      <div class="text new_headline_hub">
+        {{headline}}
+      </div>    
+    </div>
+  </div>
+  {{/each}}
+
+  <form class="ui reply form" id="comment_form1" >
+
+    <div class="field">
+      <textarea class="textarea" placeholder="Type here  to comment" id="comment_discussion_details" ></textarea>
+    </div>
+
+    <div class="ui blue labeled submit icon button " style="  background-color: #338EA7 !important; padding: 10px 30px !important;" id="submit_comment_discussion_details" >
+      Post
+    </div>
+  </form>
+
+          <script type="text/javascript">
+                 $('#comment_discussion_details').keyup(function(){
+                  // alert('gg');
+                          // event.preventDefault();
+                           if (event.ctrlKey && event.which == 13) {
+                                // Ctrl-Enter pressed
+                                 $("#submit_comment_discussion_details").click();
+                                 }
+                           else if (event.which === 13) {
+                                     $("#submit_comment_discussion_details").click();
+                                   }
+                  });
+          </script>
+
+  <h3 class="ui dividing header blog_description">Comments</h3>
+
+  {{#each show_comment_lvl0}}
+
+  <div class="comment parent_div">
+
+{{#each show_commenter_info}}
+    
+    <a class="avatar" >     
+        <img src={{profile_pic}} class="redirect_click_1 pointer circle" >      
+    </a>
+
+{{/each}}  
+
+
+
+<div class="content">
+
+      {{#each show_commenter_info}}
+      <a class="author pointer redirect_click_1">{{name}}</a>
+      {{/each}}
+
+      <div class="metadata">
+        <span class="reply">{{calculate_time_difference createdAt}}</span>
+      </div>
+
+      <div class="text justify blog_description" id="show_comment_{{comment_id}}">
+        <p>{{comment_txt}}</p>
+
+                     <span class="metadata reply">{{#if check_for_edited comment_id}}
+                          (Edited) 
+                        {{/if}}
+                        </span>
+
+      </div>
+
+                             {{#if check_if_commented_by_is_user comment_by}}
+
+                        <span class="card-title pull-right" style="" id="three_dots_{{comment_id}}">
+                                          <div class="btn-group show-on-hover" >
+                                                      <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" 
+                                                          class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                                      </ul>
+                                                  </div> 
+                      </span>
+
+                      {{/if}}
+                    <!-- <i class="fa fa-camera"></i> -->
+                    <span>
+
+                      <textarea data-toggle="modal" class="loader_visiblity_block hidden_comment edit_box_styling" 
+                      value={{comment_txt}}  id="hidden_comment_{{comment_id}}"
+                      data-target="#modalhubtop" resize="none" placeholder="Edit ..." ></textarea>
+                    </span>
+
+      <div class="actions new_headline_hub_like">
+        <a class="reply like_button_comments"  >{{Like_unlike_txt}} </a>
+        <a href="#Show_liked_list" class="modal-trigger trigger_helper reply like_Button_event Show_liked_list"  >
+        ({{show_like_count_comment}})</a>
+        <a class="reply focus_on_click">Comment ({{show_count}}) </a>
+
+      </div>
+
+    </div>
+
+
+       <script>
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+                        //   $('#form_heading').keypress(function(e){
+                        //     var code = e.keyCode || e.which; 
+      
+                        //     if( code === 13 ){
+                        //         e.preventDefault();
+                        //         $(".save_heading").click();
+                        //     };
+                        // });
+   </script>
+
+    {{#if show_more_comment_reply}}
+        {{#if show_limit_comment_reply}}
+
+            <div id="show_more" >
+                  <a href="javascript:void(0);"  class="an_style read_more show_more_comment_reply detail_description" id="show_more_comment_reply" style="color: #338ea7; padding: 5px 10px;" > Read more</a> 
+                                    
+                  <input type="hidden" value={{summary}} id="hidden_summary">
+            </div>
+            {{else}}
+            <div id="show_more"  >
+             <a href="javascript:void(0);"  class="an_style read_more show_less_comment_reply" id="show_less_comment_reply" style="color: #338ea7; padding: 5px 10px;">Read less</a> 
+           </div>
+        {{/if}}
+    {{/if}}
+{{#each show_comment_reply}}
+
+    <div class="comments">
+      <div class="comment level_2_commenting_div">
+
+{{#each show_commenter_info}}
+
+    <a class="avatar">     
+        <img src={{profile_pic}} class="circle" >      
+    </a>
+
+{{/each}} 
+
+        <div class="content">
+          {{#each show_commenter_info}}
+          <a class="author redirect_click_1">{{name}}</a>
+          {{/each}}
+          <div class="metadata">
+            <span class="reply">{{calculate_time_difference createdAt}}</span>
+          </div>
+
+          <div class="text blog_description justify" id="show_comment_level_2_{{comment_id}}">
+            {{comment_txt}}
+            <span class="metadata reply">{{#if check_for_edited comment_id}}
+                                (Edited) 
+                              {{/if}}
+                              </span>
+
+          </div>
+
+          
+                       {{#if check_if_commented_by_is_user comment_by }}
+
+                        <span class="card-title pull-right" style="display: none;" id="level_2_commenting_three_dots_{{comment_id}}">
+                                          <div class="btn-group show-on-hover" >
+                                                      <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response level_2_edit_comment" id="{{comment_id}}" > Edit</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" 
+                                                          class="level_2_remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                                      </ul>
+                                                  </div> 
+                      </span>
+                                
+                      {{/if}}
+                    <!-- <i class="fa fa-camera"></i> -->
+                    <span>
+                      <textarea data-toggle="modal" class="loader_visiblity_block hidden_comment" 
+                      value={{comment_txt}}  id="hidden_comment_level_2_{{comment_id}}"
+                      data-target="#modalhubtop" resize="none" placeholder="Edit ..." style="padding: 5px;
+                    border: 1px solid #e4e4e4;
+                  border-radius: 5px;" ></textarea>
+                      </span>
+
+          <div class="actions">
+            <a class="reply like_button_comments" >{{Like_unlike_txt}} </a>
+            <a href="#Show_liked_list" class="modal-trigger trigger_helper reply like_Button_event Show_liked_list"  >
+               {{show_like_count_comment}}</a>
+            <!-- <input type="hidden" id="" value="like_{{}}" > -->  
+          </div>
+        </div>
+
+      </div>
+    </div>
+{{/each}}
+
+
+
+  </div>
+        <div class="ui fluid icon input" style="margin-top: 10px;">
+<!-- <form id="form_heading" > -->
+  <input placeholder="Write your comment here ..." class="secomdcomment comment_input_first" type="text" id="commentlvl1_{{comment_id}}" >
+
+  <button class="submit_comment_lvl1" value={{comment_id}} style="background-color: transparent;
+    border: none;     margin-left: -5% !important;
+    color: #868383; display:none"> <i class="fa fa-paper-plane-o"></i> </button>
+
+
+     <!-- </form> -->
+      </div>
+  {{/each}}
+
+</div>
+                           </div> 
+                      </div>
+
+                      <div class="col s12 m12 l3 "> 
+                       <div class="section">
+                        <h5> About <div class="divider"></div> </h5>
+                          <span>  
+                                {{#if check_grp_discription_length }}
+      <p class="h5_hub_para">{{grp_discription_txt}}...<span id="show_group_details" style="color:#4183c4;" class="pointer">Show More</span></p>
+
+      {{else}}
+
+      {{grp_discription}}
+  {{/if}}
+
+                          </span>
+                     </div>
+                     
+<!-- start here -->
+      <div class="section">
+        <h5>
+          <span id="route_to_member" class="pointer"> Members ({{show_all_group_members_count}})</span>
+            <div class="divider"></div>
+            </h5>
+
+            <p class="head-format"><a class="font_plus_class_b" href="#"></a></p>
+                  <div class="row"  style="margin-bottom:0px; ">
+                      <span >
+                          {{#each all_memeber}}       
+                                  <img src={{profile_pic}} style="" alt="No Image" class="circle pointer  redirect_click_1 img_member member_groups" >    
+                                 {{else}}    
+                                  <h4><p>No members Yet</p> </h4>  
+                          {{/each}}  
+                      </span> 
+                </div>  
+      </div>
+<!-- end here-->
+ 
+                      </div>
+              </div>
+      </div>
+{{/each}}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <div id="Show_liked_list" class=" modal_2 modal modal-fixed-footer modal_invitees modal_content_height">
+        <div class="modal-header modal_header_create_event">
+      <p class="modal_heading_p " style="margin-bottom: 0px;"><span style="margin-right: 20px;" class="closed_modal_window" ><!-- <i class="fa fa-chevron-left closed_modal_window hide_modal_class" data-dismiss="modal" ></i> --> </span> List of people liked here</p>
+        </div>
+
+    <div class="modal-content">
+       <ul class="collection">
+   
+    {{#each show_liked_list }}
+          {{#each fetch_user_information}}
+        <li class="collection-item avatar " style="margin-bottom: 10px;">
+          <img src="{{profile_pic}}" alt="" class="circle modal_invitees_img_page pointer redirect_click_1">
+          <p class="invitees_name pointer redirect_click_1">{{name}}</p>
+          <p class="invitees_headline pointer redirect_click_1">{{headline}}
+           <span style="float: right;">
+         <!--  <input type="checkbox" class="inviteuser invitees_headline_label" name="inviteuser[]" value="{{user_id}}" id="{{_id}}" />
+          <label class="invitees_headline_label" for="{{_id}}"></label> -->
+            </span>
+
+          </p>
+        </li>
+
+    {{/each}}
+                {{else}}
+                    <p> No likes :) </p>
+    {{/each}}
+   
+  </ul>
+    </div>
+    <div class="modal-footer modal_footer_last">
+       <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat closed_modal_window ">Ok</a>
+
+   </div>
+  </div>
+
+      
+  <script type="text/javascript">
+ $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>
+      
+</body>
+</template>
+

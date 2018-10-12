@@ -1,0 +1,62 @@
+<template name="video_chat_accept">
+	
+<script src="./node_modules/rtcmulticonnection/RTCMultiConnection.js"></script>
+<button id="btn-open-room">Open Room</button>
+<button id="btn-join-room">Join Room</button><hr>
+
+<script type="text/javascript">
+	var connection = new RTCMultiConnection();
+
+// this line is VERY_important
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+connection.resources.firebaseio = 'https://webrtc.firebaseIO.com/';
+// all below lines are optional; however recommended.
+
+connection.session = {
+    audio: true,
+    video: true
+};
+
+connection.sdpConstraints.mandatory = {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: true
+};
+
+connection.onstream = function(event) {
+    document.body.appendChild( event.mediaElement );
+};
+
+var predefinedRoomId = Session.get("video_session_id");
+console.log(predefinedRoomId);
+connection.join(predefinedRoomId);
+
+/*var videoSessionCallerId = Session.get("videoSessionCallerId");
+var videoSessionPickerId = Session.get("videoSessionPickerId");
+var videoSessionId = "VideoSession" +videoSessionCallerId + videoSessionPickerId;
+Meteor.call('maintain_video_session',videoSessionId,videoSessionCallerId,videoSessionPickerId,function(error,result){
+if(error){
+alert("call failed");
+}else{
+alert("onGoingCall, waiting for user to join");
+connection.open(videoSessionCallerId+videoSessionPickerId);
+}
+});
+*/
+
+/*document.getElementById('btn-open-room').onclick = function() {
+    this.disabled = true;
+};
+167221_user_632671_user_1637741
+167221_user_632671_user_1637741
+*/
+document.getElementById('btn-join-room').onclick = function() {
+    
+    this.disabled = true;
+    connection.join("videoSessionId");
+};
+</script>
+
+
+
+</template>

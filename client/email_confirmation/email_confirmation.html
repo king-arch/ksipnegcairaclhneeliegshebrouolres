@@ -1,0 +1,99 @@
+
+<template name="email">
+  <head>
+  <title>Email Confirmation</title>
+</head>
+<body class="row main_body_bg over_on_bd email_padding_page" style="background-color: rgb(1, 16, 44) ! important; "> 
+ {{> email_template}}
+  {{email_checker}}
+
+</body>
+</template>
+
+<template name="email_template">
+
+<div class="row_nomargin_padd ">
+  <div class="col s1 m1 l1 visible-lg"> &nbsp;</div>
+   <div id="test3" class="col s12 m12 l12" style="padding: 0px;">
+    <section class="section email_section"> 
+        <div class="row">
+          <p class="email_heading">We're glad you are here. </p>
+         <p class="email_sub_heading"> Special Neighborhood is free cause best things in life are always free!</p>
+
+
+          
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m3 l1 visible-lg">
+            <p><a class="btn btn-floating pulse email_page_icon"><i class="fa fa-envelope"></i></a></p>
+          </div>
+        
+          <div class="input-field col s12 m12 l11">
+        
+        <div id="edit_grp_discription" class="" placeholder="Description" value="">
+          <p class="email_sub_heading_two"> <span id="sent_text"> Sending email to {{usernametoconfirm}}</span></p>
+          <p class="email_sub_heading_two"> Click the link in mail to confirm your email address</p>
+</div>
+            
+            
+          </div>
+        </div>
+
+
+        <div class="row">
+                    <span class="col s12 m12 l9"> &nbsp;</span>
+
+          <span class="col s12 m12 l3">
+          <button class="pull-right btn btn-home format_join join_btn_signup height_sub login-btn mouse_ani"  id="send_mail" name="action" style="color: #fff !important;">Confirm <span style="display:none;" id="spinnerimg">{{> spinner}}</span>
+            
+          </button>
+        </span>
+       </div>  
+      </section>
+    </div>
+
+<div class="col s1 m1 l1 visible-lg"> &nbsp;</div>
+</div>
+<div class="row" style="padding:50px 10px 20px 10px; margin-bottom: 0px !important; margin-top: 45% !important;">
+      <div class="col m12 l6 s12" >
+          <p class="text-left login_forgot_pass ">
+            <span style="color: #fff !important;"> Special Neighborhood <i class="fa fa-copyright"></i>, 2018.  </span> 
+          </p>
+      </div>
+      <div class="col m12 l6 s12" >
+        <p class="text-right login_forgot_pass">
+          <span style="color: #fff !important;">Powered by <a href="#" style="color: #fff !important;"><strong>BITOVN</strong></a> - The neural network
+          </span> 
+        </p>
+      </div>
+  </div>
+
+
+<div class="row hidden-lg" style="padding:50px 10px 20px 10px; margin-bottom: 0px !important; margin-top: 45% !important;">
+      <div class="col m12 l12 s12" >
+          <p class="text-center login_forgot_pass ">
+            <span style="color: #fff !important;"> Special Neighborhood <i class="fa fa-copyright"></i>, 2018.  </span> 
+          </p>
+      </div>
+      <div class="col m12 l12 s12" >
+        <p class="text-center login_forgot_pass">
+          <span style="color: #fff !important;">Powered by <a href="#" style="color: #fff !important;"><strong>BITOVN</strong></a> - The neural network
+          </span> 
+        </p>
+      </div>
+  </div>
+
+<div class="row visible-lg" style="padding:50px 10px 20px 10px; margin-bottom: 0px !important; margin-top: 45% !important;">
+      <div class="col m12 l6 s12" >
+          <p class="text-left login_forgot_pass ">
+            <span style="color: #fff !important;"> Special Neighborhood <i class="fa fa-copyright"></i>, 2018.  </span> 
+          </p>
+      </div>
+      <div class="col m12 l6 s12" >
+        <p class="text-right login_forgot_pass">
+          <span style="color: #fff !important;">Powered by <a href="#" style="color: #fff !important;"><strong>BITOVN</strong></a> - The neural network
+          </span> 
+        </p>
+      </div>
+  </div>
+</template>

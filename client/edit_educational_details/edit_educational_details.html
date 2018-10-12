@@ -1,0 +1,259 @@
+<template name="edit_educational_details">
+   <head>
+      <title>Search</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/jquery.geocomplete.min.js"></script>
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1">      
+      <link rel = "stylesheet"
+         href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel = "stylesheet" 
+         href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+      <script type = "text/javascript"
+         src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
+      </script> 
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js">
+      </script> 
+   </head>
+   <!-- <body style="background-color: #F5F5F5 !important;"> -->
+   <body>
+    <!--   {{> header}} -->
+      {{> edit_educational}}
+   </body>
+</template>
+<template name="edit_educational">
+      <div style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i> Edit Education Detail</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset" id="edit_form_edu" >
+               <div>
+                  <div class="row" style="margin-bottom: 0px !important;">
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside">Course / Degree * <sup><span class="red_start"> * </span></sup></p>
+                        <input id="edit_course"  type="text" class="validate frmt_inpt">  
+                     </div>
+                 
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside">University / Board <sup><span class="red_start"> * </span></sup></p>
+                        <input id="edit_board" type="text" class="validate frmt_inpt" >
+                        <input id="hidden_edit_edu_id" type="hidden" class="validate frmt_inpt">
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px !important;">
+                     <div class="input-field col s12 m12 l12">
+                        <p class="heading_create_inside">Institute / School <sup><span class="red_start"> * </span></sup></p>
+                        <input id="edit_school" type="text" class="validate frmt_inpt" >
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     
+                     <div class="input-field col l4 m12 s12">
+                        <p class="heading_create_inside"> Score <sup><span class="red_start"> * </span></sup></p>
+                        <div id="edit_education_format"  name="education_format" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Select Score</div>
+                              <div class="item" data-value="percentage">Percentage</div>
+                              <div class="item" data-value="cgpa">CGPA</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col l4 m12 s12">
+                        <p class="heading_create_inside">Score <sup><span class="red_start"> * </span></sup> </p>
+                        <input id="edit_score" type="text" class="validate frmt_inpt" style="width: 100%;">
+                     </div>
+                     <div class="input-field col l4 m12 s12" id="edit_select_cgpa_scale" style="display:none;">
+                        <div id="edit_cgpa_out_of" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="5">out of 5</div>
+                              <div class="item" data-value="10">out of 10</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <script>
+                     $(document).ready(function () {
+                         $("#edit_education_format").change(function () {
+                           // alert('coooo');
+                             var edit_education_format = $("#edit_education_format").dropdown('get value');
+                             alert(edit_education_format);
+                             if (edit_education_format == 'percentage') {
+                                 $("#edit_select_cgpa_scale").css('display', 'none');
+                             }
+                             else if (edit_education_format == 'cgpa') {
+                                 $("#edit_select_cgpa_scale").css('display', 'block');
+                             }
+                         });
+                     });
+                  </script>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col l6 m12 s12">
+                        <p class="heading_create_inside"> Start Month <sup><span class="red_start"> * </span></sup></p>
+                        <div id="edit_edu_start_month" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="Jan">Jan</div>
+                              <div class="item" data-value="Feb">Feb</div>
+                              <div class="item" data-value="Mar">Mar</div>
+                              <div class="item" data-value="Apr">Apr</div>
+                              <div class="item" data-value="May">May</div>
+                              <div class="item" data-value="Jun">Jun</div>
+                              <div class="item" data-value="Jul">Jul</div>
+                              <div class="item" data-value="Aug">Aug</div>
+                              <div class="item" data-value="Sep">Sep</div>
+                              <div class="item" data-value="Oct">Oct</div>
+                              <div class="item" data-value="Nov">Nov</div>
+                              <div class="item" data-value="Dec">Dec</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col l6 m12 s12">
+                       <p class="heading_create_inside"> Start Year <sup><span class="red_start"> * </span></sup></p>
+                        <div id="edit_edu_start_year" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="2000">2000</div>
+                              <div class="item" data-value="2001">2001</div>
+                              <div class="item" data-value="2002">2002</div>
+                              <div class="item" data-value="2003">2003</div>
+                              <div class="item" data-value="2004">2004</div>
+                              <div class="item" data-value="2005">2005</div>
+                              <div class="item" data-value="2006">2006</div>
+                              <div class="item" data-value="2007">2007</div>
+                              <div class="item" data-value="2008">2008</div>
+                              <div class="item" data-value="2009">2009</div>
+                              <div class="item" data-value="2010">2010</div>
+                              <div class="item" data-value="2011">2011</div>
+                              <div class="item" data-value="2012">2012</div>
+                              <div class="item" data-value="2013">2013</div>
+                              <div class="item" data-value="2014">2014</div>
+                              <div class="item" data-value="2015">2015</div>
+                              <div class="item" data-value="2016">2016</div>
+                              <div class="item" data-value="2017">2017</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div id="onchecked_edit_du_end_date" >
+                        <div class="input-field col l6 m12 s12">
+                           <p class="heading_create_inside"> End Month <sup><span class="red_start"> * </span></sup></p>
+                           <div id="edit_edu_end_month" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                              <input type="hidden" name="test" value=""/>
+                              <div class="text">Test</div>
+                              <!-- <i class="dropdown icon"></i> -->
+                              <div class="menu">
+                                 <div class="item" data-value="">Not Selected</div>
+                                 <div class="item" data-value="Jan">Jan</div>
+                                 <div class="item" data-value="Feb">Feb</div>
+                                 <div class="item" data-value="Mar">Mar</div>
+                                 <div class="item" data-value="Apr">Apr</div>
+                                 <div class="item" data-value="May">May</div>
+                                 <div class="item" data-value="Jun">Jun</div>
+                                 <div class="item" data-value="Jul">Jul</div>
+                                 <div class="item" data-value="Aug">Aug</div>
+                                 <div class="item" data-value="Sep">Sep</div>
+                                 <div class="item" data-value="Oct">Oct</div>
+                                 <div class="item" data-value="Nov">Nov</div>
+                                 <div class="item" data-value="Dec">Dec</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="input-field col l6 m12 s12">
+                           <p class="heading_create_inside"> End Year <sup><span class="red_start"> * </span></sup></p>
+                           <div id="edit_edu_end_year" class="ui selection dropdown frmt_inpt">
+                              <input type="hidden" name="test" value=""/>
+                              <div class="text">Test</div>
+                              <!-- <i class="dropdown icon"></i> -->
+                              <div class="menu">
+                                 <div class="item" data-value="">Not Selected</div>
+                                 <div class="item" data-value="2000">2000</div>
+                                 <div class="item" data-value="2001">2001</div>
+                                 <div class="item" data-value="2002">2002</div>
+                                 <div class="item" data-value="2003">2003</div>
+                                 <div class="item" data-value="2004">2004</div>
+                                 <div class="item" data-value="2005">2005</div>
+                                 <div class="item" data-value="2006">2006</div>
+                                 <div class="item" data-value="2007">2007</div>
+                                 <div class="item" data-value="2008">2008</div>
+                                 <div class="item" data-value="2009">2009</div>
+                                 <div class="item" data-value="2010">2010</div>
+                                 <div class="item" data-value="2011">2011</div>
+                                 <div class="item" data-value="2012">2012</div>
+                                 <div class="item" data-value="2013">2013</div>
+                                 <div class="item" data-value="2014">2014</div>
+                                 <div class="item" data-value="2015">2015</div>
+                                 <div class="item" data-value="2016">2016</div>
+                                 <div class="item" data-value="2017">2017</div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="onchecked_edit_edu_end_date_show" class="display_hide input-field col s3 " >
+                        <p class="login_forgot_pass"> Present </p>
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px;">
+            <form action="#">
+            <p class="col m12 l12 s12">
+            <input type="checkbox" id="edit_check_education_edu_2"/>
+            <label for="edit_check_education_edu_2" class="login_forgot_pass login_forgot_pass">Curently Pursuing</label>
+            </p>
+            </form>
+            </div>
+            <div class="row" style="margin-bottom: 0px;">
+            <div class="input-field col s12">
+            <p class="heading_create_inside">Job Location <sup><span class="red_start"> * </span></sup> </p>
+            <input id="autocomplete8" type="text" class="validate frmt_inpt">
+            <!-- <label for="autocomplete8" >Job Location <sup><span class="red_start"> * </span></sup></label> -->
+            </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px;">
+            <div class="input-field col s12">
+            <p class="login_forgot_pass login_forgot_pass"> Fields marked with <sup><span class="red_start"> * </span></sup> are mandatory</p>
+            </div>
+            </div>
+            </div>
+            <input class="edit_save_edu" type="hidden" >
+            </form>
+         </div>
+         <div class="modal-footer">
+              <span id="delete_education" ><i class="fa fa-trash-o fa-2x pull-left del_btn_profile" ></i></span>
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="edit_save_edu btn btn-primary edit_save_btn_profile save_heading" id="edit_save_edu">Save changes</button>
+         </div>
+      </div>
+   </div>
+   <script type="text/javascript">
+      $('#edit_form_edu').keypress(function(e){
+          var code = e.keyCode || e.which;
+      
+          if( code === 13 ) {
+              e.preventDefault();
+              $(".edit_save_edu").click();
+          };
+      });
+      $("#edit_edu_start_month").dropdown("set selected","");
+      $("#edit_edu_start_year").dropdown("set selected","");
+      $("#edit_edu_end_year").dropdown("set selected","");
+      $("#edit_edu_end_month").dropdown("set selected","");
+      $("#edit_education_format").dropdown("set selected","");
+      $("#start_year").dropdown("set selected","");
+      $("#end_year").dropdown("set selected","");
+   </script>   
+</template>

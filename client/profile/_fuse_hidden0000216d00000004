@@ -1,0 +1,2374 @@
+<template name="profile">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   {{> header}}
+   <div class="row page_wh">
+      <div class="row visible-lg">
+         <div class="col s12 m12 ll2">
+            <div class="card" style="padding-top: 0px;">
+               <div class="card-image">
+                  <img src={{uploaded_image}}  style="width: 100%;  height: 300px;" >  
+                  <input type="file" name="" id="upload_cover" style="display:none;" /> 
+                  <span class="card-title sppan_icons_one" id="click_upload_cover" ><i class="fa fa-camera"></i></span>
+                  <span class="card-title sppan_icons_two" id="remove_cover"><i class="fa fa-trash "></i></span>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col s12 m12 l3">
+         <div class="row section" >
+          <input type="file" id="upload_profile" accept="image/*" style="display:none"/>
+            <div class="">
+               <div class="card-image">
+                  <div class="profile-pic">
+                     <img src={{profilepic_image}}>
+                     <div class="edit">
+                        <span class="sppan_icons_three"><a href="#" style="color: #fff !important;" id="new_upload_button"><i class="fa fa-camera fa-lg" id="new_profilepic_button" ></i></a></span>
+                        <span class="sppan_icons_four"> <a href="#" id="remove_profile"><i class="fa fa-trash fa-lg"></i></a>  </span>
+                        <!--                       <a href="#" id="remove_profile"><i class="fa fa-trash fa-lg"></i></a>  
+                           -->                    
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <input type="hidden" data-target="crop_profile_image" class="btn modal-trigger" id="profile_pic_modal" >
+            <div id="crop_profile_image" class="modal modal-fixed-footer">
+               <div class="modal-content">
+                  <h4>Crop Profile Pic</h4>
+                  <div id="divcrop_profile"> <img id="my_image_profile"   style="height:300px; width:300px;"  > </div>
+               </div>
+               <div class="modal-footer"> 
+                  <button class="modal-action modal-close waves-effect waves-green btn-flat " id="crop_profile_image_selection" >Crop</button>
+               </div>
+            </div>
+            <div class="col s12">
+               {{#each display_leftpanel_info }}
+               <h3 class="text-center " style="margin-bottom: 0px;">{{name}}</h3>
+               <p class="login_forgot_pass text-center" >{{headline}}</p>
+               <p class="login_forgot_pass text-center"> <i class="fa fa-map-marker"></i> {{location}}</p>
+               {{/each}}
+            </div>
+         </div>
+         <div class="row section">
+            <div class="col m12 s12 l12">
+               <div class="ui statistics">
+                  <div class="statistic">
+                     <div class="value2">
+                        22
+                     </div>
+                     <div class="label">
+                        Blogs
+                     </div>
+                  </div>
+                  <div class="statistic">
+                     <div class="value2">
+                        31,200
+                     </div>
+                     <div class="label">
+                        Connections
+                     </div>
+                  </div>
+                  <div class="statistic">
+                     <div class="value2">
+                        22
+                     </div>
+                     <div class="label">
+                        Groups
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div>
+            <p>{{> passion}}</p>
+         </div>
+      </div>
+      <div class="col s12 m12 l6">
+         <p>{{> heading}}</p>
+         <p>{{> summary}}</p>
+         <p>{{> professional}}</p>
+         <p>{{> edudetails}}</p>
+         <p>{{> achievement}}</p>
+         <p>{{> skill}}</p>
+         <p>{{> health}}</p>
+         <p>{{> personalinfo}}</p>
+      </div>
+      <div class="col s12 m12 l3">
+         <p>{{> addbuttons}}</p>
+         <p>{{> todayevent}}</p>
+         <p>{{> recentblog}}</p>
+         <p>{{> user_list}}</p>
+         <!-- <p>{{> adds}}</p> -->
+      </div>
+   </div>
+</template>
+<template name="passion">
+  <h5>I'm passionate about <span class="pull-right"> <a class="waves-light modal-trigger" href="#passion" id="load_passion" ><i class="fa fa-pencil"></i></a> </span></h5>
+
+   {{#if equals passion ''}}
+   <p> Add your Interests</p>
+   {{else}}
+   <div class="section" style="margin-bottom: 20px;">    
+      <p class="margin-top profile_margin_center_sections login_forgot_pass"> {{ passion_list }} </p>
+   </div>
+   {{/if}}
+   <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-fullscreen">
+      Launch modal fullscreen
+      </button>
+      -->
+   <!-- Modal fullscreen -->
+   <div class="modal modal-fullscreen fade" id="modal-fullscreen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="width: 100% !important;" aria-hidden="true">
+      <div class="modal-dialog" style="width: 100% !important;">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+               <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+               ...
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div id="passion" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+        <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+            <div class="modal-header profile_modal_header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>I'm passionate about</h5>
+            </div>
+            <div class="modal-body">
+         <div id="basic" class="section scrollspy">
+               <p class="caption">Add Interests</p>
+               <div class="chips chips-initial yyy"></div>
+            </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+                <button type="button" class="save_passion btn btn-primary save_btn_profile save_heading" id="save_passion">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <script type="text/javascript">
+       
+  var elem = document.querySelector('.chips');
+  var instance = M.Chips.init(elem, options);
+
+  // Or with jQuery
+
+  $('.chips').chips();
+  $('.chips-initial').chips({
+    data: [{
+      tag: 'Apple',
+    }, {
+      tag: 'Microsoft',
+    }, {
+      tag: 'Google',
+    }],
+  });
+  $('.chips-placeholder').chips({
+    placeholder: 'Enter a tag',
+    secondaryPlaceholder: '+Tag',
+  });
+  $('.chips-autocomplete').chips({
+    autocompleteOptions: {
+      data: {
+        'Apple': null,
+        'Microsoft': null,
+        'Google': null
+      },
+      limit: Infinity,
+      minLength: 1
+    }
+  });
+        
+
+    </script>
+    <script type="text/javascript">
+       
+  var chip = {
+    tag: 'chip content',
+    image: '', //optional
+  };
+        
+    </script>
+   <script type="text/javascript">
+      $('.ui.dropdown').dropdown({
+        allowAdditions: true
+      })
+      ;
+   </script>
+   <script>
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+         $('#enter_atpassion').keypress(function(e){
+          // alert('inside passion');
+                            var code = e.keyCode || e.which;
+                            if( code === 13 ) {
+                                e.preventDefault();
+                                $(".save_passion").click();
+                            };
+                        });
+   </script>
+</template>
+<template name="heading">
+   <div class="section">
+      {{#each display_heading}} 
+      <h5 class="profile_fields_heading">Headline
+         <span class="pull-right"> 
+         <a class="waves-light modal-trigger" href="#heading_modal" id="edit_1"><i class="fa fa-pencil"></i></a> 
+         </span>
+      </h5>
+      <div class="divider"></div>
+      <p class="profile_margin_center_sections login_forgot_pass"> {{headline}} </p>
+      {{else}}
+      {{> spinner}}
+      {{/each}}
+   </div>
+   <!-- <div id="heading_modal" class="modal profile_modal_header_top modal-fixed-footer overflow_modal_tp">
+      <div class="modal-header profile_modal_header">
+         <h5> <i class="fa fa-angle-left hidden-lg"></i> Heeeeee</h5>
+      </div>
+      <div class="modal-content" style="box-shadow:none; border: none;">
+         <form id="form_heading" >
+            <div class="row">
+               <div class="input-field col s12">
+                  <textarea id="heading" class="formal_signin login_input_box materialize-textarea frmt_inpt" maxlength="120"></textarea>
+                  {{#each display_heading}} 
+                  <input type="hidden" id="default_heading" value={{heading}} >
+                  {{/each}}  
+               </div>
+            </div>
+            <input type="hidden" class="save_heading">
+         </form>
+      </div>
+      <div class="clear"></div>
+      <div class="modal-footer">
+         <a class="waves-effect waves-light btn hide_model close_modal cncl_btn_profile">Cancel</a>
+         <a class="save_heading waves-effect waves-light btn save_btn_profile" id="save_heading" >Save</a>
+      </div>
+      </div> -->
+   <div id="heading_modal" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Headline</h5>
+         </div>
+         <div class="modal-body">
+            <form id="form_heading" >
+               <div class="row">
+                  <div class="input-field col s12">
+                     <textarea id="heading" class="formal_signin login_input_box materialize-textarea frmt_inpt" maxlength="120"></textarea>
+                     {{#each display_heading}} 
+                     <input type="hidden" id="default_heading" value={{heading}} >
+                     {{/each}}  
+                  </div>
+               </div>
+               <input type="hidden" class="save_heading">
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary save_btn_profile save_heading" id="sav
+               ">Save</button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+   <!-- /.modal -->
+   <!-- <div id="heading_modal" class="modal modal-fixed-footer profile_modal_header_top" style="overflow-y: hidden !important;">
+      <div class="modal-header profile_modal_header" style="overflow-y: hidden !important;">
+         <h5> <i class="fa fa-angle-left hidden-lg close_modal" ></i> Headline</h5>
+      </div>
+      <div class="modal-content" style="padding: 0px;">
+      
+      
+      <form id="form_heading" style="padding: 30px !important;" >
+            <div class="row">
+               <div class="input-field col s12">
+                  <textarea id="heading" class="formal_signin login_input_box materialize-textarea frmt_inpt" maxlength="120" style="padding: 10px !important; "></textarea>
+                  {{#each display_heading}} 
+                  <input type="hidden" id="default_heading" value={{heading}} >
+                  {{/each}}  
+               </div>
+            </div>
+            <input type="hidden" class="save_heading">
+         </form>
+      </div>
+      <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect close_modal waves-green btn-flat cncl_btn_profile">Cancel</a>
+      <a class="modal-action profile_modal_save_btn modal-close waves-effect waves-green save_btn_profile btn-flat save_heading" id="save_heading">Save</a>
+      </div>
+      </div> -->
+   <script>
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+                          $('#form_heading').keypress(function(e){
+                            var code = e.keyCode || e.which; 
+      
+                            if( code === 13 ){
+                                e.preventDefault();
+                                $(".save_heading").click();
+                            };
+                        });
+   </script>
+</template>
+<template name="summary">
+   {{#each display_summary}} 
+   <div class="section">
+      <h5>Summary 
+         <span class="pull-right"> 
+         <a class="waves-light modal-trigger" href="#summary_modal" id="edit_2"><i class="fa fa-pencil"></i>
+         </a>
+         </span>
+      </h5>
+      <div class="divider"></div>
+      <p class="profile_margin_center_sections login_forgot_pass" style="height:auto;" id="summary_display_3" > {{summery_helper_2 summary}} </p>
+      {{#if show_Readless}}
+      <div id="show_readmore"  >
+         <a href="javascript:void(0);"  class="an_style read_more " id="read_more_summary" style="color: #338ea7; padding: 5px 10px;" > Read more</a> 
+         <a href="javascript:void(0);"  class="an_style read_more hide_redmore" id="read_less_summary" style="color: #338ea7; padding: 5px 10px;">Read less</a>                   
+         <input type="hidden" value={{summary}} id="hidden_summary">
+      </div>
+      {{/if}}
+   </div>
+   {{else}}
+   <p class="profile_margin_center_sections login_forgot_pass"> Nothing to Display as Summary</p>
+   {{/each}}
+   <div id="summary_modal" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Summary</h5>
+         </div>
+         <div class="modal-body">
+            <form id="form_summary" >
+               <div class="row">
+                  <div class="input-field col s12">
+                     <textarea id="summary" class="materialize-textarea formal_signin login_input_box frmt_inpt" maxlength="1000" style="height:220px" ></textarea>
+                     {{#each display_summary}} 
+                     <input type="hidden" id="default_summary" value={{summary}} >
+                     {{/each}}  
+                  </div>
+               </div>
+               <input type="hidden" class="save_summary">
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="save_summary btn btn-primary save_btn_profile save_heading" id="save_summary">Save</button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <script>
+      $(document).ready(function(){
+        //the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+      
+            $('#form_summary').keypress(function(e){
+                            var code = e.keyCode || e.which;
+      
+                            if( code === 13 ) {
+                                e.preventDefault();
+                                $(".save_summary").click();
+                            };
+                        });
+   </script>
+</template>
+<template name="professional">
+   <div class="section">
+      <h5>  Professional Details  
+         <span class="pull-right"> <a class="waves-light modal-trigger pointer" id="add_professional"><i class="fa fa-plus"></i></a> 
+         </span>
+      </h5>
+      <div class="divider"></div>
+      {{#each show_profjr}}
+      <div class="row profile_margin_center_sections login_forgot_pass">
+         <div class="col l11 m11 s11" style="padding: 0px !important;">
+            <h6 class="font18 colo_head_blue login_forgot_pass">{{company}}</h6>
+            <p  class="font15 p_margin_btom_none login_forgot_pass">{{title}} | {{start_month}}, {{start_year}} - 
+               {{#if end_month }}
+               {{end_month}}, {{end_year}}
+               {{else}}
+               Present
+               {{/if}}
+            </p>
+            <p class="login_forgot_pass"><i class="fa fa-map-marker"></i> {{location}}</p>
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">Skill(s) used: </p>
+            <p class="login_forgot_pass">{{skill}} </p>
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">Key Responsibilities: </p>
+            <p class="login_forgot_pass">{{key_responsibilities}} </p>
+         </div>
+         <div class="col l1 m1 s1 pull-right" style="padding-right: 0; text-align: right;">
+            <a class="waves-light modal-trigger" href="#modal_edit_prof" pid={{_id}} id="edit_5" ><i class="fa fa-pencil"></i></a> 
+         </div>
+      </div>
+      {{else}}
+      <p class="profile_margin_center_sections login_forgot_pass"> Add Professional Details</p>
+      {{/each}}
+   </div>
+   <div id="modal_edit_prof" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Edit Professionsal Details</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset" id="edit_form_profjr" >
+               <div class="row" style="margin-bottom: 0px !important;">
+                  <div class="input-field col s12 m12 l6 input_form_new">
+                     <p class="heading_create_inside">Company Name <sup><span class="red_start"> * </span></sup> </p>
+                     <input id="edit_company_name" type="text" class="frmt_inpt validate">
+                     <!--     <label for="edit_company_name">Company Name <sup><span
+                        class="red_start"> * </span></sup></label> -->
+                  </div>
+                  <div class="input-field col s12 m12 l6 input_form_new">
+                     <p class="heading_create_inside">Job Title <sup><span class="red_start"> * </span></sup> </p>
+                     <input id="edit_job_title" placeholder="" type="text" class="validate frmt_inpt">
+                     <!-- <label for="edit_job_title">Job Title <sup><span class="red_start"> * </span></sup></label> -->
+                  </div>
+               </div>
+               <div class="row" style="margin-bottom:0px !important;">
+                  <div class="input-field col l6 m6 s6 input_form_new">
+                     <p class="heading_create_inside"> Start Date <sup><span class="red_start"> * </span></sup></p>
+                     <div id="edit_start_month" class="ui selection dropdown frmt_inpt">
+                        <input type="hidden" name="test" value=""/>
+                        <div class="text">Test</div>
+                        <!--                      <i class="dropdown icon"></i>
+                           -->                     
+                        <div class="menu">
+                           <div class="item" data-value="">Not Selected</div>
+                           <div class="item" data-value="Jan">Jan</div>
+                           <div class="item" data-value="Feb">Feb</div>
+                           <div class="item" data-value="Mar">Mar</div>
+                           <div class="item" data-value="Apr">Apr</div>
+                           <div class="item" data-value="May">May</div>
+                           <div class="item" data-value="Jun">Jun</div>
+                           <div class="item" data-value="Jul">Jul</div>
+                           <div class="item" data-value="Aug">Aug</div>
+                           <div class="item" data-value="Sep">Sep</div>
+                           <div class="item" data-value="Oct">Oct</div>
+                           <div class="item" data-value="Nov">Nov</div>
+                           <div class="item" data-value="Dec">Dec</div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="input-field col l6 m6 s6 input_form_new">
+                     <p class="heading_create_inside"> &nbsp;</p>
+                     <div id="edit_start_year" class="ui selection dropdown frmt_inpt">
+                        <input type="hidden" name="test" value=""/>
+                        <div class="text">Test</div>
+                        <!--                      <i class="dropdown icon"></i>
+                           -->                     
+                        <div class="menu">
+                           <div class="item" data-value="">Not Selected</div>
+                           <div class="item" data-value="2000">2000</div>
+                           <div class="item" data-value="2001">2001</div>
+                           <div class="item" data-value="2002">2002</div>
+                           <div class="item" data-value="2003">2003</div>
+                           <div class="item" data-value="2004">2004</div>
+                           <div class="item" data-value="2005">2005</div>
+                           <div class="item" data-value="2006">2006</div>
+                           <div class="item" data-value="2007">2007</div>
+                           <div class="item" data-value="2008">2008</div>
+                           <div class="item" data-value="2009">2009</div>
+                           <div class="item" data-value="2010">2010</div>
+                           <div class="item" data-value="2011">2011</div>
+                           <div class="item" data-value="2012">2012</div>
+                           <div class="item" data-value="2013">2013</div>
+                           <div class="item" data-value="2014">2014</div>
+                           <div class="item" data-value="2015">2015</div>
+                           <div class="item" data-value="2016">2016</div>
+                           <div class="item" data-value="2017">2017</div>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="onchecked_edit_profjr_end_date" >
+                     <div class="input-field col l6 m6 s6">
+                        <p class="heading_create_inside"> End Date <sup><span class="red_start"> * </span></sup></p>
+                        <div id="edit_end_month" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">End Month</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="Jan">Jan</div>
+                              <div class="item" data-value="Feb">Feb</div>
+                              <div class="item" data-value="Mar">Mar</div>
+                              <div class="item" data-value="Apr">Apr</div>
+                              <div class="item" data-value="May">May</div>
+                              <div class="item" data-value="Jun">Jun</div>
+                              <div class="item" data-value="Jul">Jul</div>
+                              <div class="item" data-value="Aug">Aug</div>
+                              <div class="item" data-value="Sep">Sep</div>
+                              <div class="item" data-value="Oct">Oct</div>
+                              <div class="item" data-value="Nov">Nov</div>
+                              <div class="item" data-value="Dec">Dec</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col  l6 m6 s6">
+                        <p class="heading_create_inside"> &nbsp;</p>
+                        <div id="edit_end_year" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">End Year</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="2000">2000</div>
+                              <div class="item" data-value="2001">2001</div>
+                              <div class="item" data-value="2002">2002</div>
+                              <div class="item" data-value="2003">2003</div>
+                              <div class="item" data-value="2004">2004</div>
+                              <div class="item" data-value="2005">2005</div>
+                              <div class="item" data-value="2006">2006</div>
+                              <div class="item" data-value="2007">2007</div>
+                              <div class="item" data-value="2008">2008</div>
+                              <div class="item" data-value="2009">2009</div>
+                              <div class="item" data-value="2010">2010</div>
+                              <div class="item" data-value="2011">2011</div>
+                              <div class="item" data-value="2012">2012</div>
+                              <div class="item" data-value="2013">2013</div>
+                              <div class="item" data-value="2014">2014</div>
+                              <div class="item" data-value="2015">2015</div>
+                              <div class="item" data-value="2016">2016</div>
+                              <div class="item" data-value="2017">2017</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="onchecked_edit_profjr_end_date_show" class="display_hide input-field col s3 login_forgot_pass" >
+                     <p> Present </p>
+                  </div>
+               </div>
+               <div class="row" style="margin-bottom: 0px !important;">
+            <form action="#">
+            <p>
+            <input type="checkbox" id="edit_check_experience"/>
+            <label for="edit_check_experience" class="login_forgot_pass heading_create_inside">Curently Pursuing</label>
+            </p>
+            </form>
+            </div>
+            <div class="row" style="margin-bottom: 0px !important;">
+               <div class="input-field col s12 m12 l12">
+                  <p class="heading_create_inside">Job Location <sup><span class="red_start"> * </span></sup> </p>
+                  <input id="autocomplete5" type="text" class="validate frmt_inpt">
+                  <input id="hidden_profjr_id" type="hidden" class="validate frmt_inpt">
+                  <!-- <label for="autocomplete5">Job Location <sup><span class="red_start"> * </span></sup></label> -->
+               </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px !important;">
+               <div class="input-field col s12 m12 l6">
+                  <p class="heading_create_inside">Skill Used <sup><span class="red_start"> * </span></sup> </p>
+                  <input id="edit_skill_used"  type="text" class="validate frmt_inpt">
+                  <!-- <label for="edit_skill_used"></label> -->
+               </div>
+               <div class="input-field col s12 m12 l6">
+                    <p class="heading_create_inside">Job Type <sup><span class="red_start"> * </span></sup> </p>
+
+                  <div id="edit_job_type" class="ui selection dropdown frmt_inpt">
+                     <input type="hidden" name="test" value=""/>
+                     <div class="text">Job Type</div>
+                    <!--  <i class="dropdown icon"></i> -->
+                     <div class="menu">
+                        <div class="item" data-value="Permanent">Permanent</div>
+                        <div class="item" data-value="Contract">Contract</div>
+                        <div class="item" data-value="Freelance">Freelance</div>
+                        <div class="item" data-value="Ineternship">Ineternship</div>
+                     </div>
+                  </div>
+                  <!-- <p class="heading_create_inside">Skill Used</p> -->
+                  <!-- <label for="jon_type">Job Type <sup><span class="red_start"> * </span></sup></label><br/> -->
+               </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px !important;">
+               <div class="input-field col s12 m12 l12">
+                  <p class="heading_create_inside">Key Responsibilities <sup><span class="red_start"> * </span></sup> </p>
+                  <textarea id="edit_key_responsibilities" class="materialize-textarea frmt_inpt"
+                     data-length="120"></textarea>
+                  <!-- <label for="edit_key_responsibilities">Key Responsibilities</label> -->
+               </div>
+            </div>
+            
+            <div class="row">
+               <div class="input-field col s12">
+                  <p class="login_forgot_pass"> Fields marked with <sup><span class="red_start"> * </span></sup> are mandatory</p>
+               </div>
+            </div>
+            <input type="hidden" class="update_professional_details" >
+            </form>
+         </div>
+         <div class="modal-footer">
+             <span id="delete_profjr" ><i class="fa fa-trash-o fa-2x pull-left del_btn_profile" ></i></span>
+
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" id="update_professional_details" class="save_summary btn btn-primary update_professional_details edit_save_btn_profile save_heading" >Save chnages</button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <div id="addprofes" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Professional Detail</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset" id="form_profjr" >
+               <div class="row" style="margin-bottom: 0px !important">
+                  <div class="input-field col s12 m12 l6">
+                     <p class="heading_create_inside">Company Name <sup><span class="red_start"> * </span></sup> </p>
+                     <input id="company_name" type="text" class="validate frmt_inpt">
+                     <!-- <label for="company_name" class="profile_modal_header_mame">Company Name <sup><span class="red_start"> * </span></sup></label> -->
+                  </div>
+                  <div class="input-field col s12 m12 l6">
+                     <p class="heading_create_inside">Job Title <sup><span class="red_start"> * </span></sup> </p>
+                     <input id="job_title" type="text" class="validate frmt_inpt">
+                     <!-- <label for="job_title" class="profile_modal_header_mame">Job Title <sup><span class="red_start"> * </span></sup></label> -->
+                  </div>
+               </div>
+               <div class="row" style="margin-bottom: 0px;">
+                  <div class="input-field col s12 m12 l6">
+                     <p class="heading_create_inside">When (Select month)<sup><span class="red_start"> * </span></sup></p>
+                     <div id="start_month" class="ui selection dropdown frmt_inpt">
+                        <input type="hidden" name="test" value=""/>
+                        <div class="text">Select Month</div>
+                        <!-- <i class="dropdown icon"></i> -->
+                        <div class="menu">
+                           <div class="item" data-value="">...</div>
+                           <div class="item" data-value="Jan">Jan</div>
+                           <div class="item" data-value="Feb">Feb</div>
+                           <div class="item" data-value="Mar">Mar</div>
+                           <div class="item" data-value="Apr">Apr</div>
+                           <div class="item" data-value="May">May</div>
+                           <div class="item" data-value="Jun">Jun</div>
+                           <div class="item" data-value="Jul">Jul</div>
+                           <div class="item" data-value="Aug">Aug</div>
+                           <div class="item" data-value="Sep">Sep</div>
+                           <div class="item" data-value="Oct">Oct</div>
+                           <div class="item" data-value="Nov">Nov</div>
+                           <div class="item" data-value="Dec">Dec</div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- <div class="input-field col s3 m3 l3 "> -->
+                  <!--                   <p> Start Date <sup><span class="red_start"> * </span></sup></p>--> 
+                  <!--                  <select id="start_month" class="frmt_inpt" >
+                     <option value disabled selected>Select Month</option>
+                     <option value='Jan'>Jan</option>
+                     <option value='Feb'>Feb</option>
+                     <option value='Mar'>Mar</option>
+                     <option value='Apr'>Apr</option>
+                     <option value='May'>May</option>
+                     <option value='Jun'>Jun</option>
+                     <option value='Jul'>Jul</option>
+                     <option value='Aug'>Aug</option>
+                     <option value='Sep'>Sep</option>
+                     <option value='Oct'>Oct</option>
+                     <option value='Nov'>Nov</option>
+                     <option value='Dec'>Dec</option>
+                     </select>
+                     -->               <!-- </div> -->
+                  <div class="input-field col s12 m12 l6">
+                     <p class="heading_create_inside">When (Select year)<sup><span class="red_start"> * </span></sup></p>
+                     <!-- <select id="start_year" class="selectpicker fluid form-control profile_modal_header_input" ></select> -->
+                     <div id="start_year" class="ui selection dropdown frmt_inpt">
+                        <input type="hidden" name="test" value=""/>
+                        <div class="text">Select Year</div>
+                        <!--                      <i class="dropdown icon"></i>
+                           -->                     
+                        <div class="menu">
+                           <div class="item" data-value="">...</div>
+                           <div class="item" data-value="2000">2000</div>
+                           <div class="item" data-value="2001">2001</div>
+                           <div class="item" data-value="2002">2002</div>
+                           <div class="item" data-value="2003">2003</div>
+                           <div class="item" data-value="2004">2004</div>
+                           <div class="item" data-value="2005">2005</div>
+                           <div class="item" data-value="2006">2006</div>
+                           <div class="item" data-value="2007">2007</div>
+                           <div class="item" data-value="2008">2008</div>
+                           <div class="item" data-value="2009">2009</div>
+                           <div class="item" data-value="2010">2010</div>
+                           <div class="item" data-value="2011">2011</div>
+                           <div class="item" data-value="2012">2012</div>
+                           <div class="item" data-value="2013">2013</div>
+                           <div class="item" data-value="2014">2014</div>
+                           <div class="item" data-value="2015">2015</div>
+                           <div class="item" data-value="2016">2016</div>
+                           <div class="item" data-value="2017">2017</div>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="onchecked_profjr_end_date" >
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside"> End Month <sup><span class="red_start"> * </span></sup></p>
+                        <!--     <select id="end_month" class="selectpicker fluid form-control profile_modal_header_input" >
+                           <option value disabled selected>Select Month</option>
+                           <option value='Jan'>Jan</option>
+                           <option value='Feb'>Feb</option>
+                           <option value='Mar'>Mar</option>
+                           <option value='Apr'>Apr</option>
+                           <option value='May'>May</option>
+                           <option value='Jun'>Jun</option>
+                           <option value='Jul'>Jul</option>
+                           <option value='Aug'>Aug</option>
+                           <option value='Sep'>Sep</option>
+                           <option value='Oct'>Oct</option>
+                           <option value='Nov'>Nov</option>
+                           <option value='Dec'>Dec</option>
+                           </select> -->
+                        <div id="end_month" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Month</div>
+                           <!--                      <i class="dropdown icon"></i>
+                              -->                     
+                           <div class="menu">
+                              <div class="item" data-value="">...</div>
+                              <div class="item" data-value="Jan">Jan</div>
+                              <div class="item" data-value="Feb">Feb</div>
+                              <div class="item" data-value="Mar">Mar</div>
+                              <div class="item" data-value="Apr">Apr</div>
+                              <div class="item" data-value="May">May</div>
+                              <div class="item" data-value="Jun">Jun</div>
+                              <div class="item" data-value="Jul">Jul</div>
+                              <div class="item" data-value="Aug">Aug</div>
+                              <div class="item" data-value="Sep">Sep</div>
+                              <div class="item" data-value="Oct">Oct</div>
+                              <div class="item" data-value="Nov">Nov</div>
+                              <div class="item" data-value="Dec">Dec</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside"> End Year</p>
+                        <!-- <select id="end_year" class="selectpicker fluid form-control" ></select> -->
+                        <div id="end_year" class="ui selection dropdown frmt_inpt ">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Year</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">...</div>
+                              <div class="item" data-value="2000">2000</div>
+                              <div class="item" data-value="2001">2001</div>
+                              <div class="item" data-value="2002">2002</div>
+                              <div class="item" data-value="2003">2003</div>
+                              <div class="item" data-value="2004">2004</div>
+                              <div class="item" data-value="2005">2005</div>
+                              <div class="item" data-value="2006">2006</div>
+                              <div class="item" data-value="2007">2007</div>
+                              <div class="item" data-value="2008">2008</div>
+                              <div class="item" data-value="2009">2009</div>
+                              <div class="item" data-value="2010">2010</div>
+                              <div class="item" data-value="2011">2011</div>
+                              <div class="item" data-value="2012">2012</div>
+                              <div class="item" data-value="2013">2013</div>
+                              <div class="item" data-value="2014">2014</div>
+                              <div class="item" data-value="2015">2015</div>
+                              <div class="item" data-value="2016">2016</div>
+                              <div class="item" data-value="2017">2017</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="onchecked_profjr_end_date_show" class="display_hide input-field col s3" >
+                    <!--  <p> Present </p> -->
+                  </div>
+               </div>
+               <div class="row" style="margin-bottom: 0px;">
+            <form action="#" class="col s12 m12 l6">
+            <p>
+            <input type="checkbox" id="check_experience" />
+            <label for="check_experience">Curently Pursuing</label>
+            </p>
+            </form>
+            </div>
+            <div class="row" style="margin-bottom: 0px !important">
+               <div class="input-field col s12 m12 l12">
+                  <p class="heading_create_inside">Job Location <sup><span class="red_start"> * </span></sup> </p>
+                  <input id="autocomplete6" type="text" class="validate frmt_inpt">
+               </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px !important">
+               <div class="input-field col s12 m12 l6">
+                  <p class="heading_create_inside">Skill Used <sup><span class="red_start"> * </span></sup> </p>
+                  <input id="skill_used" type="text" class="validate frmt_inpt">
+               </div>
+               <div class="input-field col s12 m12 l6">
+                  <p class="heading_create_inside">Job Type <sup><span class="red_start"> * </span></sup> </p>
+                 
+                  <div id="job_type" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                     <input type="hidden" name="test" value=""/>
+                     <div class="text">Select Job Type</div>
+                     <!--                      <i class="dropdown icon"></i>
+                        -->                     
+                     <div class="menu">
+                        <div class="item" data-value="">Select Job Type</div>
+                        <div class="item" data-value="Permanent">Permanent</div>
+                        <div class="item" data-value="Contract">Contract</div>
+                        <div class="item" data-value="Freelance">Freelance</div>
+                        <div class="item" data-value="Ineternship">Ineternship</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px !important">
+               <div class="input-field col s12 m12 l12">
+                  <p class="heading_create_inside">Key Responsibilities <sup><span class="red_start"> * </span></sup> </p>
+                  <textarea id="key_responsibilities" class="materialize-textarea frmt_inpt" data-length="120"></textarea>
+               </div>
+            </div>
+         
+            <div class="row">
+               <div class="input-field col s12 m12 l12">
+                  <p class="login_forgot_pass"> Fields marked with  <sup><span class="red_start"> * </span></sup> are mandatory</p>
+               </div>
+            </div>
+            <input type="hidden" class="add_profjr" >
+            </form>
+         </div>
+      </div>
+      <div class="modal-footer">
+         <a class="waves-effect waves-light btn close_modal cncl_btn_profile" id="close_add_profjr">Cancel</a>
+         <a class="add_profjr waves-effect waves-light btn save_btn_profile" id="add_profjr">Save</a>
+      </div>
+   </div>
+   <script>
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+          
+      
+   </script>
+   <script type="text/javascript">
+      $('#form_profjr').keypress(function(e){
+                     var code = e.keyCode || e.which;
+                     if( code === 13 ) {
+                     e.preventDefault();
+                     $(".add_profjr").click();
+                     };
+               });
+   </script>
+   <script type="text/javascript">
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+      
+   </script>
+   <script type="text/javascript">
+      $('#edit_form_profjr').keypress(function(e){
+          var code = e.keyCode || e.which;
+      
+          if( code === 13 ) {
+              e.preventDefault();
+              $(".update_professional_details").click();
+          };
+      });
+   </script> 
+   <!--  <script>
+      var min = new Date().getFullYear(),
+      max = 1900,
+      select = document.getElementById('start_year');
+      
+      for (var i = min; i>=max; i){
+          var opt = document.createElement('option');
+          opt.value = i;
+          opt.innerHTML = i;
+          select.appendChild(opt);
+          } 
+      </script>           
+       <script>
+         var min = new Date().getFullYear(),
+         max = 1900,
+         select = document.getElementById('end_year');
+         
+         for (var i = min; i>=max; i){
+             var opt = document.createElement('option');
+             opt.value = i;
+             opt.innerHTML = i;
+             select.appendChild(opt);
+             } 
+      </script> -->
+</template>
+<template name="edudetails">
+   <div class="section">
+      <h5>Educational Details <span class="pull-right"> <a class="waves-light modal-trigger" href="#addedudetails"><i class="fa fa-plus"></i></a> </span></h5>
+      <div class="divider"></div>
+      {{#each show_education }}
+      <div class="row profile_margin_center_sections">
+         <div class="col l11 m11 s11" style="padding: 0px;">
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">{{course}}</p>
+            <p  class="login_forgot_pass" style="margin-bottom: 0px;">{{school}} | 
+               {{show_score score}}
+               {{score}}
+            </p>
+            <p class="login_forgot_pass">{{edu_start_month}}, {{edu_start_year}} - 
+               {{#if edu_end_month }}
+               {{edu_end_month}}, {{edu_end_year}}
+               {{else}}
+               Present
+               {{/if}}
+            </p>
+         </div>
+         <div class="col l1 m1 s1 pull-right" style="padding-right: 0; text-align: right;">
+            <a class="waves-light modal-trigger" href="#ediedudetails" eid={{_id}} id="edit_6" ><i class="fa fa-pencil"></i></a> 
+         </div>
+      </div>
+      {{else}}
+      <p class="profile_margin_center_sections login_forgot_pass"> Add educational details here</p>
+      {{/each}}
+   </div>
+   <div id="addedudetails" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Education Detail</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset" id="form_edu">
+               <div class="">
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside">Course / Degree <sup><span class="red_start"> * </span></sup></p>
+                        <input id="course" type="text" class="validate frmt_inpt">
+                     </div>
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside">University / Board <sup><span class="red_start"> * </span></sup> </p>
+                        <input id="board" type="text" class="validate frmt_inpt">
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 m12 l12">
+                        <p class="heading_create_inside">Institute / School <sup><span class="red_start"> * </span></sup></p>
+                        <input id="school" type="text" class="validate frmt_inpt">
+                     </div>
+                    </div>
+                      <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 m12 l4">
+                        <p class="heading_create_inside"> Score <sup><span class="red_start"> * </span></sup></p>
+                        <!-- <select id="education_format" name="education_format" class="selectpicker fluid form-control" >
+                           <option value="" disabled selected>Select Score</option>
+                           <option value="percentage">Percentage</option>
+                           <option value="cgpa">CGPA</option>
+                           </select> -->
+                        <div id="education_format" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Score</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="percentage">Percentage</div>
+                              <div class="item" data-value="CGPA">CGPA</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col s12 m12 l4">
+                        <p class="heading_create_inside"> Score <sup><span class="red_start"> * </span></sup></p>
+                        <input id="education_grade" type="text" class="validate  frmt_inpt" >
+                     </div>
+                     <div class="input-field col s12 m12 l4" id="select_cgpa_scale" style="display:none;">
+                        <p class="heading_create_inside"> &nbsp; <sup><span class="red_start"> * </span></sup></p>
+                        <div id="cgpa_out_of" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">CGPA Out of</div>
+<!--                            <i class="dropdown icon"></i>
+ -->                           <div class="menu">
+                              <div class="item" data-value="5">Out of 5</div>
+                              <div class="item" data-value="10">Out of 10</div>
+                           </div>
+                        </div>
+                        <!-- <select id="cgpa_out_of" class="selectpicker fluid form-control" >
+                           <option value="" disabled selected>CGPA out of</option>
+                           <option value="5">out of 5</option>
+                           <option value="10">out of 10</option>
+                           </select>--> 
+                     </div>
+                  </div>
+                  <script>
+                     $(document).ready(function(){  
+                       $("#education_format").change(function () {
+                       var edu_format = $("#education_format").dropdown('get value');
+                         if(edu_format == 'percentage' || edu_format == 'Percentage'){
+                          $("#select_cgpa_scale").css('display', 'none');
+                         }
+                         else if(edu_format == 'cgpa' || edu_format == 'CGPA' ){      
+                           $("#select_cgpa_scale").css('display', 'block');
+                          }
+                       });
+                     });
+                  </script>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside"> Start Month <sup><span class="red_start"> * </span></sup></p>
+                        <!--         <select id="edu_start_month" class="selectpicker fluid form-control" >
+                           <option value disabled selected>Select Month</option>
+                           <option value='Jan'>Jan</option>
+                           <option value='Feb'>Feb</option>
+                           <option value='Mar'>Mar</option>
+                           <option value='Apr'>Apr</option>
+                           <option value='May'>May</option>
+                           <option value='Jun'>Jun</option>
+                           <option value='Jul'>Jul</option>
+                           <option value='Aug'>Aug</option>
+                           <option value='Sep'>Sep</option>
+                           <option value='Oct'>Oct</option>
+                           <option value='Nov'>Nov</option>
+                           <option value='Dec'>Dec</option>
+                           </select> -->
+                        <div id="edu_start_month" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Month <sup><span class="red_start"> * </span></sup> </div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">...</div>
+                              <div class="item" data-value="Jan">Jan</div>
+                              <div class="item" data-value="Feb">Feb</div>
+                              <div class="item" data-value="Mar">Mar</div>
+                              <div class="item" data-value="Apr">Apr</div>
+                              <div class="item" data-value="May">May</div>
+                              <div class="item" data-value="Jun">Jun</div>
+                              <div class="item" data-value="Jul">Jul</div>
+                              <div class="item" data-value="Aug">Aug</div>
+                              <div class="item" data-value="Sep">Sep</div>
+                              <div class="item" data-value="Oct">Oct</div>
+                              <div class="item" data-value="Nov">Nov</div>
+                              <div class="item" data-value="Dec">Dec</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col s6 m6 l6">
+                        <p class="heading_create_inside"> Start Year <sup><span class="red_start"> * </span></sup></p>
+                        <!-- <select id="edu_start_year" class="selectpicker fluid form-control" ></select>
+                           <script>
+                              var min = new Date().getFullYear(),
+                              max = 1900,
+                              select = document.getElementById('edu_start_year');
+                              
+                              for (var i = min; i>=max; i){
+                                  var opt = document.createElement('option');
+                                  opt.value = i;
+                                  opt.innerHTML = i;
+                                  select.appendChild(opt);
+                                  } 
+                           </script> -->
+                        <div id="edu_start_year" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">... </div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="2000">2000</div>
+                              <div class="item" data-value="2001">2001</div>
+                              <div class="item" data-value="2002">2002</div>
+                              <div class="item" data-value="2003">2003</div>
+                              <div class="item" data-value="2004">2004</div>
+                              <div class="item" data-value="2005">2005</div>
+                              <div class="item" data-value="2006">2006</div>
+                              <div class="item" data-value="2007">2007</div>
+                              <div class="item" data-value="2008">2008</div>
+                              <div class="item" data-value="2009">2009</div>
+                              <div class="item" data-value="2010">2010</div>
+                              <div class="item" data-value="2011">2011</div>
+                              <div class="item" data-value="2012">2012</div>
+                              <div class="item" data-value="2013">2013</div>
+                              <div class="item" data-value="2014">2014</div>
+                              <div class="item" data-value="2015">2015</div>
+                              <div class="item" data-value="2016">2016</div>
+                              <div class="item" data-value="2017">2017</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="onchecked_edu_end_date" >
+                        <div class="input-field col s6 m6 l6">
+                           <p class="heading_create_inside"> End Date <sup><span class="red_start"> * </span></sup></p>
+                           <!--  <select id="edu_end_month" class="selectpicker fluid form-control" >
+                              <option value disabled selected>Select Month</option>
+                              <option value='Jan'>Jan</option>
+                              <option value='Feb'>Feb</option>
+                              <option value='Mar'>Mar</option>
+                              <option value='Apr'>Apr</option>
+                              <option value='May'>May</option>
+                              <option value='Jun'>Jun</option>
+                              <option value='Jul'>Jul</option>
+                              <option value='Aug'>Aug</option>
+                              <option value='Sep'>Sep</option>
+                              <option value='Oct'>Oct</option>
+                              <option value='Nov'>Nov</option>
+                              <option value='Dec'>Dec</option>
+                              </select> -->
+                           <div id="edu_end_month" class="ui selection dropdown frmt_inpt">
+                              <input type="hidden" name="test" value=""/>
+                              <div class="text">...  </div>
+                              <!-- <i class="dropdown icon"></i> -->
+                              <div class="menu">
+                                 <div class="item" data-value="Jan">Jan</div>
+                                 <div class="item" data-value="Feb">Feb</div>
+                                 <div class="item" data-value="Mar">Mar</div>
+                                 <div class="item" data-value="Apr">Apr</div>
+                                 <div class="item" data-value="May">May</div>
+                                 <div class="item" data-value="Jun">Jun</div>
+                                 <div class="item" data-value="Jul">Jul</div>
+                                 <div class="item" data-value="Aug">Aug</div>
+                                 <div class="item" data-value="Sep">Sep</div>
+                                 <div class="item" data-value="Oct">Oct</div>
+                                 <div class="item" data-value="Nov">Nov</div>
+                                 <div class="item" data-value="Dec">Dec</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="input-field col s6 m6 l6">
+                           <p> &nbsp;</p>
+                           <!--    <select id="edu_end_year" class="selectpicker fluid form-control"  ></select>
+                              <script>
+                                 var min = new Date().getFullYear(),
+                                 max = 1900,
+                                 select = document.getElementById('edu_end_year');
+                                 
+                                 for (var i = min; i>=max; i){
+                                     var opt = document.createElement('option');
+                                     opt.value = i;
+                                     opt.innerHTML = i;
+                                     select.appendChild(opt);
+                                     } 
+                              </script> -->
+                           <div id="edu_end_year" class="ui selection dropdown frmt_inpt">
+                              <input type="hidden" name="test" value=""/>
+                              <div class="text">... </div>
+                             <!--  <i class="dropdown icon"></i> -->
+                              <div class="menu">
+                                 <div class="item" data-value="2000">2000</div>
+                                 <div class="item" data-value="2001">2001</div>
+                                 <div class="item" data-value="2002">2002</div>
+                                 <div class="item" data-value="2003">2003</div>
+                                 <div class="item" data-value="2004">2004</div>
+                                 <div class="item" data-value="2005">2005</div>
+                                 <div class="item" data-value="2006">2006</div>
+                                 <div class="item" data-value="2007">2007</div>
+                                 <div class="item" data-value="2008">2008</div>
+                                 <div class="item" data-value="2009">2009</div>
+                                 <div class="item" data-value="2010">2010</div>
+                                 <div class="item" data-value="2011">2011</div>
+                                 <div class="item" data-value="2012">2012</div>
+                                 <div class="item" data-value="2013">2013</div>
+                                 <div class="item" data-value="2014">2014</div>
+                                 <div class="item" data-value="2015">2015</div>
+                                 <div class="item" data-value="2016">2016</div>
+                                 <div class="item" data-value="2017">2017</div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="onchecked_edu_end_date_show" class="display_hide input-field col s3" >
+                        <p> Present </p>
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px !important;">
+            <form action="#">
+            <p class="col m12 l12 s12">
+            <input type="checkbox" class="check-education" id="check_education_edu_2" />
+            <label for="check_education_edu_2">Curently Pursuing</label>
+            </p>
+            <script></script>
+            <div class="row" style="margin-bottom: 0px !important;">
+            <div class="input-field col s12 m12 l12">
+            <p class="heading_create_inside">Job Location <sup><span class="red_start"> * </span></sup></p>
+            <input id="autocomplete7" type="text" class="validate frmt_inpt">
+            </div>  
+            </div>
+            <input type="hidden" class="save_edu" >
+            </form>
+            </div>
+            <div class="row">
+            <div class="input-field col s12">
+            <p class="login_forgot_pass"> Fields marked with <sup><span class="red_start"> * </span></sup> are mandatory</p>
+            </div>
+            </div>
+            </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="save_edu save_summary btn btn-primary save_btn_profile save_heading" id="save_edu">Save</button>
+         </div>
+      </div>
+   </div>
+   <script>
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+   </script>
+   <script type="text/javascript">
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+   </script>
+   <script type="text/javascript">
+      $('#form_edu').keypress(function(e){
+          var code = e.keyCode || e.which;
+          if( code === 13 ) {
+              e.preventDefault();
+              $(".save_edu").click();
+          };
+      });
+   </script>  
+   <div id="ediedudetails" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i> Edit Education Detail</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset" id="edit_form_edu" >
+               <div>
+                  <div class="row" style="margin-bottom: 0px !important;">
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside">Course / Degree * <sup><span class="red_start"> * </span></sup></p>
+                        <input id="edit_course"  type="text" class="validate frmt_inpt">  
+                     </div>
+                 
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside">University / Board <sup><span class="red_start"> * </span></sup></p>
+                        <input id="edit_board" type="text" class="validate frmt_inpt" >
+                        <input id="hidden_edit_edu_id" type="hidden" class="validate frmt_inpt">
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px !important;">
+                     <div class="input-field col s12 m12 l12">
+                        <p class="heading_create_inside">Institute / School <sup><span class="red_start"> * </span></sup></p>
+                        <input id="edit_school" type="text" class="validate frmt_inpt" >
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     
+                     <div class="input-field col l4 m12 s12">
+                        <p class="heading_create_inside"> Score <sup><span class="red_start"> * </span></sup></p>
+                        <div id="edit_education_format"  name="education_format" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Select Score</div>
+                              <div class="item" data-value="percentage">Percentage</div>
+                              <div class="item" data-value="cgpa">CGPA</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col l4 m12 s12">
+                        <p class="heading_create_inside">Score <sup><span class="red_start"> * </span></sup> </p>
+                        <input id="edit_score" type="text" class="validate frmt_inpt">
+                     </div>
+                     <div class="input-field col l4 m12 s12" id="edit_select_cgpa_scale" style="display:none;">
+                        <div id="edit_cgpa_out_of" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="5">out of 5</div>
+                              <div class="item" data-value="10">out of 10</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <script>
+                     $(document).ready(function () {
+                         $("#edit_education_format").change(function () {
+                           // alert('coooo');
+                             var edit_education_format = $("#edit_education_format").dropdown('get value');
+                             alert(edit_education_format);
+                             if (edit_education_format == 'percentage') {
+                                 $("#edit_select_cgpa_scale").css('display', 'none');
+                             }
+                             else if (edit_education_format == 'cgpa') {
+                                 $("#edit_select_cgpa_scale").css('display', 'block');
+                             }
+                         });
+                     });
+                  </script>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col l6 m12 s12">
+                        <p class="heading_create_inside"> Start Date <sup><span class="red_start"> * </span></sup></p>
+                        <div id="edit_edu_start_month" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="Jan">Jan</div>
+                              <div class="item" data-value="Feb">Feb</div>
+                              <div class="item" data-value="Mar">Mar</div>
+                              <div class="item" data-value="Apr">Apr</div>
+                              <div class="item" data-value="May">May</div>
+                              <div class="item" data-value="Jun">Jun</div>
+                              <div class="item" data-value="Jul">Jul</div>
+                              <div class="item" data-value="Aug">Aug</div>
+                              <div class="item" data-value="Sep">Sep</div>
+                              <div class="item" data-value="Oct">Oct</div>
+                              <div class="item" data-value="Nov">Nov</div>
+                              <div class="item" data-value="Dec">Dec</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col l6 m12 s12">
+                        <p> &nbsp;</p>
+                        <div id="edit_edu_start_year" class="ui selection dropdown frmt_inpt">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="2000">2000</div>
+                              <div class="item" data-value="2001">2001</div>
+                              <div class="item" data-value="2002">2002</div>
+                              <div class="item" data-value="2003">2003</div>
+                              <div class="item" data-value="2004">2004</div>
+                              <div class="item" data-value="2005">2005</div>
+                              <div class="item" data-value="2006">2006</div>
+                              <div class="item" data-value="2007">2007</div>
+                              <div class="item" data-value="2008">2008</div>
+                              <div class="item" data-value="2009">2009</div>
+                              <div class="item" data-value="2010">2010</div>
+                              <div class="item" data-value="2011">2011</div>
+                              <div class="item" data-value="2012">2012</div>
+                              <div class="item" data-value="2013">2013</div>
+                              <div class="item" data-value="2014">2014</div>
+                              <div class="item" data-value="2015">2015</div>
+                              <div class="item" data-value="2016">2016</div>
+                              <div class="item" data-value="2017">2017</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div id="onchecked_edit_du_end_date" >
+                        <div class="input-field col l6 m12 s12">
+                           <p class="heading_create_inside"> End Date <sup><span class="red_start"> * </span></sup></p>
+                           <div id="edit_edu_end_month" class="ui selection dropdown frmt_inpt">
+                              <input type="hidden" name="test" value=""/>
+                              <div class="text">Test</div>
+                              <!-- <i class="dropdown icon"></i> -->
+                              <div class="menu">
+                                 <div class="item" data-value="">Not Selected</div>
+                                 <div class="item" data-value="Jan">Jan</div>
+                                 <div class="item" data-value="Feb">Feb</div>
+                                 <div class="item" data-value="Mar">Mar</div>
+                                 <div class="item" data-value="Apr">Apr</div>
+                                 <div class="item" data-value="May">May</div>
+                                 <div class="item" data-value="Jun">Jun</div>
+                                 <div class="item" data-value="Jul">Jul</div>
+                                 <div class="item" data-value="Aug">Aug</div>
+                                 <div class="item" data-value="Sep">Sep</div>
+                                 <div class="item" data-value="Oct">Oct</div>
+                                 <div class="item" data-value="Nov">Nov</div>
+                                 <div class="item" data-value="Dec">Dec</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="input-field col l6 m12 s12">
+                           <p> &nbsp;</p>
+                           <div id="edit_edu_end_year" class="ui selection dropdown frmt_inpt">
+                              <input type="hidden" name="test" value=""/>
+                              <div class="text">Test</div>
+                              <!-- <i class="dropdown icon"></i> -->
+                              <div class="menu">
+                                 <div class="item" data-value="">Not Selected</div>
+                                 <div class="item" data-value="2000">2000</div>
+                                 <div class="item" data-value="2001">2001</div>
+                                 <div class="item" data-value="2002">2002</div>
+                                 <div class="item" data-value="2003">2003</div>
+                                 <div class="item" data-value="2004">2004</div>
+                                 <div class="item" data-value="2005">2005</div>
+                                 <div class="item" data-value="2006">2006</div>
+                                 <div class="item" data-value="2007">2007</div>
+                                 <div class="item" data-value="2008">2008</div>
+                                 <div class="item" data-value="2009">2009</div>
+                                 <div class="item" data-value="2010">2010</div>
+                                 <div class="item" data-value="2011">2011</div>
+                                 <div class="item" data-value="2012">2012</div>
+                                 <div class="item" data-value="2013">2013</div>
+                                 <div class="item" data-value="2014">2014</div>
+                                 <div class="item" data-value="2015">2015</div>
+                                 <div class="item" data-value="2016">2016</div>
+                                 <div class="item" data-value="2017">2017</div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="onchecked_edit_edu_end_date_show" class="display_hide input-field col s3 " >
+                        <p class="login_forgot_pass"> Present </p>
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px;">
+            <form action="#">
+            <p class="col m12 l12 s12">
+            <input type="checkbox" id="edit_check_education_edu_2"/>
+            <label for="edit_check_education_edu_2" class="login_forgot_pass login_forgot_pass">Curently Pursuing</label>
+            </p>
+            </form>
+            </div>
+            <div class="row" style="margin-bottom: 0px;">
+            <div class="input-field col s12">
+            <p class="heading_create_inside">Job Location <sup><span class="red_start"> * </span></sup> </p>
+            <input id="autocomplete8" type="text" class="validate frmt_inpt">
+            <!-- <label for="autocomplete8" >Job Location <sup><span class="red_start"> * </span></sup></label> -->
+            </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px;">
+            <div class="input-field col s12">
+            <p class="login_forgot_pass login_forgot_pass"> Fields marked with <sup><span class="red_start"> * </span></sup> are mandatory</p>
+            </div>
+            </div>
+            </div>
+            <input class="edit_save_edu" type="hidden" >
+            </form>
+         </div>
+         <div class="modal-footer">
+              <span id="delete_education" ><i class="fa fa-trash-o fa-2x pull-left del_btn_profile" ></i></span>
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="edit_save_edu btn btn-primary edit_save_btn_profile save_heading" id="edit_save_edu">Save changes</button>
+         </div>
+      </div>
+   </div>
+   <script type="text/javascript">
+      $('#edit_form_edu').keypress(function(e){
+          var code = e.keyCode || e.which;
+      
+          if( code === 13 ) {
+              e.preventDefault();
+              $(".edit_save_edu").click();
+          };
+      });
+   </script>  
+</template>
+<template name="achievement">
+   <div class="section">
+      <h5>Achievement <span class="pull-right"> <a class="waves-light modal-trigger" href="#addachieve"><i class="fa fa-plus"></i></a> </span></h5>
+      <div class="divider"></div>
+      {{#each display_award}}
+      <div class="row profile_margin_center_sections">
+         <div class="col m11 l11 s11" style="padding: 0px;">
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">Achievement: ({{type}})</p>
+            <p class="login_forgot_pass"><i class="fa fa-map-marker"></i> {{location}}</p>
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">Description: </p>
+            <p class="login_forgot_pass">{{description}}</p>
+         </div>
+         <div class="col l1 m1 s1 pull-right" style="padding-right: 0; text-align: right;">
+            <a class="waves-light modal-trigger" href="#modaleditachieve" id="edit_4"><i class="fa fa-pencil"></i></a> 
+         </div>
+      </div>
+      {{else}}
+      <p class="profile_margin_center_sections login_forgot_pass"> Add achievements here</p>
+      {{/each}}
+   </div>
+   <div id="addachieve" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Achievement Detail</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset" >
+               <div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 m12 l12">
+                        <p class="heading_create_inside">Event Type <sup><span class="red_start"> * </span></sup> </p>
+                        <div id="awd_type" class="ui selection dropdown frmt_inpt" style=" width: 100% !important; border: 1px solid #ADA7A7 !important; border-radius:5px !important;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Event Type </div>
+                           <!--                      <i class="dropdown icon"></i>
+                              -->                     
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="Acadmic">Acadmic</div>
+                              <div class="item" data-value="Cultural">Cultural</div>
+                              <div class="item" data-value="Personal">Personal</div>
+                              <div class="item" data-value="Polatical">Polatical</div>
+                              <div class="item" data-value="Professional">Professional</div>
+                              <div class="item" data-value="Sport">Sport</div>
+                              <div class="item" data-value="Social">Social</div>
+                              <div class="item" data-value="Other">Other</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 m12 l12 ">
+                        <p class="heading_create_inside">Description <sup><span class="red_start"> * </span></sup> </p>
+                        <textarea id="description" class="materialize-textarea frmt_inpt" placeholder="Share more details about this achievement (maximum characters allowed is 200)" data-length="120"></textarea>
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 m12 l6">
+                        <p class="heading_create_inside">When (Select month)<sup><span class="red_start"> * </span></sup></p>
+                        <div id="awd_month" class="ui selection dropdown frmt_inpt" style=" width: 100% !important; border: 1px solid #ADA7A7 !important; border-radius:5px !important;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Month</div>
+                           <!--   <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">...</div>
+                              <div class="item" data-value="Jan">Jan</div>
+                              <div class="item" data-value="Feb">Feb</div>
+                              <div class="item" data-value="Mar">Mar</div>
+                              <div class="item" data-value="Apr">Apr</div>
+                              <div class="item" data-value="May">May</div>
+                              <div class="item" data-value="Jun">Jun</div>
+                              <div class="item" data-value="Jul">Jul</div>
+                              <div class="item" data-value="Aug">Aug</div>
+                              <div class="item" data-value="Sep">Sep</div>
+                              <div class="item" data-value="Oct">Oct</div>
+                              <div class="item" data-value="Nov">Nov</div>
+                              <div class="item" data-value="Dec">Dec</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col s12 m12 l6">
+                        <!-- <select id="awd_year" class="selectpicker fluid form-control"></select> -->
+                        <p class="heading_create_inside">When (Select year)<sup><span class="red_start"> * </span></sup></p>
+                        <div id="awd_year" class="ui selection dropdown frmt_inpt" style=" width: 100% !important; border: 1px solid #ADA7A7 !important; border-radius:5px !important;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Year</div>
+                           <!--                      <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">...</div>
+                              <div class="item" data-value="2000">2000</div>
+                              <div class="item" data-value="2001">2001</div>
+                              <div class="item" data-value="2002">2002</div>
+                              <div class="item" data-value="2003">2003</div>
+                              <div class="item" data-value="2004">2004</div>
+                              <div class="item" data-value="2005">2005</div>
+                              <div class="item" data-value="2006">2006</div>
+                              <div class="item" data-value="2007">2007</div>
+                              <div class="item" data-value="2008">2008</div>
+                              <div class="item" data-value="2009">2009</div>
+                              <div class="item" data-value="2010">2010</div>
+                              <div class="item" data-value="2011">2011</div>
+                              <div class="item" data-value="2012">2012</div>
+                              <div class="item" data-value="2013">2013</div>
+                              <div class="item" data-value="2014">2014</div>
+                              <div class="item" data-value="2015">2015</div>
+                              <div class="item" data-value="2016">2016</div>
+                              <div class="item" data-value="2017">2017</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="input-field col s12">
+                        <p class="heading_create_inside">Location <sup><span class="red_start"> * </span></sup></p>
+                        <input id="autocomplete4" type="text" class="validate frmt_inpt">
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="input-field col s12">
+                        <p class="login_forgot_pass"> Fields marked with <sup><span class="red_start"> * </span></sup>  are mandatory</p>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="save_summary btn btn-primary save_btn_profile save_heading" id="save_award">Save</button>
+         </div>
+      </div>
+   </div>
+   <div id="modaleditachieve" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Edit Achievement Detail</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset">
+               <div>
+                  
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 l12 m12">
+                        <p class="heading_create_inside">Type <sup><span class="red_start"> * </span></sup>  </p>
+                        <div id="edit_awd_type" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Select Type</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="Acadmic">Acadmic</div>
+                              <div class="item" data-value="Cultural">Cultural</div>
+                              <div class="item" data-value="Personal">Personal</div>
+                              <div class="item" data-value="Polatical">Polatical</div>
+                              <div class="item" data-value="Professional">Professional</div>
+                              <div class="item" data-value="Sport">Sport</div>
+                              <div class="item" data-value="Social">Social</div>
+                              <div class="item" data-value="Other">Other</div>
+                           </div>
+                        </div>
+                        <!-- <label for="edit_awd_type"> Type<sup><span class="red_start"> * </span></sup></label>         -->
+                     </div>
+                  </div>
+                  <div class="row"  style="margin-bottom: 0px;">
+                     <div class="input-field col s12">
+                        <p class="heading_create_inside">Description <sup><span class="red_start"> * </span></sup> </p>
+                        <textarea id="edit_description" class="materialize-textarea frmt_inpt" 
+                           placeholder="Share more details about this achievement (maximum characters allowed is 200)"
+                           data-length="120"></textarea>
+                     </div>
+                  </div>
+                  <div class="row"  style="margin-bottom: 0px;">
+                     <div class="input-field col s12 l6 m6">
+                        <p class="heading_create_inside" > When (Month)<sup><span class="red_start"> * </span></sup></p>
+                        <div id="edit_awd_month" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">...</div>
+                              <div class="item" data-value="Jan">Jan</div>
+                              <div class="item" data-value="Feb">Feb</div>
+                              <div class="item" data-value="Mar">Mar</div>
+                              <div class="item" data-value="Apr">Apr</div>
+                              <div class="item" data-value="May">May</div>
+                              <div class="item" data-value="Jun">Jun</div>
+                              <div class="item" data-value="Jul">Jul</div>
+                              <div class="item" data-value="Aug">Aug</div>
+                              <div class="item" data-value="Sep">Sep</div>
+                              <div class="item" data-value="Oct">Oct</div>
+                              <div class="item" data-value="Nov">Nov</div>
+                              <div class="item" data-value="Dec">Dec</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col s12 l6 m6">
+                        <p class="heading_create_inside" > When (Year)<sup><span class="red_start"> * </span></sup></p>
+                         <div id="edit_awd_year" class="ui selection dropdown frmt_inpt" style="width: 100%;">
+                           <input type="hidden" name="test" value=""/>
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">...</div>
+                              <div class="item" data-value="2000">2000</div>
+                              <div class="item" data-value="2001">2001</div>
+                              <div class="item" data-value="2002">2002</div>
+                              <div class="item" data-value="2003">2003</div>
+                              <div class="item" data-value="2004">2004</div>
+                              <div class="item" data-value="2005">2005</div>
+                              <div class="item" data-value="2006">2006</div>
+                              <div class="item" data-value="2007">2007</div>
+                              <div class="item" data-value="2008">2008</div>
+                              <div class="item" data-value="2009">2009</div>
+                              <div class="item" data-value="2010">2010</div>
+                              <div class="item" data-value="2011">2011</div>
+                              <div class="item" data-value="2012">2012</div>
+                              <div class="item" data-value="2013">2013</div>
+                              <div class="item" data-value="2014">2014</div>
+                              <div class="item" data-value="2015">2015</div>
+                              <div class="item" data-value="2016">2016</div>
+                              <div class="item" data-value="2017">2017</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12">
+                        <p class="heading_create_inside">Location <sup><span class="red_start"> * </span></sup> </p>
+                        <input id="autocomplete2" type="text" class="validate frmt_inpt">
+                        <input id="hidden_edit_awd_id" type="hidden" class="validate frmt_inpt">
+                        <!-- <label for="autocomplete2">Location <sup><span class="red_start"> * </span></sup></label> -->
+                        <!-- <input id="hidden_edit_id_forawd" type="hidden" class="validate"> -->
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="input-field col s12">
+                        <p class="login_forgot_pass"> Fields marked with <sup><span class="red_start"> * </span></sup>  are mandatory</p>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+              <span id="delete_award" ><i class="fa fa-trash-o fa-2x pull-left del_btn_profile" ></i></span>
+               <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="save_summary btn btn-primary edit_save_btn_profile save_heading" id="edit_save_award">Save changes</button>
+         </div>
+      </div>
+   </div>
+</template>
+<template name="skill">
+   <div class="section">
+      <h5>Skill <span class="pull-right"> <a class="waves-light modal-trigger" href="#addskill"><i class="fa fa-plus"></i></a> </span></h5>
+      <div class="divider"></div>
+      <div class="row profile_margin_center_sections">
+         {{#each show_skills}} 
+         <div class="col s12 m4 l3 text-center">
+            <p class="login_forgot_pass">{{skill_name}}  <a class="pull-right waves-light modal-trigger" href="#modaleditskillmod" id="edit_8" ><i class="fa fa-pencil"></i></a></p>
+            <p class="text-center login_forgot_pass"><img src="{{skill_gif awd_expert}}" width="130" /></p>
+            <p class="login_forgot_pass">{{last_used}}</p>
+            <input type="hidden" value={{_id}} id="hidden_edit_skill_name">
+         </div>
+         {{else}}
+         <p class="profile_margin_center_sections login_forgot_pass"> Add skills here</p>
+         {{/each}}
+      </div>
+   </div>
+   <div id="addskill" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Skill</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset" id="form_add_skills" >
+               <div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 l6 m6">
+                        <p class="heading_create_inside">Select Expertise <sup><span class="red_start"> * </span></sup> </p>
+                        <!--                   <p> Experties <sup><span class="red_start"> * </span></sup></p>
+                           <input type="hidden" name="test" value=""/>
+                           -->                  
+                        <div id="awd_expert" class="ui selection dropdown frmt_inpt" style="width: 100%">
+                           <div class="text">...</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="Beginner">Beginner</div>
+                              <div class="item" data-value="Middle">Middle</div>
+                              <div class="item" data-value="Expert">Expert</div>
+                           </div>
+                        </div>
+                        <!-- <select id="awd_expert" class="selectpicker fluid form-control" >
+                           <option value disabled selected>Select Experties</option>
+                           <option value='Beginner'>Beginner</option>
+                           <option value='Middle'>Middle</option>
+                           <option value='Expert'>Expert</option>
+                           </select> -->
+                     </div>
+                 
+                  <div class="input-field col s12 l6 m6">
+                     <p class="heading_create_inside"> Last Use <sup><span class="red_start"> * </span></sup></p>
+                     <!-- <select id="last_used" class="selectpicker fluid form-control" ></select> -->
+                     <div id="last_used" class="ui selection dropdown frmt_inpt">
+                        <input type="hidden" name="test" value="" class="ormal_signin login_input_box" />
+                        <div class="text">Last Used</div>
+                        <!-- <i class="dropdown icon"></i> -->
+                        <div class="menu">
+                           <div class="item" data-value="2000">2000</div>
+                           <div class="item" data-value="2001">2001</div>
+                           <div class="item" data-value="2002">2002</div>
+                           <div class="item" data-value="2003">2003</div>
+                           <div class="item" data-value="2004">2004</div>
+                           <div class="item" data-value="2005">2005</div>
+                           <div class="item" data-value="2006">2006</div>
+                           <div class="item" data-value="2007">2007</div>
+                           <div class="item" data-value="2008">2008</div>
+                           <div class="item" data-value="2009">2009</div>
+                           <div class="item" data-value="2010">2010</div>
+                           <div class="item" data-value="2011">2011</div>
+                           <div class="item" data-value="2012">2012</div>
+                           <div class="item" data-value="2013">2013</div>
+                           <div class="item" data-value="2014">2014</div>
+                           <div class="item" data-value="2015">2015</div>
+                           <div class="item" data-value="2016">2016</div>
+                           <div class="item" data-value="2017">2017</div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 m12 l12">
+                        <p class="heading_create_inside">Skill Name <sup><span class="red_start"> * </span></sup>  </p>
+                        <input id="skill_name" type="text" class="validate frmt_inpt" maxlength="25" >
+                        <!-- <label for="skill_name">Skill Name <sup><span class="red_start"> * </span></sup></label> -->
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="input-field col s12">
+                        <p class="login_forgot_pass"> Fields marked with <sup><span class="red_start"> * </span></sup> are mandatory</p>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="save_skill save_summary btn btn-primary save_btn_profile save_heading" id="save_skill">Save</button>
+         </div>
+      </div>
+   </div>
+   <div id="modaleditskillmod" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Edit Skill</h5>
+         </div>
+         <div class="modal-body">
+            <form class="form_reset" id="form_edit_skill" >
+               <div>
+                  <div class="row">
+                     <div class="input-field col s12 l6 m6">
+                        <p class="heading_create_inside" > Experties <sup><span class="red_start"> * </span></sup></p>
+                        <div id="edit_awd_expert" class="ui selection dropdown frmt_inpt" style="width:100%">
+                           <input type="hidden" name="test" value="" class="normal_signin login_input_box" />
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="Beginner">Beginner</div>
+                              <div class="item" data-value="Middle">Middle</div>
+                              <div class="item" data-value="Expert">Expert</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="input-field col s12 m6 l6"  >
+                        <p class="heading_create_inside"> Last Use <sup><span class="red_start"> * </span></sup></p>
+                        <div id="edit_last_used" class="ui selection dropdown frmt_inpt" style="width:100%" >
+                           <input type="hidden" name="test" value="" class="ormal_signin login_input_box" />
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="2000">2000</div>
+                              <div class="item" data-value="2001">2001</div>
+                              <div class="item" data-value="2002">2002</div>
+                              <div class="item" data-value="2003">2003</div>
+                              <div class="item" data-value="2004">2004</div>
+                              <div class="item" data-value="2005">2005</div>
+                              <div class="item" data-value="2006">2006</div>
+                              <div class="item" data-value="2007">2007</div>
+                              <div class="item" data-value="2008">2008</div>
+                              <div class="item" data-value="2009">2009</div>
+                              <div class="item" data-value="2010">2010</div>
+                              <div class="item" data-value="2011">2011</div>
+                              <div class="item" data-value="2012">2012</div>
+                              <div class="item" data-value="2013">2013</div>
+                              <div class="item" data-value="2014">2014</div>
+                              <div class="item" data-value="2015">2015</div>
+                              <div class="item" data-value="2016">2016</div>
+                              <div class="item" data-value="2017">2017</div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px;">
+                     <div class="input-field col s12 l12 m12" style="width:100%">
+                        <p class="heading_create_inside">  Skill Name <sup><span class="red_start"> * </span></sup> </p>
+                        <input id="edit_skill_name" type="text" class="validate frmt_inpt" maxlength="25" >
+                        <input id="hidden_edit_id_forskill" type="hidden" class="validate">
+                        <!--  <label for="edit_skill_name">  
+                           Skill Name <sup><span class="red_start"> * </span></sup></label> -->
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="input-field col s12">
+                        <p class="login_forgot_pass"> Fields marked with <sup><span class="red_start"> * </span></sup>  are mandatory</p>
+                     </div>
+                  </div>
+               </div>
+               <input type="hidden" class="edit_save_skill" >
+            </form>
+         </div>
+         <div class="modal-footer">
+            <span id="delete_skill" ><i class="fa fa-trash-o fa-2x pull-left del_btn_profile" ></i>
+         </span>
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="edit_save_skill btn btn-primary save_btn_profile save_heading" id="edit_save_skill">Save</button>
+         </div>
+      </div>
+   </div>
+   <script>
+      /*       var min = new Date().getFullYear(),
+             max = 1900,
+             select = document.getElementById('awd_year');
+             
+             for (var i = min; i>=max; i--){
+                 var opt = document.createElement('option');
+                 opt.value = i;
+                 opt.innerHTML = i;
+                 select.appendChild(opt);
+                 } */
+          
+   </script>
+   <script>
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+      
+   </script>
+   <script type="text/javascript">
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+      
+   </script>
+   <script type="text/javascript"> 
+      $("#edit_edu_start_month").dropdown("set selected","");
+   </script>
+   <!-- <script>
+      var min = new Date().getFullYear(),
+      max = 1900,
+      select = document.getElementById('last_used');
+      
+      for (var i = min; i>=max; i){
+          var opt = document.createElement('option');
+          opt.value = i;
+          opt.innerHTML = i;
+          select.appendChild(opt);
+          } 
+      </script> -->
+   <script type="text/javascript">
+      $("#edit_edu_start_month").dropdown("set selected","");
+   </script>
+   <script type="text/javascript">
+      $('#form_edit_skill').keypress(function(e){
+                     var code = e.keyCode || e.which;
+                     if( code === 13 ) {
+                     e.preventDefault();
+                     $(".edit_save_skill").click();
+                     };
+               });
+   </script>
+   <script type="text/javascript">
+      $('#form_add_skills').keypress(function(e){
+       var code = e.keyCode || e.which;
+       if( code === 13 ) {
+       e.preventDefault();
+       $(".save_skill").click();
+       };
+      });
+   </script>
+   <script>
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+          
+      
+   </script>
+   <script type="text/javascript">
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+      
+   </script>
+</template>
+<template name="health">
+   <div class="section" id="hide_medical">
+     
+         <h5>
+            Health Check 
+            <span class="pull-right edit_7">
+               <i class="fa pull-right fa-eye-slash" id="fa_eye_medical" ></i>
+               <a class="waves-light modal-trigger" href="#health" id="edit_7" >
+                  <!-- <i class="fa pull-right fa-eye"></i> -->
+                  <!-- <i class="fa pull-right fa-eye-slash"></i> -->
+                  <!-- </div> -->
+                  <i class="fa fa-pencil"></i>
+               </a>
+            </span>
+         </h5>
+         <div class="divider"></div>
+      <div id="show_modal_body" >
+         {{#each display_health}}
+          <div class="row" style="margin-top: 10px;">
+         <p class="heading_create_inside">  Hearing Problem:  <span>{{hearing}}</span></p>
+          <p class="heading_create_inside"> Physical Handicap: <span>{{physical}}</span></p>
+           <p class="heading_create_inside"> Speech Issue : <span>{{speech}}</span></p>
+           <p class="heading_create_inside"> Visually Impaired: <span>{{visual}}</span> </p>
+          </div>
+        
+         {{#if special_note}}      
+         <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+            <div class="col s12 m4 l3">
+               <p class="heading_create_inside"> Special Note: </p>
+            </div>
+            <div class="col s12 m4 l9">
+               <p class="heading_create_inside"> {{special_note}}</p>
+            </div>
+            <div class="col s12 m4 l9">
+               <p></p>
+            </div>
+            <hr style="margin-top: 5px; margin-bottom: 5px;"/>
+         </div>
+         {{/if}}
+         {{/each}}   
+      </div>
+   </div>
+   <script type="text/javascript">
+      $(document).ready(function(){
+         $("#show_modal_body").fadeOut("slow");
+      $("#hide_medical").click(function(){
+          var troica2 = $("#fa_eye_medical");
+        if(troica2.hasClass('fa-eye-slash')){
+      $("#show_modal_body").fadeIn("slow");
+        $("#fa_eye_medical").addClass('fa-eye').removeClass('fa-eye-slash');
+      }
+      else{
+       $("#show_modal_body").fadeOut("slow");
+         $("#fa_eye_medical").addClass('fa-eye-slash').removeClass('fa-eye'); 
+      }     
+      }); 
+      });
+   </script>
+
+
+
+   <div id="health" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+        <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+            <div class="modal-header profile_modal_header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Health check</h5>
+            </div>
+            <div class="modal-body">
+               
+                <div class="row">
+               <div class="col s12">
+                  <div class="row">
+                     <div class="col s6">
+                        <p class="heading_create_inside">Hearing problem<br/>
+                           <input name="group1" class="with-gap" type="radio" id="hearing_yes" />
+                           <label for="hearing_yes"><span class="heading_create_inside">Yes</span></label>
+                        </p>
+                        <p class="heading_create_inside">
+                           <input name="group1" class="with-gap" type="radio" id="hearing_no" />
+                           <label for="hearing_no">No</label>
+                        </p>
+                     </div>
+                     <div class="col s6">
+                        <p class="heading_create_inside">Physical Handicap<br/>
+                           <input  name="group_23" class="with-gap" type="radio" id="handicap_yes" />
+                           <label for="handicap_yes"><span class="heading_create_inside">Yes</span></label>
+                        </p>
+                        <p>
+                           <input type="radio" class="with-gap" name="group_23" id="handicap_no" />
+                           <label for="handicap_no"><span class="heading_create_inside">No</span></label>
+                        </p>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col s6">
+                        <p class="heading_create_inside">Visually impared<br/>
+                           <input type="radio" class="with-gap" name="group_23e" id="visual_yes" />
+                           <label for="visual_yes"><span class="heading_create_inside">Yes</span></label>
+                        </p>
+                        <p class="heading_create_inside">
+                           <input type="radio" class="with-gap" name="group_23e" id="visual_no" />
+                           <label for="visual_no"><span class="heading_create_inside">No</span></label>
+                        </p>
+                     </div>
+                     <div class="col s6">
+                        <p class="heading_create_inside">Speech Issue<br/>
+                           <input type="radio" class="with-gap" id="speech_yes" name="speech" value="Yes" />
+                           <label for="speech_yes"><span class="heading_create_inside">Yes</span></label>
+                        </p>
+                        <p class="heading_create_inside">
+                           <input type="radio" class="with-gap" id="speech_no" name="speech" value="No" />
+                           <label for="speech_no"><span class="heading_create_inside">No</span></label>
+                        </p>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="input-field col s12 m12 l12">
+                        <p class="heading_create_inside">Special Note </p>
+                        <textarea id="special_note" class="materialize-textarea frmt_inpt" placeholder="Special Note" data-length="120"></textarea>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+                <button type="button" class="save_summary btn btn-primary save_btn_profile save_medical" id="save_medical">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+   <script type="text/javascript">
+      $('#form_medical').keypress(function(e){
+                     var code = e.keyCode || e.which;
+                     if( code === 13 ) {
+                     e.preventDefault();
+                     $(".save_medical").click();
+                     };
+               });
+   </script>
+   <script>
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+          
+   </script>
+   <script type="text/javascript">
+      $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Ok',
+        closeOnSelect: false // Close upon selecting a date,
+      });
+   </script>
+   <script type="text/javascript">
+      $(".modal-fullscreen").on('show.bs.modal', function () {
+        setTimeout( function() {
+          $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
+        }, 0);
+      });
+      $(".modal-fullscreen").on('hidden.bs.modal', function () {
+        $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
+      });
+      
+   </script>
+</template>
+<template name="personalinfo">
+   <div class="section">
+      <div id="hide_personal_info" >
+         <h5>Personal Information <span class="pull-right"> <i class="fa pull-right  fa-eye-slash" id="fa_eye_info" ></i><a class="waves-light modal-trigger edit_3" href="#modal3" id="edit_peronal_info"><i class="fa fa-pencil"></i></a> </span></h5>
+         <div class="divider"></div>
+      </div>
+      <div id="show_modal_body_info" >
+         {{#each display_info}}
+         <div class="row" style="margin-top: 10px;">
+             <p class="heading_create_inside">  Name:  <span>{{name}}</span></p>
+              <p class="heading_create_inside">  Hearing Problem:  <span>{{hearing}}</span></p>
+               {{#if Gender}} 
+               <p class="heading_create_inside">  gender:  <span>{{gender}}</span></p>
+               {{/if}}
+                {{#if marital_status}}     
+                <p class="heading_create_inside">  Marital Status:  <span>{{marital_status}}</span></p>
+                 {{/if}}
+                  {{#if dob}} 
+                 <p class="heading_create_inside">  DOB:  <span>{{dob}}</span></p>
+                  {{/if}} 
+                  <p class="heading_create_inside">  Phone No.:  <span>{{phone}}</span></p>
+                   <p class="heading_create_inside">  Address:  <span>{{location}}</span></p>
+                </div>
+          {{/each}}
+      </div>
+   </div>
+   <script type="text/javascript">
+      $(document).ready(function(){
+         $("#show_modal_body_info").fadeOut("slow");
+      $("#hide_personal_info").click(function(){
+        // alert('inside');
+          var troica2 = $("#fa_eye_info");
+          // alert(troica2);
+      
+        if(troica2.hasClass('fa-eye-slash')){
+          // alert('without eye');
+      $("#show_modal_body_info").fadeIn("slow");
+        $("#fa_eye_info").addClass('fa-eye').removeClass('fa-eye-slash');
+      }
+      else{
+        // alert('with eye'); 
+       $("#show_modal_body_info").fadeOut("slow");
+         $("#fa_eye_info").addClass('fa-eye-slash').removeClass('fa-eye'); 
+      }     
+      }); 
+      });
+      
+   </script>
+  <div id="modal3" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+        <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+            <div class="modal-header profile_modal_header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Personal Info</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form_reset" id="form_pers_info" >
+                     <div class="row" style="margin-bottom: 0px;">
+                           <div class="input-field col s12 l6 m6">
+                              <p class="heading_create_inside" >First Name</p>
+                              <input id="info_first_name" type="text" class="validate frmt_inpt" placeholder="First Name" >
+                              {{#each set_hidden_info}} 
+                              <input type="hidden" id="default_name" value={{user_name}} >
+                              {{/each}}  
+                           </div>
+                           <!-- <div class="input-field col s6">
+                              <input id="info_middle_name" type="text" class="validate" placeholder="Middle Name" >
+                              </div> -->
+                           <div class="input-field col s12 l6 m6">
+                              <p class="heading_create_inside" >Last Name</p>
+                              <input id="info_last_name" type="text" class="validate frmt_inpt" placeholder="Last Name" >
+                           </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 0px;">
+                           <div class="input-field col s12 l6 m6">
+                        <p class="heading_create_inside" > Gender <sup><span class="red_start"> * </span></sup></p>
+                        <div id="" class="ui selection dropdown frmt_inpt" style="width:100%">
+                           <input type="hidden" name="test" value="" class="normal_signin login_input_box" />
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="Male">Male</div>
+                              <div class="item" data-value="Female">Female</div>
+                           </div>
+                        </div>
+                     </div>
+                       
+                           <div class="input-field col s12 m6 l6">
+                              <p class="heading_create_inside" > Date of Birth</p>
+                              <input type="text" class="frmt_inpt"  id="datepicker">
+                              {{#each set_hidden_info}} 
+                              <input type="hidden" id="default_dob" value={{dob}} >
+                              {{/each}}  
+                           </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 0px;">
+                           <div class="input-field col s12 l6 m6">
+                        <p class="heading_create_inside" > Marital status <sup><span class="red_start"> * </span></sup></p>
+                        <div id="" class="ui selection dropdown frmt_inpt" style="width:100%">
+                           <input type="hidden" name="test" value="" class="normal_signin login_input_box" />
+                           <div class="text">Test</div>
+                           <!-- <i class="dropdown icon"></i> -->
+                           <div class="menu">
+                              <div class="item" data-value="">Not Selected</div>
+                              <div class="item" data-value="Married">Married </div>
+                              <div class="item" data-value="Un-married">Un-married</div>
+                           </div>
+                        </div>
+                     </div>
+                       
+                           <div class="input-field col s12 m6 l6">
+                              <p class="heading_create_inside" > Phone</p>
+                              <input type="text" class="frmt_inpt">
+                              {{#each set_hidden_info}} 
+                              <input type="hidden" id="default_dob">
+                              {{/each}}  
+                           </div>
+                        </div>
+                         
+
+                        <div class="row">
+                           <div class="input-field col s12 m12 l12 ">
+                              <p class="heading_create_inside" > Enter Location</p>
+                              <input id="autocomplete" type="text" tabindex="-1" class="automat validate frmt_inpt" Placeholder="Enter Location" >
+                              {{#each set_hidden_info}}    
+                              <input type="hidden" id="default_location" value={{location}} >
+                              {{/each}}
+                           </div>
+                      
+                        </div>
+              
+            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+                <button type="button" class="save_summary btn btn-primary edit_save_btn_profile save_heading" id="save_summary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+   <script type="text/javascript">
+      $('#form_pers_info').keypress(function(e){
+                     var code = e.keyCode || e.which;
+                     if( code === 13 ) {
+                     e.preventDefault();
+                     $(".save_pers_info").click();
+                     };
+               });
+   </script>
+   <script>
+      $(document).ready(function(){
+        $('.modal').modal();
+      });
+          
+      
+   </script>
+   <script type="text/javascript">
+      $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Ok',
+        closeOnSelect: false // Close upon selecting a date,
+      });
+      
+   </script>
+</template>
+<template name="addbuttons">
+   <div class="section visible-lg">
+      <a class="waves-effect col m6 s6 brn_add_health waves-light  btn_clor modal-trigger edit_7" href="#health" id="health_check_1" ><i class="fa fa-plus"></i> Health check</a>
+      <a class="waves-effect waves-light brn_add_health btn_clor modal-trigger edit_3" href="#modal3" id="personal_info_2" ><i class="fa fa-plus"></i> Personal Details</a>
+      <script type="text/javascript">
+         $('#health_check_1').click(function(){
+           $('#edit_7').click();
+         });
+         
+         $('#personal_info_2').click(function(){
+           $('#edit_3').click();
+         });
+         
+      </script>
+   </div>
+</template>
+<template name="todayevent">
+   <div class="section visible-lg">
+      <h5>Today is Nov 20  </h5>
+      <div class="divider"></div>
+      <p class="margin-top" style="margin-top: 10px !important;"> <span class="total_event_count_profile profile_margin_center_sections">5</span> event today</p>
+   </div>
+</template>
+<template name="recentblog">
+   <div class="section visible-lg">
+      <h5>
+         You may like to read 
+         <div class="divider"></div>
+      </h5>
+      <ul class="collection">
+         <li class="collection-item avatar">
+            <img src="http://bitovn.com/feed/profileImage/cGft1494661092783272_user-Lauren-59f6b030ac35f.jpg" alt="" class="circle">
+            <span class="title"><a href="" style="color: #333 !important;
+               font-size: 16px !important;">Make The Domain Unique</a>  </span>
+            <p> <a href="" id="redirect_click_1" valu="Ankit arora" >Ankit arora</a><br>
+            </p>
+         </li>
+         <li class="collection-item avatar">
+            <img src="http://bitovn.com/feed/profileImage/cGft1494661092783272_user-Lauren-59f6b030ac35f.jpg" alt="" class="circle">
+            <span class="title"><a href="" style="color: #333 !important;
+               font-size: 16px !important;">Make The Domain Unique</a>  </span>
+            <p> <a href="" id="redirect_click_2" valu="Shobhu" >Shobhu</a><br>
+            </p>
+         </li>
+         <li class="collection-item avatar">
+            <img src="http://bitovn.com/feed/profileImage/cGft1494661092783272_user-Lauren-59f6b030ac35f.jpg" alt="" class="circle">
+            <span class="title"><a href="" style="color: #333 !important;
+               font-size: 16px !important;">Make The Domain Unique</a>  </span>
+            <p> <a href="#" id="redirect_click_3" valu="Akhilesh Chandel" >Akhilesh Chandel</a><br>
+            </p>
+         </li>
+      </ul>
+   </div>
+</template>
+<template name="user_list">
+   <div class="section visible-lg">
+      <h5>
+         People you may know
+         <div class="divider"></div>
+      </h5>
+      <ul class="collection">
+         {{#each display_user_list}}
+         {{#if display_user_list_2}}
+         <li class="collection-item avatar">
+            <img src="{{profile_pic}}" alt="" class="circle">
+            <p> <a href="" class="redirect_click_1" valu={{user_id}} target="_blank" >{{name}}</a><br>
+            <p style="color:#af7ac5"> {{email}} <br>
+            <p style="color:black"> {{headline}} <br> </p>
+            </p>
+            </p>
+         </li>
+         {{/if}}
+         {{else}}
+         {{> spinner}}
+         {{/each}}
+      </ul>
+   </div>
+</template>

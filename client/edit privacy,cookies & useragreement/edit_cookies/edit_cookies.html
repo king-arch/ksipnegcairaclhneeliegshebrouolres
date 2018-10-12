@@ -1,0 +1,157 @@
+
+<template name="editcookies">
+  <head>
+  <title>messanging</title>
+</head>
+
+ <style>
+  .cropper-example-lena
+{
+  width:100% !important;
+}
+  </style>
+  <body class="body_bg">
+  {{> header}}
+  {{> edit_cookies}}
+ {{> sAlert}}
+</body>
+
+</template>
+
+<template name="edit_cookies">
+    <!-- <button id="check_alert" > check alert</button> -->sss
+<!-- {{#each edit_privacy_array }}       -->
+<div class="page_wh">
+   {{> ticker}}
+
+<h1>Edit Cookies</h1>
+
+  <div class="page_all_white">
+   <div class="row">
+    <form >
+      <div class="row">
+        <div class="input-field col s12">
+           <p class="heading_create_inside"> Description </p>
+          <textarea id="edit_privacy" class="materialize-textarea frmt_inpt"  ></textarea>
+          <!-- <textarea id="edit_privacy" class="materialize-textarea frmt_inpt" value={{privacy_content}} ></textarea> -->
+         
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+  // $('#edit_blog_description').trumbowyg();
+    var trumbowyg = $('#edit_privacy').trumbowyg(
+ {
+  btnsDef: {
+        // Create a new dropdown
+       
+    },
+    // Redefine the button pane
+    btns: [
+        ['strong', 'em', 'del'],
+        ['superscript', 'subscript'],
+        //['link'],
+        // ['insertImage'],
+         ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+        [ 'orderedList'],
+        ['horizontalRule'],
+        ['removeformat'],
+        // ['fullscreen']
+    ],
+  });
+
+
+</script>
+ <!-- 
+<script type="text/javascript">       
+  $("#edit_blog_visibility").dropdown("set selected","");
+</script> -->
+ 
+
+ <div class="row">
+    <div class="col s12 m6 l4"> &nbsp;  </div>
+
+    <div class="col s12 m6 l3 text-right">
+         <a class="waves-effect waves-light save_button" id="save_edit_privacy" > Save</a>
+    </div>
+    
+    <div class="col s12 m6 l2 text-right">
+          <a class="waves-effect waves-light clicked_cancel cncl_btm" id="cancelBack" >Cancel</a> 
+    </div>
+  </div>
+
+  <div class="loading loader_visiblity_block"  id="loading_div" ></div>
+
+  <script type="text/javascript">
+
+
+      $('input').blur(function() {
+        enableScroll();
+        })
+      .focus(function() {
+        disableScroll();
+        });
+      var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault)
+      e.preventDefault();
+  e.returnValue = false;  
+}
+
+function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+}
+
+function disableScroll() {
+  if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove  = preventDefault; // mobile
+  document.onkeydown  = preventDefaultForScrollKeys;
+}
+
+function enableScroll() {
+    if (window.removeEventListener)
+        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.onmousewheel = document.onmousewheel = null; 
+    window.onwheel = null; 
+    window.ontouchmove = null;  
+    document.onkeydown = null;  
+}
+
+
+
+    $('.datepicker').pickadate({
+
+    format: 'yyyy-mm-dd',
+    formatSubmit: 'yyyy-mm-dd',
+    min: new Date(), 
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('select').material_select();
+  });
+  </script>
+</div>
+</div>
+<!-- {{load_blog_data}} -->
+<!-- {{/each}} -->
+
+</template>

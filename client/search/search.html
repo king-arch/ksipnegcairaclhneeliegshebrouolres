@@ -1,0 +1,688 @@
+
+<template name="search">
+   <head>
+      <title>Search</title>
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1">      
+     <!--  <link rel = "stylesheet"
+         href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel = "stylesheet" 
+         href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"> -->
+
+      <script type = "text/javascript"
+         src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
+      </script>
+   </head>
+   <!-- <body style="background-color: #F5F5F5 !important;"> -->
+   <body>
+     {{> header}}
+      {{> search_content}}
+   </body>
+</template>
+<template name="search_content">
+    {{#if user_is_admin}}
+
+   <div class="page_wh">
+    <p>showing result for 'hi'</p>
+      <div class="">
+         <div class="row">
+
+            <div class="col s12" style="padding: 0px;">
+
+               <ul class="tabs tabs_ne" style="margin-top:10px !important;">
+                  <li class="tab col s3"><a  id="all_people_tab" href="#all_people">People ({{total_people}}) </a></li>
+                  <li class="tab col s3"><a  id="all_groups_tab" href="#all_groups">Groups ({{total_groups}})</a></li>
+                  <li class="tab col s3 "><a id="all_events_tab" href="#all_events"> Events ({{total_events}})</a></li>
+                  <li class="tab col s3 "><a id="all_blogs_tab"  href="#all_blogs"> Blogs ({{total_blogs}})</a></li>
+               </ul>
+
+            </div>
+
+            <div class=" col m12 l12 s12 tab-content" style="background-color: #fff; padding-top: 20px !important">
+               <div class="tab-pane" id="all_people">
+                  <!-- <h5 class="profile_fields_heading">People </h5>
+                   <div class="divider"></div> -->
+           
+                  <div class="row" >
+
+                   {{#each search_people_for_admin}}
+                     <div class="col m4 l3 s12  pointer"> 
+                        <div class="card row_nomargin_padd text-center no_box_shadow" style="padding: 0px;">
+
+                          
+                           <div class="card-content" style="padding: 0px;">
+                              <div class="text-center padding_image_right col m12 l12 s12" style="margin-top: 0px!important;">
+                                 <img class="all_people img_connection ui medium image" src={{profile_pic}}
+                                  onError="this.onerror=null;this.src='https://placeimg.com/200/300/animals';">
+                              </div>
+                              <span class="all_people card-title activator event_name">{{name}}</span>
+                              <p class="activator event_type">{{headline_online_only}}</p>
+                              <p class="event_type activator"><i class="fa fa-map-marker"></i> {{trim_content location}} 
+
+                              <!-- <p class="connected_since_text"><span style="color: #23527c;">Connected since</span> connected_since</p> -->
+                              </p>
+                              <!-- <p class="col m12 s12 l12 join_btn">Connected </p> -->
+                           </div>
+<!-- 
+        <div class="section">
+              {{#each check_status}}
+
+              {{#if equals req_status 0 }}
+                  <button class="waves-effect waves-light btn-large" disabled="disabled" style="width: 100%;" >Pending</button>
+              {{/if}}
+
+              {{#if equals req_status 1 }}
+                  <button class="waves-effect waves-light btn-large" disabled="disabled" style="width: 100%;" >Connected</button>
+              {{/if}}
+
+              {{#if equals req_status 2 }}
+                  <button class="waves-effect waves-light btn-large" disabled="disabled" style="width: 100%;" >Pending</button>
+              {{/if}}
+
+              {{#if equals req_status 3 }}
+                  <button class="waves-effect waves-light btn-large" id="connect_now"  style="width: 100%;">
+                  Connect </button>
+                  <input type="hidden" id="capture_request_id_{{req_id}}" value={{../user_id}} >
+              {{/if}}
+
+              {{else}}
+                  <button class="waves-effect waves-light btn-large" id="connect_now2" sho={{../user_id}}  style="width: 100%;" >Connect</button>
+                  <input type="hidden" id="capture_request_id2_{{req_id}}" value={{../user_id}} >
+              {{/each}}
+        </div> -->
+                      <!--   <div class="row">
+                              <div class="col m12 s12 l12" style="padding: 0px;">
+                                 <p class="join_btn">
+                                    <a href="#" style="color: #fff !important;">
+                                           <p> Attending </p>  
+                                    </a>
+                                 </p>
+                              </div>
+                           </div> -->
+                           <!-- <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;"> -->
+
+                              <!-- <div class="col m12 l12 s12 icon_for_site ignore_req" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a></div> -->
+                           <!-- </div> -->
+                        </div>
+
+                     </div>
+                        {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> No People found with the searched keyword</p>
+                           </div>
+                        </div>
+                     {{/each}}
+                  </div>
+               </div>
+                 <div class="tab-pane" id="all_groups">
+                  <!-- <div id="custom-search-input">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Groups</p>
+                     </div>
+                  </div> -->
+                  <div class="row" >
+                     {{#each search_groups}}
+                     <div class="col m4 l3 s12  pointer">
+                        <div class="card row_nomargin_padd text-center no_box_shadow" style="padding: 0px;">
+                           <div class="card-content" style="padding: 0px !important;">
+                              
+                              <div class="card" style="margin-top: 0 !important; padding-top: 0px !important; box-shadow: none; ">
+                                  <img src={{Show_grp_image}} class="group_search image_banner_all">
+                                </div>
+                                <!-- <div class="text-center padding_image_right col m12 l12 s12">
+                                 <img class="img_connection ui medium image" src={{Show_grp_image}} alt="No image" >
+                              </div> -->
+                              <span class="card-title activator event_name group_search">{{trim_content grp_title}}</span>
+                              <p class="activator event_type">{{trim_content grp_discription}}</p>
+                              <p class="event_type activator"> Group-Type: {{grp_type}} 
+                              <!-- <p class="connected_since_text"><span style="color: #23527c;">Connected since</span> connected_since</p> -->
+                              </p>
+                           </div>
+                            <div class="card-action text-left">
+                                  
+                                  <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> {{get_total_discussions}} </span>
+                           </div>
+
+
+<!--       <div class="section">
+
+          {{#each join_status_check_array}}
+
+           {{#if leave_status }}  
+           <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite modal-trigger edit_7" href="#health" id="leave_group" style="border: 1px solid rgb(51, 142, 167);
+color: rgb(51, 142, 167) !important;
+background-color: rgb(255, 255, 255) !important;
+border-radius: 5px !important;"> Leave</a>
+                  
+
+         {{else if join_status}}
+         <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite modal-trigger edit_7" href="#" id="Join_group" > Join</a>
+
+         {{else if Send_invitee_request}}
+         <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite modal-trigger edit_7" href="#health" id="send_Join_group_request" title="Send request" > Send request</a>
+
+         {{else if check_invitee_request_status}}
+         <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite " href="#" title="Request Sent and Pending for approval by Admin" > Approval pending from admin</a>
+         {{else}}
+             <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite" href="#" disable="disabled">  Sorry you are not invited :)</a>
+         {{/if}} 
+         {{else}}
+         <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite" href="#" disable="disabled">  Welcome Admin :)</a>
+         
+          {{/each}}
+          <div class="clearfix"></div>
+        </div> -->
+
+
+                                <!-- <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;"> -->
+                              <!-- <div class="col m12 l12 s12 icon_for_site ignore_req" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a> -->
+                           <!-- </div> -->
+                           <!-- </div> -->
+                        </div>
+                     </div>
+                         {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> No Groups found with the searched keyword</p>
+                           </div>
+                        </div>
+                     {{/each}}
+
+                  </div>
+               </div>
+
+                 <div class="tab-pane" id="all_events">
+                  <!-- <div id="custom-search-input">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Events </p>
+                     </div>
+                  </div> -->
+                  <div class="row" >
+                     {{#each fetch_events}}
+                    <div class="col m4 l3 s12 pointer">
+                        <span id="show_event_details" class="redirect_click_1" >
+                           <a class="list-quotes" href="#" >
+                              <img alt="img" style="height:100px;  " src="{{event_cover_image}}" class="event_search img-responsive setimgres">  
+                              <div class="quotes">
+                                 <p><i class="fa fa-map-marker"></i> {{trim_content event_location event_location}} </p>
+                              </div>
+                           </a>
+                           <div class="row listing_">
+                              <div class="col l2 m1 s2">
+                                 <div class="tdtdss">
+                                    <div class="sep24">
+                                       <span class="month">{{datemnth}} </span><br> 
+                                       <span class="date">{{datenm}}</span> <br> 
+                                       <samp class="week">{{dateday}}</samp>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col l10 m11 s10">
+                                 <a class="event_name event_search" href="#">{{trim_content event_name}}</a> <br>
+                                 <a href="event_type"><span class="event_type">{{event_type}}</span></a><br>
+                              </div>
+                           </div>
+                           <div class="row">
+
+<!-- 
+                <div class="section">
+                      {{#if check_invite_status}}
+                        <div class="btn-group show-on-hover text-center" style="width: 100% !important;">
+                            <button type="button" class="dropdown-toggle brn_add_health" data-toggle="dropdown" style="width: 100% !important;" >Invitation Pending   </button>
+                            
+                            <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                              <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" invitation="1" id="event_invite_accpted" > Accept</a></li>
+                              <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" invitation="2" id="event_invite_rejected" > Reject</a></li>
+                            </ul>
+ 
+                        </div> 
+                        {{else if check_accept_status}}  
+                      <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="btn_members_invite dropdown-toggle brn_add_health btn_clor" > Attending</a> 
+                         
+
+                        {{else if check_reject_status}} 
+                        <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="dropdown-toggle brn_add_health btn_clor btn_members_invite" > Not Attending</a>    
+                 
+                             
+                          {{else if check_if_admin}} 
+                          <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="dropdown-toggle brn_add_health btn_clor btn_members_invite" > Welcome Creator :)</a>
+                  
+                          {{else}}
+                          <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="dropdown-toggle brn_add_health btn_clor btn_members_invite" > Not invited :(</a>
+        
+                       {{/if}}   
+                      </div> -->
+
+
+                           </div>
+                        </span>
+                     
+                     </div>
+                            {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> No Events found with the searched keyword</p>
+                           </div>
+                        </div>
+                     {{/each}}
+                  </div>
+               </div> 
+               <div class="tab-pane" id="all_blogs">
+                  <!-- <div id="custom-search-input">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Blogs </p>
+                     </div>
+                  </div> -->
+                  <div class="row" >
+                    {{#each fetch_all_blogs}}
+                     <div class="col m4 l3 s12 pointer">
+                        <div class="card row_nomargin_padd text-center no_box_shadow" style="padding:0px; margin-top: 0px;">
+                           <div class="card-content" style="padding: 0px !important; padding-bottom: 10px!important;">
+                            <!--   <div class="text-center padding_image_right col m12 l12 s12">
+                                 <img class="img_connection ui medium image" src={{blog_image}} alt="No image" >
+                              </div> -->
+                                <div class="card" style="margin-top: 0; padding: 0px;">
+                                  <img src={{blog_image}} class="image_banner_all blog_search">
+                                </div>
+                              <span class="card-title activator blog_search">{{trim_content blog_title}}</span>
+                              <p class="activator event_type">{{changeDateFormat}}</p>
+                              <p class="event_type activator blog_author"><!-- <i class="fa fa-map-marker"></i>  --><b>Author-</b> {{fetch_blog_creator_info blog_creator_id }} 
+                              <!-- <p class="connected_since_text"><span style="color: #23527c;">Connected since</span> connected_since</p> -->
+                              </p>
+                           </div>
+                           <!-- <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;"> -->
+                              <!-- <div class="col m12 l12 s12 icon_for_site ignore_req" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a></div> -->
+                           <!-- </div> -->
+                        </div>
+                     </div>
+                     {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> No Blogs found with the searched keyword</p>
+                           </div>
+                        </div>
+                     {{/each}}
+                  </div>
+               </div>
+
+            </div>
+         </div>
+      </div>
+   </div>
+  <!--  <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+      <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+         <li class="col m4 s4 text-center total_number_bg_padding" id="all_connections">
+            <a class="total_number_bg">
+            <span class="numbr_below" >{{connection}}</span>
+            <span href="#connection"   class="total_number_name">All</span>
+            </a>
+         </li>
+         <li class="col m4 s4 text-center total_number_bg_padding" id="request_connections" >
+            <a class="total_number_bg">
+            <span class="numbr_below">{{request}}</span>
+            <span href="#request" class="total_number_name">Request</span>
+            </a>
+         </li>
+         <li class="col m4 s4 text-center total_number_bg_padding_last" id="ignore_connections">
+            <a class="total_number_bg">
+            <span class="numbr_below">{{ignore}}</span>
+            <span href="#ignore"  class="total_number_name">Ignore</span>
+            </a>
+         </li>
+      </ul>
+   </div> -->
+  
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+   {{else}}
+
+
+      <div class="page_wh">
+         <h3><p style="text-align: center; display: none">showing result for {{show_searched_text}}</p></h3>
+      <div class="">
+         <div class="row">
+
+            <div class="col s12" style="padding: 0px;">
+
+               <ul class="tabs tabs_ne" style="margin-top:10px !important;">
+                  <li class="tab col s3"><a  id="all_people_tab" href="#all_people">People ({{total_people}}) </a></li>
+                  <li class="tab col s3"><a  id="all_groups_tab" href="#all_groups">Groups ({{total_groups}})</a></li>
+                  <li class="tab col s3 "><a id="all_events_tab" href="#all_events"> Events ({{total_events}})</a></li>
+                  <li class="tab col s3 "><a id="all_blogs_tab"  href="#all_blogs"> Blogs ({{total_blogs}})</a></li>
+               </ul>
+
+            </div>
+           <!-- <center>   <p id="showResultstext" >  Showing result for "{{ShowResultFor}}" </p> </center> -->
+            <div class=" col m12 l12 s12 tab-content" style="background-color: #fff; padding-top: 20px !important">
+               <div class="tab-pane" id="all_people">
+                  <!-- <h5 class="profile_fields_heading">People </h5>
+                   <div class="divider"></div> -->
+                  <div class="row" >
+
+
+                {{#if total_people}}
+              <p class="login_forgot_pass col m12 s12" >
+                  Showing {{total_people}} result for "{{ShowResultFor}}"
+            </p>
+              {{/if}}
+
+              
+                 {{#each search_people}}
+                     <div class="col m4 l3 s12  pointer"> 
+                        <div class="card row_nomargin_padd text-center no_box_shadow" style="padding: 0px;">
+
+                          
+                           <div class="card-content" style="padding: 0px;">
+                              <div class="text-center padding_image_right col m12 l12 s12" style="margin-top: 0px!important;">
+                                 <img class="all_people img_connection ui medium image" src={{profile_pic}}
+                                  onError="this.onerror=null;this.src='https://placeimg.com/200/300/animals';">
+                              </div>
+                              <span class="all_people card-title activator event_name">{{name}}</span>
+                              <p class="activator event_type">{{headline_online_only}}</p>
+                              <p class="event_type activator"><i class="fa fa-map-marker"></i> {{trim_content location}} 
+
+                              <!-- <p class="connected_since_text"><span style="color: #23527c;">Connected since</span> connected_since</p> -->
+                              </p>
+                              <!-- <p class="col m12 s12 l12 join_btn">Connected </p> -->
+                              {{#each check_status}}
+
+              {{#if equals req_status 0 }}
+                  <button class="btn_connect" disabled="disabled" style="width: 100%;" >Pending</button>
+              {{/if}}
+
+              {{#if equals req_status 1 }}
+                  <button class="btn_connected" disabled="disabled" style="width: 100%;" >Connected</button>
+              {{/if}}
+
+              {{#if equals req_status 2 }}
+                  <button class="btn_connect " disabled="disabled" style="width: 100%;" >Pending</button>
+              {{/if}}
+
+              {{#if equals req_status 3 }}
+                  <button class="btn_connect" id="connect_now"  style="width: 100%;">
+                  Connect </button>
+                  <input type="hidden" id="capture_request_id_{{req_id}}" value={{../user_id}} >
+              {{/if}}
+
+              {{else}}
+                  <button class="btn_connect" id="connect_now2" sho={{../user_id}}  style="width: 100%;" >Connect</button>
+                  <input type="hidden" id="capture_request_id2_{{req_id}}" value={{../user_id}} >
+              {{/each}} 
+                           </div>
+
+                      <!--   <div class="row">
+                              <div class="col m12 s12 l12" style="padding: 0px;">
+                                 <p class="join_btn">
+                                    <a href="#" style="color: #fff !important;">
+                                           <p> Attending </p>  
+                                    </a>
+                                 </p>
+                              </div>
+                           </div> -->
+                           <!-- <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;"> -->
+
+                              <!-- <div class="col m12 l12 s12 icon_for_site ignore_req" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a></div> -->
+                           <!-- </div> -->
+                        </div>
+
+                     </div>
+                        {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> No People found with the searched keyword</p>
+                           </div>
+                        </div>
+                     {{/each}}
+                  </div>
+               </div>
+                 <div class="tab-pane" id="all_groups">
+                  <!-- <div id="custom-search-input">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Groups</p>
+                     </div>
+                  </div> -->
+                  <div class="row" >
+                                  <!-- <p class="login_forgot_pass col m12 s12" style="display: none">10 people found</p>
+ -->
+ {{#if total_groups}}
+              <p class="login_forgot_pass col m12 s12" >Showing {{total_groups}} result for "{{ShowResultFor}}"</p>
+ {{/if}}
+                     {{#each search_groups}}
+                     <div class="col m4 l3 s12  pointer">
+                        <div class="card row_nomargin_padd text-center no_box_shadow" style="padding: 0px;  ">
+                           <div class="card-content" style="padding: 0px !important;">
+                              
+                              <div class="card" style="margin-top: 0 !important; padding-top: 0px !important; box-shadow: none;  margin-bottom: 0px;">
+                                  <img src={{Show_grp_image}} class="group_search image_banner_all">
+                                </div>
+                                <!-- <div class="text-center padding_image_right col m12 l12 s12">
+                                 <img class="img_connection ui medium image" src={{Show_grp_image}} alt="No image" >
+                              </div> -->
+                              <span class="card-title activator event_name group_search">{{trim_content grp_title}}</span>
+                              <p class="activator event_type">{{trim_content grp_discription}}</p>
+                              <p class="event_type activator">Group-Type: {{grp_type}} 
+                              <!-- <p class="connected_since_text"><span style="color: #23527c;">Connected since</span> connected_since</p> -->
+                              </p>
+                           </div>
+                            <div class="card-action text-left">
+                                  
+                                  <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> {{get_total_discussions}} </span>
+                           </div>
+
+
+    
+
+          {{#each join_status_check_array}}
+
+           {{#if leave_status }}  
+           <button class="btn_connected grp_bt" href="#health" id="leave_group"> Leave</button>
+                  
+
+         {{else if join_status}}
+         <button class="btn_connect grp_bt" href="#" id="Join_group"  > Join</button>
+
+         {{else if Send_invitee_request}}
+         <button class="btn_connect grp_bt" href="#health" id="send_Join_group_request" title="Send request" > Send request</button>
+
+         {{else if check_invitee_request_status}}
+         <button class="btn_connect grp_bt" href="#" title="Request Sent and Pending for approval by Admin" > Approval pending from admin</button>
+         {{else}}
+             <button class="btn_connect grp_bt" href="#" disable="disabled">  Not invited </button>
+         {{/if}} 
+         {{else}}
+         <button class="btn_connect grp_bt" href="#" disable="disabled">  Welcome Admin :)</button>
+         
+          {{/each}}
+          <div class="clearfix"></div>
+       
+
+
+                                <!-- <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;"> -->
+                              <!-- <div class="col m12 l12 s12 icon_for_site ignore_req" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a> -->
+                           <!-- </div> -->
+                           <!-- </div> -->
+                        </div>
+                     </div>
+                         {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> No Groups found with the searched keyword</p>
+                           </div>
+                        </div>
+                     {{/each}}
+
+                  </div>
+               </div>
+
+                 <div class="tab-pane" id="all_events">
+                  <!-- <div id="custom-search-input">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Events </p>
+                     </div>
+                  </div> -->
+                  <div class="row" >
+                     {{#if total_events}}
+                                  <p class="login_forgot_pass col m12 s12" >Showing {{total_events}} result for "{{ShowResultFor}}"</p>
+                    {{/if}}
+                     {{#each fetch_events}}
+                    <div class="col m4 l3 s12 pointer">
+                        <span id="show_event_details" class="redirect_click_1" >
+                           <a class="list-quotes" href="#" >
+                              <img alt="img" style="height:100px;  " src="{{event_cover_image}}" class="event_search img-responsive setimgres">  
+                              <div class="quotes">
+                                 <p><i class="fa fa-map-marker"></i> {{trim_content event_location event_location}} </p>
+                              </div>
+                           </a>
+                           <div class="row listing_" style="padding: 0px !important;">
+                              <div class="col l2 m1 s2">
+                                 <div class="tdtdss">
+                                    <div class="sep24">
+                                       <span class="month">{{datemnth}} </span><br> 
+                                       <span class="date">{{datenm}}</span> <br> 
+                                       <samp class="week">{{dateday}}</samp>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col l10 m11 s10">
+                                 <a class="event_name event_search" href="#">{{trim_content event_name}}</a> <br>
+                                 <a href="event_type"><span class="event_type">{{event_type}}</span></a><br>
+                              </div>
+                              
+                          {{#if check_invite_status}}
+
+                              {{#if checkIfEventIsPastEvent}}
+                                <button class="wbtn_connect btn_connect" disabled="disabled" style="width: 100%;" >This event has passed</button>
+                                {{else}}
+                    <div class="btn-group show-on-hover text-center" style="width: 100% !important;">
+                            <button type="button" class="btn_connect grp_bt" data-toggle="dropdown" style="width: 100% !important;" >Invitation Pending   </button>
+                            <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                              <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" invitation="1" id="event_invite_accpted" > Accept</a></li>
+                              <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" invitation="2" id="event_invite_rejected" > Reject</a></li>
+                            </ul>
+                        </div>
+                 {{/if}}
+
+                         
+                        {{else if check_accept_status}} 
+                      {{#if checkIfEventIsPastEvent}}
+                          <button class="btn_connected grp_bt"> Attended</button> 
+                          <!-- <p> Attending </p> -->
+                                {{else}}
+                          <button class="btn_connected grp_bt"> Attending</button> 
+                          <!-- <p> Attending </p> -->
+                      {{/if}}
+
+                        {{else if check_reject_status}} 
+                                             {{#if checkIfEventIsPastEvent}}
+                          <button class="btn_connected grp_bt" > Not Attended</button> 
+                          <!-- <p> Attending </p> -->
+                                {{else}}
+                          <button class="btn_connected grp_bt" > Not Attending</button> 
+                          <!-- <p> Attending </p> -->
+                 {{/if}}
+
+                         <!--  <p> Not Attending </p> -->
+                             
+                          {{else if check_if_admin}} 
+                         
+                         <button class="btn_connect grp_bt"> Welcome Creator :)</button>
+                          <!-- <p> Welcome Creator :)  </p> -->
+                          {{else}}
+                         <button class="btn_connect grp_bt"> Not invited :(</button>
+                          <!-- <p> Not invited :(  </p> -->
+                       {{/if}} 
+                           </div>
+                           
+
+
+               
+                        
+                      
+                        </span>
+                     
+                     </div>
+                            {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> No Events found with the searched keyword</p>
+                           </div>
+                        </div>
+                     {{/each}}
+                  </div>
+               </div> 
+               <div class="tab-pane" id="all_blogs">
+                  <!-- <div id="custom-search-input">
+                     <div class="col m12 l12 s12">
+                        <p class="heading_create">Blogs </p>
+                     </div>
+                  </div> -->
+                  <div class="row" >
+                       {{#if total_blogs}}
+                          <p class="login_forgot_pass col m12 s12" >Showing {{total_blogs}} result for "{{ShowResultFor}}"</p>
+                       {{/if}}
+
+                    {{#each fetch_all_blogs}}
+                     <div class="col m4 l3 s12 pointer">
+                        <div class="card row_nomargin_padd text-center no_box_shadow" style="padding:0px; margin-top: 0px;">
+                           <div class="card-content" style="padding: 0px !important; padding-bottom: 10px!important;">
+                            <!--   <div class="text-center padding_image_right col m12 l12 s12">
+                                 <img class="img_connection ui medium image" src={{blog_image}} alt="No image" >
+                              </div> -->
+                                <div class="card" style="margin-top: 0; padding: 0px;">
+                                  <img src={{blog_image}} class="image_banner_all blog_search">
+                                </div>
+                              <span class="card-title activator blog_search">{{trim_content blog_title}}</span>
+                              <p class="activator event_type">{{changeDateFormat}}</p>
+                              <p class="event_type activator blog_author"><!-- <i class="fa fa-map-marker"></i>  --><b>Author-</b> {{fetch_blog_creator_info blog_creator_id }} 
+                              <!-- <p class="connected_since_text"><span style="color: #23527c;">Connected since</span> connected_since</p> -->
+                              </p>
+                           </div>
+                           <!-- <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;"> -->
+                              <!-- <div class="col m12 l12 s12 icon_for_site ignore_req" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a></div> -->
+                           <!-- </div> -->
+                        </div>
+                     </div>
+                     {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> No Blogs found with the searched keyword</p>
+                           </div>
+                        </div>
+                     {{/each}}
+                  </div>
+               </div>
+
+            </div>
+         </div>
+      </div>
+   </div>
+  <!--  <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+      <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+         <li class="col m4 s4 text-center total_number_bg_padding" id="all_connections">
+            <a class="total_number_bg">
+            <span class="numbr_below" >{{connection}}</span>
+            <span href="#connection"   class="total_number_name">All</span>
+            </a>
+         </li>
+         <li class="col m4 s4 text-center total_number_bg_padding" id="request_connections" >
+            <a class="total_number_bg">
+            <span class="numbr_below">{{request}}</span>
+            <span href="#request" class="total_number_name">Request</span>
+            </a>
+         </li>
+         <li class="col m4 s4 text-center total_number_bg_padding_last" id="ignore_connections">
+            <a class="total_number_bg">
+            <span class="numbr_below">{{ignore}}</span>
+            <span href="#ignore"  class="total_number_name">Ignore</span>
+            </a>
+         </li>
+      </ul>
+   </div> -->
+  
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+   {{/if}}
+</template>

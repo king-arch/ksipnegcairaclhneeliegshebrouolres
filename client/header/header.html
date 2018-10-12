@@ -1,0 +1,338 @@
+
+  <head>
+ <link rel="icon" sizes="16x16 32x32" href="/uploads/icons/favicon.ico">
+ <link href='http://fonts.googleapis.com/css?family=Glegoo|Fauna+One' rel='stylesheet' type='text/css'>
+<!--  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+ -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120016144-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120016144-1');
+</script>
+  </head>
+  
+<template name="header" >
+  <input type="hidden" id="hereiam">
+  
+{{#if isDesktop}}
+
+ <nav class="navbar-fixed-top" style="background-color: #333 !important; box-shadow: none;">
+         <div class="container nav-wrapper">
+          <a href="/feed"> <img src="/uploads/icons/sn_logo.png" class="brand-logo" title="Special Neighborhood"></a>
+
+            <ul class="right hide-on-med-and-down">   
+           <li> <div class="ui search">
+                <input class="prompt search_for_all" id="search_text" placeholder="Search for people, blog, group..." type="text">
+                  <div class="results"></div>
+              </div></li>
+                {{#if equals active_panel "feed"}}
+               <li class="hover_underline feed_redirect active blue_border" style=" margin-left: 75px;"><a  style="color: #fff !important;">Home</a></li>
+                {{else}}
+               <li class="feed_redirect hover_underline" style="margin-left: 75px;"><a style="color: #fff !important;">Home</a></li>
+                {{/if}}
+
+
+              {{#if equals active_panel "blog"}}            
+                 <li class="hover_underline active blue_border"><a href="/blog_listing" style="color: #fff !important;">Blog</a></li>
+                {{else}}
+                 <li class="hover_underline "><a href="/blog_listing" style="color: #fff !important;">Blog</a></li>
+                {{/if}} 
+
+                 {{#if equals active_panel "event"}} 
+               <li class="hover_underline active blue_border"><a href="/events" style="color: #fff !important;">Event</a></li>
+               {{else}}
+               <li class="hover_underline"><a href="/events" style="color: #fff !important;">Event</a></li>
+               {{/if}}
+
+                 {{#if equals active_panel "group"}} 
+                <li class="hover_underline active blue_border"><a href="/grplisting" style="color: #fff !important;">Group</a></li>
+                  {{else}}
+                <li class="hover_underline"><a href="/grplisting" style="color: #fff !important;">Group</a></li>
+                  {{/if}}   
+
+                   {{#if equals active_panel "feature"}} 
+                <li class="hover_underline active blue_border"><a href="/settings" style="color: #fff !important;">Features</a></li>
+                  {{else}}
+                <li class="hover_underline"><a href="/settings" style="color: #fff !important;">Features</a></li>
+                  {{/if}}            
+
+               {{#if equals active_panel "ads"}} 
+               {{#if logged_in_user_isadmin}}
+              
+<li class="hover_underline"><a href="/ads " title="Buisness Manager" alt="" style="color: white !important;"><i class="fa fa fa-usd" style="color: white; margin-top: 2px !important; font-size: 10px !important;"></i></a></li>
+
+               
+<li class="hover_underline"><a href="https://www.google.com/analytics/#?modal_active=none" title="Google analytics" alt="" style="color: white !important;" target="_blank" ><i class="fa fa-bar-chart" style="color: white; margin-top: 2px !important; font-size: 10px !important;"></i></a></li>
+                {{/if}}
+                {{else}}
+                {{#if logged_in_user_isadmin}}
+
+<!--                 <i class="fa fa-usd" style="color: #f00; margin-top: 2px !important; font-size: 10px !important;"></i>
+                 -->
+               
+<li class="hover_underline"><a href="/ads " title="Buisness Manager" alt="" style="color: white !important;"><i class="fa fa fa-usd" style="color: white; margin-top: 2px !important; font-size: 10px !important;" target="_blank" ></i></a></li>
+
+
+               
+<li class="hover_underline"><a href="https://www.google.com/analytics/#?modal_active=none" title="Google analytics" alt="" target="_blank" style="color: white !important;"><i class="fa fa-bar-chart" style="color: white; margin-top: 2px !important; font-size: 10px !important;"></i></a></li>
+                  
+               <!--  <i class="fa fa-bar-chart" style="color: #f00; margin-top: 2px !important; font-size: 10px !important;"></i> -->
+                <!-- <li class="hover_underline"><a href="/ads" style="color: #fff !important;">advertisements</a></li> -->
+                {{/if}}
+              {{/if}}
+
+{{#if logged_in_user_isadmin}}
+               {{#if equals active_panel "connection"}} 
+                <li class="hover_underline active blue_border"><a href="/connection" title="User Management"  style="color: #fff !important;"><i id="connections_click" class="icon_header_top fa fa-handshake-o"></i> 
+
+
+                <sup>
+                  <i class="fa fa-circle loader_visiblity_block" id="hide_notification_dot_connection"  style="color: #f00; font-size: 10px !important;">
+                  </i>
+                </sup>
+
+              </a></li>
+
+              {{else}}
+
+              <li class="hover_underline"><a href="/connection" title="User Management  "  style="color: #fff !important;"><i id="connections_click" class="icon_header_top fa fa-handshake-o"></i> 
+
+
+                <sup>
+                  <i class="fa fa-circle loader_visiblity_block" id="hide_notification_dot_connection"  style="color: #f00; font-size: 10px !important;">
+                  </i>
+                </sup>
+
+              </a>
+            </li>
+
+              {{/if}}
+{{else}}
+               {{#if equals active_panel "connection"}} 
+                <li class="hover_underline active blue_border"><a href="/connection" title="Connection Request"  style="color: #fff !important;"><i id="connections_click" class="icon_header_top fa fa-handshake-o"></i> 
+
+
+                <sup>
+                  <i class="fa fa-circle loader_visiblity_block" id="hide_notification_dot_connection"  style="color: #f00; font-size: 10px !important;">
+                  </i>
+                </sup>
+
+              </a></li>
+
+              {{else}}
+
+              <li class="hover_underline"><a href="/connection" title="Connection Request"  style="color: #fff !important;"><i id="connections_click" class="icon_header_top fa fa-handshake-o"></i> 
+
+
+                <sup>
+                  <i class="fa fa-circle loader_visiblity_block" id="hide_notification_dot_connection"  style="color: #f00; font-size: 10px !important;">
+                  </i>
+                </sup>
+
+              </a>
+            </li>
+
+              {{/if}}
+{{/if}}
+
+    {{#if logged_in_user_isadmin}}
+        {{else}}
+               {{#if equals active_panel "message"}}
+
+               <li class="hover_underline active blue_border"><a href="/Messaging" title="Message" alt="Message" style="color: #fff !important;"><i id="messages_icon" class="icon_header_top fa fa-envelope-open-o"></i> 
+                <sup>
+
+                  <i class="fa fa-circle loader_visiblity_block" id="hide_notification_dot"  style="color: #f00; font-size: 10px !important;">
+                  </i>
+                  
+                </sup></a>
+              </li>
+
+                {{else}}
+
+                <li class="hover_underline"><a href="/Messaging" title="Message" alt="Message" style="color: #fff !important;"><i id="messages_icon" class="icon_header_top fa fa-envelope-open-o"></i> 
+                <sup>
+
+                  <i class="fa fa-circle loader_visiblity_block" id="hide_notification_dot"  style="color: #f00; font-size: 10px !important;">
+                  </i>
+                  
+                </sup></a></li>
+
+              {{/if}} 
+    {{/if}} 
+               
+               {{#if equals active_panel "notification"}}
+
+               <li class="hover_underline active blue_border"><a href="/notification " title="Notification" alt="" style="color: #fff !important;"><i class="icon_header_top fa fa-bell-o"><sup>
+                {{#if check_notification_status}}
+                <i class="fa fa-circle" style="color: #f00; margin-top: 2px !important; font-size: 10px !important;"></i>
+                {{/if}}
+              </sup></i></a></li>
+
+                {{else}}
+
+                <li class="hover_underline"><a href="/notification " title="Notification" alt="" style="color: #fff !important;"><i class="icon_header_top fa fa-bell-o"><sup>
+                {{#if check_notification_status}}
+                <i class="fa fa-circle" style="color: #f00; margin-top: 2px !important; font-size: 10px !important;"></i>
+                {{/if}}
+              </sup></i></a></li>
+
+                {{/if}}
+
+                {{#if equals active_panel "map"}}
+               <li class="hover_underline active blue_border"><a href="/users_map " title="Neighborhood Map" alt="" style="color: #fff !important;"><i class="icon_header_top fa fa-map-o"></i></a>
+               </li>
+                {{else}}
+               <li class="hover_underline"><a href="/users_map " title="Neighborhood Map" alt="" style="color: #fff !important;"><i class="icon_header_top fa fa-map-o"></i></a></li>
+               {{/if}}
+                <!-- <li class="dropdown drop_here">
+                  <a  style="color: #fff !important;">
+                    <i class="icon_header_top fa fa-user-o" style="margin-top: 2px !important;"></i>
+                  </a>
+                </li> -->
+                <li>
+             <!--  <li><a id="increase_font" style="color: #fff !important;">
+                A<sup><i class="icon_header_top fa fa-plus" style="margin-top: 2px !important;"></i></sup>
+                </a>
+              </li>
+              <li><a id="decrease_font" style="color: #fff !important;">
+                A<sup><i class="icon_header_top fa fa-minus" style="margin-top: 2px !important;"></i></sup>
+                </a>
+              </li> -->
+            
+                  
+<div id="heroes-dropdown1" class="ui dropdown drop_here">
+    <div class="text"><img style="margin-top:10px !important; max-height: 45px !important " src="{{user_profile_pic}}" class="circle"></div>
+    <i class="fa fa-caret-down" style="margin-left: 1px !important"></i>
+    <div class="menu" style="width: 175px;">
+        <!-- <a class="item" href="/profile">  -->
+          <!-- <span><a id="increase_font" style="display: -moz-inline-box;"> A<sup><i class="icon_header_top fa fa-plus" ></i></sup></a></span>
+           <span><a id="decrease_font" style="display: -moz-inline-box;" >A<sup><i class="icon_header_top fa fa-minus"></i></sup></a></span></a> -->
+<!--            <a class="item" id="increase_font" > <span>A<sup><i class="icon_header_top fa fa-plus" ></i></sup></span></a>
+           <a class="item" id="decrease_font">  <span>A<sup><i class="icon_header_top fa fa-minus"></i></sup></span></a> -->
+        <a class="item" href="/profile"> Profile</a>
+        <a class="item" href="/settings"> Settings</a>
+        <a class="item" id="logout"> Sign out</a>
+    </div>
+</div>
+<script type="text/javascript">
+  $('.ui.dropdown').dropdown();
+</script>
+</li>
+
+
+            </ul>
+            <ul class="side-nav" id="mobile-demo" style="background-color: #333 !important;">
+                <li><a href="/feed"><!-- <img src="/uploads/icons/sn_logo.png" class="brand-logo" title="Special Neighborhood"  alt="Special Neighborhood"> --></a></li>
+               <li ><a href="/feed" class="white menu_mob_font" style="background-color: #333!important;">Home</a></li>
+               <li ><a href="/Messaging_mobile" class="white menu_mob_font" style="background-color: #333!important;">Messaging</a></li>
+               <li ><a href="/blog_listing" class="white menu_mob_font" style="background-color: #333!important;">Blogs</a></li>
+               <li ><a href="/grplisting" class="white menu_mob_font" style="background-color: #333!important;">Groups</a></li>
+               <li ><a href="/events" class="white menu_mob_font" style="background-color: #333!important;">Event</a></li>
+               <li ><a href="/connection" class="white menu_mob_font" style="background-color: #333!important;">Connection</a></li>
+               <li ><a href="/users_map" class="white menu_mob_font" style="background-color: #333!important;">Map</a></li>
+               <li ><a href="#" class="white menu_mob_font" id="logout" style="background-color: #333!important;">Sign out</a></li>
+            </ul>
+         </div>
+      <ul id="dropdown1" class="dropdown-content">
+         <li><a href="#!">one</a></li>
+         <li><a href="#!">two</a></li>
+         <li class="divider"></li>
+         <li><a href="#!">three</a></li>
+      </ul>
+      </nav>
+{{/if}}
+
+{{#if isTablet}}
+   <header style="background-color: #333 !important;">
+      <nav class="container" style="z-index: +99999; box-shadow: none;">
+         <div class="nav-wrapper">
+            <a href="/feed"> <img src="/uploads/icons/sn_logo.png" class="brand-logo" title="Special Neighborhood"  alt="Special Neighborhood"> </a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons" style="color: #fff !important;" ><i class="fa fa-bars "></i></i></a>
+             <ul class="side-nav" id="mobile-demo" style="background-color: #333 !important; width: 500px !important;">
+               <!--  <li><a href="#" class="white" style="background-color: #333!important; padding-left: 0px !important;"><img src="http://www.specialneighborhood.com/beta/feed/blog/logo.png" style="width:119px !important; padding: 10px !important;"></a></li> -->
+               <!-- <li > -->
+                <!-- <a href="/feed" class="white menu_mob_font" style="background-color: #333!important;"><img style="margin-top:20px !important; float: left; width: 100px; margin-right: 10px !important; " src="http://cdn-tehran.wisgoon.com/dlir-s3/1053500x500_1447833135681286.jpg" class="circle"> <span style="margin-top: 30px !important; font-size: 22px !important;">Shobhita Yadav</span></a> -->
+                  
+                <!-- </li>/ -->
+              
+               <!-- <li class="clearfix"></li> -->
+                <hr/>
+               <li ><a href="/feed" class="white menu_mob_font" style="background-color: #333!important;"><i class="fa fa-globe" style="color: #fff; font-size: 25px !important;"></i> Home </a></li>
+               <li ><a href="/Messaging_mobile" class="white menu_mob_font" style="background-color: #333!important;"> <i class="fa  fa-envelope-open-o" style="color: #fff; font-size: 25px !important;"></i> Messaging</a></li>
+               <li ><a href="/blog_listing" class="white menu_mob_font" style="background-color: #333!important;"> <i class="fa fa-rss" style="color: #fff; font-size: 25px !important;"></i> Blogs</a></li>
+               <li ><a href="/grplisting" class="white menu_mob_font" style="background-color: #333!important;"> <i class="fa fa-object-group" style="color: #fff; font-size: 25px !important;"></i> Groups</a></li>
+               <li ><a href="/events" class="white menu_mob_font" style="background-color: #333!important;"> <i class="fa fa-calendar" style="color: #fff; font-size: 25px !important;"></i> Event</a></li>
+               <li ><a href="/connection" class="white menu_mob_font" style="background-color: #333!important;"> <i class="fa fa-handshake-o" style="color: #fff; font-size: 25px !important;"></i> Connection</a></li>
+               <li ><a href="/users_map" class="white menu_mob_font" style="background-color: #333!important;"> <i class="fa fa-map-o" style="color: #fff; font-size: 25px !important;"></i>Map </a></li>
+               <li ><a href="#" class="white menu_mob_font" id="logout" style="background-color: #333!important;"> <i class="fa fa-sign-out" style="color: #fff; font-size: 25px !important;"></i> Sign out</a></li>
+            </ul>
+         </div>
+      </nav>
+      <ul id="dropdown1" class="dropdown-content">
+         <li><a href="#!">one</a></li>
+         <li><a href="#!">two</a></li>
+         <li class="divider"></li>
+         <li><a href="#!">three</a></li>
+      </ul>
+   </header>
+{{/if}}
+
+
+{{#if isPhone}}
+   <header style="background-color: #333 !important;">
+      <nav class="container" style="z-index: +99999; box-shadow: none;">
+         <div class="nav-wrapper">
+           <a href="/feed" > <img src="/uploads/icons/sn_logo.png" class="brand-logo" title="Special Neighborhood"  alt="Special Neighborhood" style="width: 220px !important;"></a>  
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons" style="color: #fff !important;" ><i class="fa fa-bars "></i></i></a>
+               <ul class="side-nav" id="mobile-demo" style="background-color: #333 !important;">
+               <!--  <li><a href="#" class="white" style="background-color: #333!important; padding-left: 0px !important;"><img src="http://www.specialneighborhood.com/beta/feed/blog/logo.png" style="width:119px !important; padding: 10px !important;"></a></li> -->
+               <li>
+                <a href="/feed" class="white menu_mob_font" style="background-color: #333!important;">
+               <!--  <img style="margin-top:20px !important; " src="{{user_profile_pic}}" class="circle"> --></a></li>
+               <li ><a href="/feed" class="white menu_mob_font" style="background-color: #333!important;"><i class="fa fa-globe" style="color: #fff; font-size: 25px !important;"></i>Home</a></li>
+               <li ><a href="/Messaging_mobile" class="white menu_mob_font" style="background-color: #333!important;"><i class="fa  fa-envelope-open-o" style="color: #fff; font-size: 25px !important;"></i>Messaging</a></li>
+               <li ><a href="/blog_listing" class="white menu_mob_font" style="background-color: #333!important;"> <i class="fa fa-rss" style="color: #fff; font-size: 25px !important;"></i>Blogs</a></li>
+               <li ><a href="/grplisting" class="white menu_mob_font" style="background-color: #333!important;"><i class="fa fa-object-group" style="color: #fff; font-size: 25px !important;"></i>Groups</a></li>
+               <li ><a href="/events" class="white menu_mob_font" style="background-color: #333!important;"><i class="fa fa-calendar" style="color: #fff; font-size: 25px !important;"></i>Event</a></li>
+               <li ><a href="/connection" class="white menu_mob_font" style="background-color: #333!important;"><i class="fa fa-handshake-o" style="color: #fff; font-size: 25px !important;"></i> Connection</a></li>
+               <li ><a href="/users_map" class="white menu_mob_font" style="background-color: #333!important;"><i class="fa fa-map-o" style="color: #fff; font-size: 25px !important;"></i>Map</a></li>
+               <li ><a href="#" class="white menu_mob_font" id="logout" style="background-color: #333!important;"><i class="fa fa-sign-out" style="color: #fff; font-size: 25px !important;"></i>Sign out</a></li>
+            </ul>
+         </div>
+      </nav>
+      <ul id="dropdown1" class="dropdown-content">
+         <li><a href="#!">one</a></li>
+         <li><a href="#!">two</a></li>
+         <li class="divider"></li>
+         <li><a href="#!">three</a></li>
+      </ul>
+   </header>
+{{/if}}
+
+
+<div id="loader" class="loading"></div>
+    <div class="internet_connectivity">
+    <div class = "alert alert-danger " id="alert_danger">
+      <i class="fa fa-exclamation-circle "></i> Internet connectivity lost 
+  </div>
+</div> 
+
+<div class="internet_connectivity1">
+    <div class = "alert alert-success" id="alert_success">
+      <i class="fa fa-spinner "></i> Loading, Please wait
+  </div>
+</div>
+
+   <!-- <div id="loader" class="loading"></div> -->
+   <script type="text/javascript">
+      $(".dropdown-button").dropdown();
+   </script>
+   <script>
+      $(".button-collapse").sideNav();
+   </script>
+</template>

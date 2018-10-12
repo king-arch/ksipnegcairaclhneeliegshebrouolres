@@ -1,0 +1,761 @@
+<template name="messagingpage">
+
+    <head>
+        <title>messanging</title>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" type="text/css">
+     <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/lib/js/emojione.min.js" type="text/css">    </head>
+
+     /*<body style="background-color: #F5F5F5 !important;">*/ -->
+         <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+        <!--CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+     </head>
+
+    <body>
+        <script url="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.12/howler.min.js">
+        </script> 
+
+         <script url="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/lib/js/emojione.min.js">
+        </script>
+        {{> header}}
+        {{> messanging}}
+    </body>
+    <script>
+        function increase_unread_count(chatroom_id, reset) {
+            if (reset == "true") {
+                count = 0;
+            } else {
+                count = 1;
+            }
+
+            Meteor.call('update_chatroom_count', Session.get("userId"),chatroom_id, count, function(error, result) {
+                if (error) {
+                    console.log(error);
+                } else {    
+                    console.log(result);
+                }
+            });
+
+        }
+
+        function changeUserStatus(status) {
+            Meteor.call('change_user_online_status', Session.get("userId"), status, function(error, result) {
+                if (error) {
+                    console.log('failed');
+                } else {
+                    if (status == "offline") {
+                        console.log('sucess offline');
+
+                    } else {
+                        if(Session.get("rightPanelChatRoomId")){
+                        if (Session.get("rightPanelChatRoomId") != "" &&  Session.get("rightPanelChatRoomId") != undefined ) {
+                            increase_unread_count(Session.get("rightPanelChatRoomId"), "true");
+                        }    
+                        }
+
+                        console.log('success online');
+                    }
+                }
+            });
+        }
+        // Create `myApp` namespace.
+        window.myApp = {
+            // Function to use for the `focus` event.
+
+            onFocus: function() {
+                // online
+                changeUserStatus("online");
+
+            },
+            // Function to use for the `blur` event.
+            // onBlur: function() {
+            //     changeUserStatus("offline");
+            // }
+        };
+
+        /* Detect if the browser supports `addEventListener`
+          Complies with DOM Event specification. */
+        if (window.addEventListener) {
+            // Handle window's `load` event.
+            window.addEventListener('load', function() {
+                // Wire up the `focus` and `blur` event handlers.
+                window.addEventListener('focus', window.myApp.onFocus);
+                window.addEventListener('blur', window.myApp.onBlur);
+
+            });
+        }
+        /* Detect if the browser supports `attachEvent`
+          Only Internet Explorer browsers support that. */
+        else if (window.attachEvent) {
+            // Handle window's `load` event.
+            window.attachEvent('onload', function() {
+                // Wire up the `focus` and `blur` event handlers.
+                window.attachEvent('onfocus', window.myApp.onFocus);
+                window.attachEvent('onblur', window.myApp.onBlur);
+            });
+        }
+        /* If neither event handler function exists, then overwrite 
+        the built-in event handers. With this technique any previous event
+        handlers are lost. */
+        else {
+            // Handle window's `load` event.
+            window.onload = function() {
+                // Wire up the `focus` and `blur` event handlers.
+                window.onfocus = window.myApp.onFocus;
+                window.onblur = window.myApp.onBlur;
+            };
+        }
+    </script>
+</template>
+
+<template name="messanging">
+    <!-- <audio id="audio" src="https://raw.githubusercontent.com/OPardesiRasnaFruitMaggi/metrik/master/ting.ogg" preload="auto"  ></audio> -->
+    <!-- <audio src="https://raw.githubusercontent.com/OPardesiRasnaFruitMaggi/metrik/master/ting.ogg" preload="auto"  ></audio> -->
+    <!-- <button id="sound" > </button> -->
+
+    <div class=" page_wh hidden-xs hidden-sm hidden-md">
+        <div class="row">
+        <div class="col s12 m12 l3 left_part">
+
+            <div class="card card_two">
+
+                <ul class="nav navbar-nav col s12 m12 l12" style="padding: 0px;">
+                    <li class="dropdown col s12 m12 l12 drop_dwn_tw">
+                        <a href="#" class="dropdown-toggle drop_dwn_tw_a" data-toggle="dropdown"><span style="font-size: 18px;">Conversation ({{conversation_count}})</span></a>
+                        <!--<i class="fa fa-ellipsis-v pull-right fa-2x pull-right"></i>
+          <ul class="dropdown-menu">
+            <li><a href="#"> Delete Conversations </a></li>
+            <li class="divider"></li>
+             <li><a href="#"> Delete Conversations </a></li>
+          </ul>-->
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card" style="box-shadow: none; margin-bottom: 0px !important;">
+                <div class="card-content">
+                    <p>
+                        <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Enter User Name" style="margin-bottom: 0px;" id="search_connection_msg" />
+                    </p>
+                </div>
+
+                <div class="card-content" style="padding-left: 0px !important; padding-right: 0px !important; padding-bottom: 0px !important">
+
+                    <div id="connnection">
+
+                        <ul class="collection" style="max-height: 385px !important; overflow-y: auto; min-height: 360px !important;">
+
+                            <div id="display_connection" class="display_hide_conversation">
+
+                                {{#each show_connections}} {{#each show_connections_2}}
+
+                                <li class="collection-item avatar change_msg_onright {{#if highligh_selected}}
+            highligh_selected     
+        {{/if}}
+        " style="padding-bottom: 20px !important;">
+
+                                    <span> <img src={{profile_pic}} alt="No Image" class="circle"  >
+        <span class="bott om-left-2">
+
+        <input type="hidden" id="hidden_conversation_user_id" value={{user_id}}  > 
+  {{#if online_status}} 
+        <i class="fa fa-circle color_green_messaging"></i>
+     {{else}}     
+        <i class="fa fa-circle color_red"></i>
+  {{/if}}   
+        </span></span>
+                                    <span class="title">   
+        {{name}}   
+      </span> {{#each show_message_details}}
+                                    <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>
+
+                                    <p class="lisimg_msg">
+                                        {{#if check_lastmsg_sender}} Me: {{last_msg}} {{else}} {{sender}}: {{last_msg}} {{/if}} {{#if check_unread}}
+                                        <span class="pull-right new_no_chat"> 
+      {{unread_msg_count}}    
+      </span> {{/if}}
+                                    </p>
+                                    {{/each}}
+                                </li>
+
+                                {{/each}}
+                                <!-- {{set_session_true_for_right}} -->
+                                {{/each}}
+
+                            </div>
+
+                            <div id="display_conversation">
+                                {{#each recent_list}} {{#each recent_list_2}}
+                                <li class="collection-item avatar change_msg_onright 
+        {{#if highligh_selected}}
+            highligh_selected     
+        {{/if}}
+        " id="show_right" style="padding-right: 10px !important;">
+
+                                    <span> <img src={{profile_pic}} alt="No Image" class="circle" >
+        <span class="bottom-left-2">
+
+        <input type="hidden" id="hidden_conversation_user_id" value={{user_id}}  > 
+  {{#if online_status}} 
+        <i class="fa fa-circle color_green_messaging"></i>
+     {{else}}   
+        <i class="fa fa-circle color_red"></i>
+  {{/if}}
+        </span></span>
+                                    <span class="title">
+        {{name}}
+      </span> {{#each show_message_details}}
+                                    <span class="pull-right fo_size_time"><p>{{calculate_time_difference last_msg_time}} </p> </span>
+
+                                    <p class="lisimg_msg">
+
+                                        {{#if check_lastmsg_sender}} Me: {{trim_content last_msg}} {{else}} {{sender}}: {{trim_content last_msg}} {{/if}} {{#if check_unread}}
+                                        <span class="pull-right new_no_chat"> 
+      {{unread_msg_count}}    
+      </span> {{/if}}
+                                    </p>
+                                    {{/each}}
+                                </li>
+                                <!-- <li class="collection-item avatar">
+     <span> <img src="https://i0.wp.com/tricksmaze.com/wp-content/uploads/2017/04/Stylish-Girls-Profile-Pictures-36.jpg?resize=300%2C300&ssl=1" alt="" class="circle"> <span class="bottom-left-2"><i class="fa fa-circle color_red"></i></span></span>
+      <span class="title"><a href="#">Shobhita Yadav</a></span> <span class="pull-right fo_size_time"> 20m </span>
+      <p class="typing">Typing ...</p>
+    </li> -->
+                                <!-- {{set_session_true_for_right}} -->
+                                {{/each}} {{else}}
+
+                                <!-- {{set_session_false_for_right}} -->
+                                <p style=" padding: 15% !important;  text-align: center !important;"> Search your connections to start coneversations</p>
+                                {{/each}}
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{#each msg_rightbox}} {{#if check_msgid_forright}}
+
+        <div class="col s12 m12 l9 cbg_toofull">
+            <div class="row wid_row_tp" style="margin-bottom: 0px; margin-right: 0px !important; padding-bottom: 0px; ">
+                <div class="col m1">
+                    <img src={{profile_pic}} width="50" height="50" alt="User Avatar" class="img-circle" style="width: 50px;">
+                </div>
+
+                <div class="col m7" style="padding-left: 3px;"> <span class="font_size_19">{{name}}</span>
+                    <br/>
+
+                    <!-- <span id="call_button"><i class="fa fa-video-camera"></i></span>       -->
+                    <!-- {{#if check_connection}}
+            Connected
+          {{else}}
+            Not Connected
+          {{/if}} -->
+                    {{#if typing_gif}} Typing...
+                    <!-- <img src="https://cdn.dribbble.com/users/597268/screenshots/2991038/dribbble_2x.gif" style="height:80px; width:100px;" class="pull-left" > -->
+                    <!-- {{call_typing_gif}} -->
+                    <!-- {{typing_gif_window_down}} -->
+                    {{else}} {{get_user_headline}} {{/if}}
+                </div>
+                <!-- Modal Structure -->
+                <div class="col m4 card card_two text-right" style="margin-top: 10px !important;">
+                    <span>
+            {{#each chatroom_around}}
+               {{#if check_mute_user_field}}
+              {{#if equals mute_status_user1 'Mute'}}
+            <i  class="mute_button fa fa-bell-o fa-2x"></i> 
+            {{else}}
+              <i class="mute_button fa fa-bell-slash-o fa-2x"></i>
+            {{/if}}
+
+            {{else}}
+              {{#if equals mute_status_user2 'Mute'}}
+            <i  class="mute_button fa fa-bell-o fa-2x"></i> 
+            {{else}}
+              <i class="mute_button fa fa-bell-slash-o fa-2x"></i>
+            {{/if}}    
+            {{/if}}    
+            {{/each}}
+            </span>
+                    <!-- <span class="btn-group" style="margin-right: 12px;"> <i class="fa fa-phone fa-2x "></i></span>   
+            <span class="btn-group" style="margin-right: 12px;" id="call_button"><i class="fa fa-video-camera fa-2x "></i></span>  -->
+                    <!-- dropdown start for mute conversation             
+          <div class="btn-group">
+          <span data-toggle="dropdown">
+           <i class="fa fa-ellipsis-v pull-right fa-2x "></i> <span class="caret"></span>
+          </span>
+           <ul class="dropdown-menu" role="menu">
+            {{#each chatroom_around}}
+          {{#if check_mute_user_field}}
+            <li><a href="#" class="mute_button" > {{mute_status_user1}} Conversation </a></li>
+          {{else}}
+            <li><a href="#" class="mute_button" > {{mute_status_user2}} Conversation </a></li>
+          {{/if}}  
+          {{else}}       
+            <li><a href="#" class="mute_button" > Mute Conversations </a></li>    
+        {{/each}}
+          </ul>
+        </div> dropdown end for mute conversation -->
+                </div>
+
+            </div>
+            <div class="card new_card margin_top_bottom_zeero">
+                <div id="test4">
+                    <div class="col-s12">
+                        <div class="chatbody">
+                            <div class="panel panel-primary new_bg_for_all" style="box-shadow:none !important;">
+                                <div class="panel-body msg_container_base" id="message_container">
+                                    <div class="row msg_container base_sent" style="margin-bottom: 0px;">
+                                        <div class="col l12 m12 s12" style="padding-right: 0px;">
+                                            <ul class="collection" id="messages_div">
+                                                <div id="call_picker_dialog" class="modal col l7">
+                                                    <div class="">
+                                                        <p id="call_picker_message" class="callarea"></p>
+                                                        <p style="text-align: center;">
+                                                            <button id="accept_the_call" class="acceptcal">Acccept</button>
+                                                            <button id="reject_the_call" class="rejectcal">Reject</button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <script type="text/javascript">
+                                                    $(document).ready(function() {
+                                                        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+                                                        $('.modal').modal();
+                                                    });
+                                                </script>
+                                                {{#each show_message_array}}
+                                                <!-- {{msg_text}}<br> -->
+                                                {{#if sentby_other_user}}
+                                                <li class="collection-item avatar">
+                                                    <span>
+          {{#if equals delivery_status 'read'}} 
+        <div class="messages messages_us msg_receive text-right green_bg" style="">
+            <span style="text-align: justify"> 
+                                        {{#if msg_text_check_for_smily}}
+                                           
+                                            {{#each msg_text2}}
+
+                                                  {{#if equals msg ':smile:'}}
+                                                  <span  style=" height: 20px; width: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/smile.svg" class="emojySize" ></span>
+                                                  
+                                                  {{else if equals msg ':sad:'}}
+                                                  <span  style=" height: 20px; width: 20px; margin-right: 10px; margin-bottom: 10px;"> <img src="uploads/emojies/sad.svg" class="emojySize" ></span>
+                                                
+                                                  
+                                                  {{else if equals msg ':quiet:'}}
+                                                  <span  style=" width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/quiet.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':in-love:'}}
+                                                  <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/in-love.svg" class="emojySize" ></span> 
+
+                                                  {{else if equals msg ':happy:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/happy.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':confused:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/confused.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':crying:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/crying.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':surprised:'}}
+                                                   <span  style=" width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/surprised.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':unhappy:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/unhappy.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':smart:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/smart.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':laugh:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/laugh.svg" class="emojySize" ></span>
+                                                 
+                                                  
+                                                  {{else if equals msg ':mad:'}}
+                                                <span  style="width: 20px; margin-right: 2px; height: 20px; margin-bottom: 10px;"><img src="uploads/emojies/mad.svg" class="emojySize" ></span>
+                                                        {{else}}
+
+                                                        {{msg}}
+                                                {{/if}}
+                                            {{/each}}
+
+                                        {{else}}
+                                               <span> {{msg_text}}</span>
+                                        {{/if}}
+                                             </span>
+            <time datetime="2009-11-13T20:00"><span class="time fo_size_time" style="font-size: 10px !important; color: #fff !important;">
+               <p  >{{calculate_time_difference sentAt}}</p>
+            </span></time>
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                        <p class="read_msg"> Read </p>
+                                        {{else if equals delivery_status 'delivered' }}
+                                        <div class="messages messages_us msg_receive text-right yellow_bg">
+                                            <span style="text-align: justify"> {{msg_text}} </span>
+                                            <time datetime="2009-11-13T20:00"><span class="time fo_size_time" style="font-size: 10px !important;">
+               <p  >{{calculate_time_difference sentAt}}</p>
+            </span></time>
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                        <span class="read_msg"> Delivered </span> {{else}}
+
+                                        <div class="messages messages_us msg_receive text-right red_bg">
+                                    <span style="text-align: justify"> 
+                                        {{#if msg_text_check_for_smily}}
+                                           
+                                            {{#each msg_text2}}
+
+                                                  {{#if equals msg ':smile:'}}
+                                                  <span  style=" height: 20px; width: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/smile.svg" class="emojySize" ></span>
+                                                  
+                                                  {{else if equals msg ':sad:'}}
+                                                  <span  style=" height: 20px; width: 20px; margin-right: 10px; margin-bottom: 10px;"> <img src="uploads/emojies/sad.svg" class="emojySize" ></span>
+                                                
+                                                  
+                                                  {{else if equals msg ':quiet:'}}
+                                                  <span  style=" width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/quiet.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':in-love:'}}
+                                                  <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/in-love.svg" class="emojySize" ></span> 
+
+                                                  {{else if equals msg ':happy:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/happy.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':confused:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/confused.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':crying:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/crying.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':surprised:'}}
+                                                   <span  style=" width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/surprised.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':unhappy:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/unhappy.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':smart:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/smart.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':laugh:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/laugh.svg" class="emojySize" ></span>
+                                                 
+                                                  
+                                                  {{else if equals msg ':mad:'}}
+                                                <span  style="width: 20px; margin-right: 2px; height: 20px; margin-bottom: 10px;"><img src="uploads/emojies/mad.svg" class="emojySize" ></span>
+                                                        {{else}}
+
+                                                        {{msg}}
+                                                {{/if}}
+                                            {{/each}}
+
+                                        {{else}}
+                                               <span> {{msg_text}}</span>
+                                        {{/if}}
+                                             </span>
+                                            <time datetime="2009-11-13T20:00">
+                                                <span class="time fo_size_time" style="font-size: 12px !important;">
+                    <p  >{{calculate_time_difference sentAt}}</p>
+                </span>
+                                            </time>
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                        <p class="not_delived"> Sent </p>
+                                        {{/if}}
+                                        </span>
+                                        <div style="clear: both;"> </div>
+                                        </li>
+                                        {{else if sentby_loggedin}}
+                                        <li class="collection-item avatar">
+                                            {{#each msg_rightbox}}
+                                            <span> <img src={{profile_pic}} alt="NO Image" class="circle" style="width: 40px !important; height: 40px !important;"> <span class="bottom-left"></span></span>
+                                            {{/each}}
+                                            <span>
+                                                <div class="messages messages_you msg_receive text-left">
+                                                    <span style="text-align: justify" > 
+                                    {{#if msg_text_check_for_smily}}
+                                           
+                                            {{#each msg_text2}}
+                                                  {{#if equals msg ':smile:'}}
+                                                  <span  style="height: 20px; width: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/smile.svg" class="emojySize" ></span>
+                                                  
+                                                  {{else if equals msg ':sad:'}}
+                                                  <span  style="height: 20px; width: 20px; margin-right: 10px; margin-bottom: 10px;"> <img src="uploads/emojies/sad.svg" class="emojySize" ></span>
+                                                
+                                                  
+                                                  {{else if equals msg ':quiet:'}}
+                                                  <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/quiet.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':in-love:'}}
+                                                  <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/in-love.svg" class="emojySize" ></span> 
+
+                                                  {{else if equals msg ':happy:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/happy.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':confused:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/confused.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':crying:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/crying.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':surprised:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px; margin-bottom: 10px;"><img src="uploads/emojies/surprised.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':unhappy:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/unhappy.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':smart:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/smart.svg" class="emojySize" ></span>
+
+                                                  {{else if equals msg ':laugh:'}}
+                                                   <span  style="width: 20px; height: 20px; margin-right: 10px; margin-bottom: 10px;"><img src="uploads/emojies/laugh.svg" class="emojySize" ></span>                                               
+                                                  
+                                                  {{else if equals msg ':mad:'}}
+                                                <span  style="width: 20px; margin-right: 2px; height: 20px; margin-bottom: 10px;"><img src="uploads/emojies/mad.svg" class="emojySize" ></span>
+                                                        {{else}}
+
+                                                        {{msg}}
+                                                {{/if}}
+                                            {{/each}}
+
+                                        {{else}}
+                                                <span>{{msg_text}}</span>
+                                        {{/if}}
+                                                    </span>
+                                                      <time datetime="2009-11-13T20:00">
+                                                          <span class="time fo_size_time">
+                                                            <p style="color: #fff  !important; font-size: 10px !important;" >{{calculate_time_difference sentAt}}</p>
+                                                          </span>
+                                                      </time>
+                                                </div>
+                                            </span>
+                                            <div style="clear: both;"> </div>
+                                         </li>
+                                    {{else}}
+                                        <p> No message to Show (Default Message) </p>
+                                            {{/if}} {{else}} {{> spinner}} {{/each}}
+
+                                    </ul>
+                                    <!-- <div class="loading loader_visiblity_block" id="loading_div" ></div> -->
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!--footer Chantting start-->
+                        
+                        <!--footer Chantting start-->
+
+                    </div>
+
+                    <script type="text/javascript">
+                        $('#msg_input_form').keypress(function(e) {
+                            var code = e.keyCode || e.which;
+
+                            if (code === 13) {
+                                e.preventDefault();
+                                $("#send_msg").click();
+                            };
+                        });
+                    </script>
+
+                </div>
+                <div style="background-color: #fff !important; padding: 12px;">
+                <div class="panel-footer padding_0">
+
+                            <div class="input-controls-container">
+
+                                <form id="msg_input_form">
+                                    <div id="jquery-script-menu">
+                                     <div class="emotion">
+               <textarea class="input" contenteditable="true" id="msg_text" style="z-index:2; width: 250% !important" placeholder="Type a message here ..."></textarea>
+               <input type="hidden" id="send_msg">
+                <i id="smiling_icon"
+                 class="fa fa-smile-o fa-2x" aria-hidden="true" style="font-size: 24px;"></i>
+              <span id="emotion_area_test" 
+              style=" background-color: #fff;
+              padding: 8px !important;
+              top:-130px !important;
+                position: relative !important;" 
+              class="loader_visiblity_block"></span>
+
+           </div>
+           <script type="text/javascript">
+               $(document).ready(function(){
+     $('#emotion_area_test').html(
+   '<span id="smile"> <img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/smile.svg"> </span>' +
+
+                '<span id="sad"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/sad.svg"></span>' +
+
+                '<span id="mad"><img style="float:left !important; width:30px !important; height:30px !important;"; src="uploads/emojies/mad.svg"></span>' +
+
+                '<span id="laugh"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/laugh.svg"></span>' +
+
+                '<span id="quiet"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/quiet.svg"></span>' +
+
+                '<span id="in-love"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/in-love.svg"></span>' +
+
+                '<span id="happy"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/happy.svg"></span>' +
+
+                '<span id="confused"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/confused.svg"></span>' +
+
+                '<span id="crying"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/crying.svg"></span>' +
+
+                '<span id="surprised"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/surprised.svg"></span>' +
+                
+                '<span id="unhappy"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/unhappy.svg"></span>' +
+
+                '<span id="smart"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/smart.svg"></span>'
+                );
+//  var alphabet = "abcdef".split("");
+//  alphabet.each(function(letter) {
+////      $('.emotion-area').append('<img scr="img/1f60${letter}.png"');
+//      console.log(letter);
+//  });
+
+    function ApndImgEmotion() {
+            $('.emotion-area').append(
+                '<span id="smile"> <img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/smile.svg"> </span>' +
+
+                '<span id="sad"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/sad.svg"></span>' +
+
+                '<span id="mad"><img style="float:left !important; width:30px !important; height:30px !important;"; src="uploads/emojies/mad.svg"></span>' +
+
+                '<span id="laugh"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/laugh.svg"></span>' +
+
+                '<span id="quiet"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/quiet.svg"></span>' +
+
+                '<span id="in-love"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/in-love.svg"></span>' +
+
+                '<span id="happy"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/happy.svg"></span>' +
+
+                '<span id="confused"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/confused.svg"></span>' +
+
+                '<span id="crying"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/crying.svg"></span>' +
+
+                '<span id="surprised"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/surprised.svg"></span>' +
+                
+                '<span id="unhappy"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/unhappy.svg"></span>' +
+
+                '<span id="smart"><img style="float:left !important; width:30px !important; height:30px !important;" src="uploads/emojies/smart.svg"></span>'
+                );
+
+/*
+          for (var i = 65; i <= 70; i++) {
+            $('.emotion-area').append(
+                '<img width="30px" height="30px" src="images/emojies/happy.svg">' + 
+                '<img width="30px" height="30px" src="images/emojies/happy.svg">' + 
+                '<img width="30px" height="30px" src="images/emojies/happy.svg">' + 
+                '<img width="30px" height="30px" src="images/emojies/happy.svg">' +
+                '<img width="30px" height="30px" src="images/emojies/happy.svg">'
+            );
+        }
+        
+        for (var i = 4; i <= 8; i++) {
+            $('.emotion-area').append(
+                '<img width="30px" height="30px" src="images/emojies/happy' + i + '.svg">'
+            );
+        }
+        
+        for (var i = 3; i <= 8; i++) {
+            $('.emotion-area').append(
+                '<img width="30px" height="30px" src="images/emojies/happy' + i + '.svg">'
+            );
+        }
+        
+        for (var i = 0; i <= 9; i++) {
+            $('.emotion-area').append(
+                '<img width="30px" height="30px" src="images/emojies/happy' + i + '.svg">'
+            );
+        }
+        
+        for (var i = 10; i <= 44; i++) {
+            $('.emotion-area').append(
+                '<img width="30px" height="30px" src="images/emojies/happy' + i + '.svg">'
+            );
+        }
+        
+        for (var i = 10; i <= 17; i++) {
+            $('.emotion-area').append(
+                '<img width="30px" height="30px" src="images/emojies/happy' + i + '.svg">'
+            );
+        }
+        */
+    }
+    
+//  $(document).one('click' , '.emotion-Icon', function(e){
+//      ApndImgEmotion();
+//  });
+    
+    $(document).on('click' , '.emotion-Icon', function(e){
+        var top = $(this).offset().top ,
+            top = Math.floor(top),
+            emotionArea = $(this).find('.emotion-area');
+        
+        emotionArea.toggleClass('ShowImotion');
+        
+        if( top <= 160 ){
+            emotionArea.toggleClass('top');
+        }
+        
+        if(!emotionArea.hasClass('ShowImotion')){
+            $('.emotion-area').empty();
+            emotionArea.removeClass('top');
+        }else{
+            ApndImgEmotion();
+        }
+        
+    });
+    
+    $(document).on('click', '.emotion-area' ,function(e){
+        e.stopPropagation();
+    });
+    
+    $(document).on('click' , '.emotion-area img', function(e){
+        var imgIcon = $(this).clone();
+        $(this).parents('.emotion').find('.input').append(imgIcon);
+    });
+    
+});
+           </script>
+       </div>
+                                    <!-- <textarea class="form-control textarea_format " style=" box-shadow: none; border-radius: 5px; border: 1px solid #EFEFEF !important;" placeholder="Type a message here ..." id="msg_text"></textarea> -->
+                                    <!-- <input type="hidden" id="send_msg">
+                                    <div class="dropdown pull-left">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Emojies
+            <span class="caret"></span></button>   -->  
+            <!-- <ul class="dropdown-menu dropdown-menu-center adjustDropDown" >
+             <p>
+
+                <span id="smile"><img src="/uploads/emojies/smile.jpg" class="emojySize" style="float: left" ></span>
+                <span id="cry"><img src="/uploads/emojies/cry.png" class="emojySize"  style="float: left" ></span>
+                <span id="wink"><img src="/uploads/emojies/wink.png" class="emojySize"  style="float: left" ></span>
+                <span id="strange"><img src="/uploads/emojies/strange.jpeg" class="emojySize"  style="float: left" ></span>
+
+             </p>
+             
+            </ul> -->
+                                
+                                </form>
+
+                            </div>
+        
+
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    {{/if}} {{else}}
+
+    <p class="none_listing" style="background-color: #fff;"><i class="fa fa-pencil"></i><br/>Click on User Name to Start</p>
+    <!-- {{> spinner}} -->
+    <!-- <div class="loading"  ></div> -->
+    {{/each}}
+
+    </div>
+</div>
+</template>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        

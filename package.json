@@ -1,0 +1,19 @@
+{
+  "name": "special",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.42",
+    "autoprefixer": "^8.2.0",
+    "fs-extra": "^6.0.1",
+    "google-maps": "^3.2.1",
+    "materialize": "^1.0.0",
+    "materialize-css": "^1.0.0-beta",
+    "meteor-node-stubs": "^0.3.2",
+    "path": "^0.12.7",
+    "simpl-schema": "^1.4.2",
+    "url-metadata": "^2.1.7"
+  }
+}

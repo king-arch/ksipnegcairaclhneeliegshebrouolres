@@ -1,0 +1,327 @@
+
+<template name="connection">
+   <head>
+      <title>Create Event</title>
+   </head>
+   <!-- <body style="background-color: #F5F5F5 !important;"> -->
+    <body>
+   {{> header}}
+   {{> connection_content}}
+ </body>
+</template>
+<template name="connection_content">
+   <div class="page_wh">
+      <div class="">
+         <div class="row">
+          <div class="col m3 l3 s12">
+            <ul class="nav nav-pills nav-stacked left_row hidden-md hidden-xs visible-lg" id="connection_container">
+                         
+<!-- 
+               <li class="active"><a href="#connection" data-toggle="pill" >All users ({{connection}})</a></li> -->
+               {{#if user_is_admin}}
+                <h3>All Users</h3>
+                   <li class="active"><a href="#connection" data-toggle="pill" >All users ({{connection}})</a></li>
+               {{else}}
+                   <h3>Connections</h3>
+                 <li class="active" ><a href="#request" data-toggle="pill" >Request ({{request}})</a></li>
+                 <li ><a href="#connection" data-toggle="pill" >All connections ({{connection}})</a></li>
+                 <li><a href="#ignore" data-toggle="pill">Ignored ({{ignore}})</a></li>
+               {{/if}}
+            </ul>
+          </div>
+            
+            <div class="col m12 l9 s12 tab-content right_row">
+               <div class="tab-pane {{#if user_is_admin}}active{{else}}{{/if}}" id="connection">
+                  <div id="custom-search-input">
+                     <div class="col m12 l7 s12">
+                        <p class="heading_create">
+                          <!-- All users ({{connection}}) -->
+
+                           {{#if user_is_admin}}
+                              All users ({{connection}})
+                           {{else}}
+                              All connections ({{connection}})
+                           {{/if}}
+
+                        </p>
+                     </div>
+                     <div class="input-group col m12 l5 s12">
+                        <div id="imaginary_container">
+                           <div class="input-group stylish-input-group">
+                              <input type="text" class="form-control margin_inpu_search"  placeholder="Search connection by name" id="search_all_text_conn" >
+                              <span class="input-group-addon search_format_iocn">
+                              <button type="submit" id="search_connection_all">
+                              <span class="glyphicon glyphicon-search"></span>
+                              </button>  
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <script type="text/javascript">
+                     $('#search_all_text_conn').keypress(function(e){
+                         var code = e.keyCode || e.which;
+                     
+                         if( code === 13 ) {
+                             e.preventDefault();
+                             $( "#search_connection_all" ).click();
+                         };
+                     });
+                  </script> 
+               <div class="clearfix"></div>
+                  <div class="row" >
+                    {{#if user_is_admin}}
+
+                     {{#each show_all_users}}
+
+                     <div class="col m6 l4 s12">
+                        <div class="card row_nomargin_padd text-center no_box_shadow" style="padding: 0px;">
+                           
+                           <div class="card-content" style="padding: 0px;">
+          
+
+
+                            <div class="text-center padding_image_right col m12 l12 s12">
+                                  <img class="img_connection ui medium image pointer redirect_to_profile" src={{profile_pic}} alt="No image" >
+                                 </div>
+                              <span class="card-title activator name_profile_hub  event_name blue_text_color pointer redirect_to_profile">
+                                {{name}}
+                              </span>
+                              <p class="activator event_type pointer redirect_to_profile">
+                      {{#if headline_online_only}}
+                              {{headline_online_only}}
+                      {{else}}
+                             No headline
+                      {{/if}}
+                            </p>
+
+                              <p class="event_type activator">
+                                {{#if location_country}}
+                                <i class="fa fa-map-marker"></i>
+                                 {{location_country}}
+                                 {{else}}
+                                 no location to display
+                                {{/if}}
+                                 <p class="connected_since_text"><span style="color: #23527c;">Member Since</span> {{calculate_time_difference createdAt}} </p>
+                              
+
+                              </p>
+<!--                                 <div class="row" style="margin-bottom: 0px;">
+                                            {{#if check_user_blocked_or_not }}
+                                                          <button class="pull-right admin_de_btn" id="block_user" > Block </button>
+                                                      {{else}}
+                                                          <button class="pull-right admin_ac_btn" id="unblock_user" > Unblock </button>
+                                                    {{/if}}
+                               </div>     -->
+                                                                  <div class="row" style="margin-bottom: 0px;">
+                                     <span class=" pull-right">
+                                 <div class="btn-group show-on-hover">
+                                         <button aria-expanded="false" style="width: 100% !important; border: 0px !important; background-color: #fff;" data-toggle="dropdown" class="dropdown-toggle" type="button"><i style="color:#000 !important; margin-right: 0px; margin-top: 0px;" class="fa fa-ellipsis-v"> </i></button>
+                                          <ul style="width: 100%; left: 0 !important;" role="menu" class="dropdown-menu">
+                                           <li>
+                                            {{#if check_user_blocked_or_not }}
+                                                          <a id="block_user" > Block </a>
+                                                      {{else}}
+                                                          <a id="unblock_user" > Unblock </a>
+                                                    {{/if}}
+
+                                           </li>
+                                           
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                                                    
+                                                  </div>                 
+
+                           </div>
+                          <!--  <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                              <div class="col m12 l12 s12 icon_for_site ignore_req pointer" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a></div>
+                              
+                           </div> -->
+                          
+                        </div>
+                     </div>
+                 
+                        {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> 0 Connection in connection list</p>
+                           </div>
+                        </div>
+                     {{/each}}
+
+                  {{else}}
+                     {{#each show_connections}}
+                     {{#each show_connections_2}}
+                     
+                     <div class="col m6 l4 s12">
+                        <div class="card row_nomargin_padd text-center no_box_shadow" style="padding: 0px;">
+                           
+                           <div class="card-content" style="padding: 0px;">
+                           	<div class="text-center padding_image_right col m12 l12 s12">
+				                      	 	<img class="img_connection ui medium image pointer redirect_to_profile" src={{profile_pic}} alt="No image" >
+				                      	 </div>
+                              <span class="card-title activator event_name pointer redirect_to_profile name_profile_hub blue_text_color">
+                                {{name}}</span>
+                              <p class="activator event_type pointer redirect_to_profile">{{headline_online_only}}</p>
+                              <p class="event_type activator pointer"><i class="fa fa-map-marker"></i> {{location_country}} <p class="connected_since_text"><span style="color: #23527c;">Connected since</span> {{connected_since}}</p>
+                              </p>
+                           </div>
+                           <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                              <div class="col m12 l12 s12 icon_for_site ignore_req pointer" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a></div>
+                              
+                           </div>
+                          
+                        </div>
+                     </div>
+                 
+                     {{/each}}
+                        {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> 0 Connection in connection list</p>
+                           </div>
+                        </div>
+                     {{/each}}
+
+                    {{/if}}
+                  </div>
+                
+               </div>
+
+               <div class="tab-pane  {{#if user_is_admin}}{{else}}active{{/if}}" id="request">
+                  <div class="row">
+                        <div class="col m12 l12 s12">
+                           <p class="heading_create">Request ({{request}})</p>
+                        </div>
+                  </div>
+                  <div class="row">
+                     <ul class="collection ">
+                        {{#each show_pending}}
+                        {{#each show_pending2}}
+                        <li>
+                           <div class="col m6 l4 s12">
+                              <div class="card box effect1 row_nomargin_padd text-center no_box_shadow" style="padding-top: 0px;">
+                                 <div class="card-content">
+                                    <div class="text-center padding_image_right col m12 l12 s12">
+                                       <img class="img_connection ui medium image pointer redirect_to_profile" src={{profile_pic}} alt="No image" >
+                                    </div>
+                                    <p class="card-title activator event_name"> <span class="name_profile_hub blue_text_color pointer redirect_to_profile">{{name}}</span> </p>
+                                    <p class="activator event_type pointer redirect_to_profile">{{headline_online_only}}</p>
+                                    <p class="event_type activator pointer"> 	<i class="fa fa-map-marker"></i> {{location_country}} </p>
+                                 </div>
+
+                                 <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                                    <div class="col m6 l6 s12 ignore_req request_ignore_status pointer" id="request_ignore_status">Ignore</div>
+                                    <div class="col m6 l6 s12 accept_req request_accept_status pointer" id="request_accept_status">Accept</div>
+                                 </div>
+
+                              </div>
+                           </div>
+                        </li>
+                        {{/each}}
+                        {{else}}
+                          <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> You don't have any request</p>
+                           </div>
+                        </div>
+                        {{/each}}
+                     </ul>
+                  </div>
+               </div>
+               <div class="tab-pane" id="ignore"> 
+                  <div class="row">
+                        <div class="col m12 l12 s12">
+                         <p class="heading_create">Ignored ({{ignore}})</p>
+                      </div>
+                  </div>
+                  <div class="row">
+                     <ul class="collection">
+                        {{#each show_ignored }}
+                        {{#each show_ignored2 }}
+                       
+                        <div class="col m6 l4 s12">
+                           <div class="card row_nomargin_padd text-center no_box_shadow" style="padding-top: 0px;">
+                               <div class="card-content">
+                              	<div class="text-center padding_image_right col m12 l12 s12">
+				                      	 	<img class="img_connection ui medium image pointer redirect_to_profile"  src={{profile_pic}} alt="No image" >
+				                      	 </div>
+                                 <span class="card-title activator event_name"><span class="pointer redirect_to_profile blue_text_color name_profile_hub">{{name}}</span></span>
+                                 <p class="activator event_type pointer redirect_to_profile">{{headline_online_only}}</p>
+                                 <p class="event_type activator pointer"><i class="fa fa-map-marker"></i> {{location_country}} </p>
+                              </div>
+                              
+                              <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                                 <!-- <div class="col m6 l6 s12 icon_for_site">Remove</div> -->
+                                 <div class="col m12 l12 s12 icon_for_site_not pointer request_accept_status accept_req" id="ignore_event-1348278818req-" >Accept</div>
+                              </div>
+                            
+                           </div>
+                        </div>
+                        {{/each}}
+                          {{else}}
+                          <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> 0 request in ignore list</p>
+                           </div>
+                        </div>
+                        {{/each}}
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <!-- tab content -->
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown({
+                   inDuration: 300,
+                   outDuration: 225,
+                   constrainWidth: false, // Does not change width of dropdown to that of the activator
+                   hover: true, // Activate on hover
+                   gutter: 0, // Spacing from edge
+                   belowOrigin: false, // Displays dropdown below the button
+                   alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                   stopPropagation: false // Stops event propagation
+                 }
+               );
+                    
+               
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('open');
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('close');
+            </script>
+         </div>
+      </div>
+   </div>
+    <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+   <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+      <li class="col m4 s4 text-center total_number_bg_padding" id="all_connections">
+        <a class="total_number_bg">
+          <span class="numbr_below" >{{connection}}</span>
+         
+          <span href="#connection"   class="total_number_name">All</span>
+        </a>
+      </li>
+      <li class="col m4 s4 text-center total_number_bg_padding" id="request_connections" >
+        <a class="total_number_bg">
+         <span class="numbr_below">{{request}}</span>
+         
+         <span href="#request" class="total_number_name">Request</span>
+        </a>
+      </li>
+       <li class="col m4 s4 text-center total_number_bg_padding_last" id="ignore_connections">
+        <a class="total_number_bg">
+          <span class="numbr_below">{{ignore}}</span>
+          
+          <span href="#ignore"  class="total_number_name">Ignore</span>
+        </a>
+      </li>
+   </ul>
+</div>
+
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</template>

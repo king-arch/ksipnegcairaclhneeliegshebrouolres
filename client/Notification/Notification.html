@@ -1,0 +1,1067 @@
+
+<template name="notification">
+  {{> header}}
+  <body class="page_wh"> 
+   {{> notifi}}
+ </body>
+
+</template>
+
+<template name="notifi">
+    <div class="row">
+
+           <div class="col s12 m3 l3 ">
+                <div class="section">
+                     <div align="center">
+                         <h4 class="name_profile_hub"> Notifications</h4>
+                         <p> You´re all caught up! Check back later for new notifications </p>
+                      </div>
+                </div>
+           </div>
+
+<div class="loading loader_visiblity_block"  id="loading_div" ></div>
+           <div class="col s12 m9 l9 ">
+                    {{#each all_notifications}}
+
+              <div class="section_noti ui feed margin_bottom section" style="margin-bottom: 0px !important;">
+
+<!-- *************** event notifications starts *******************   -->
+
+                    {{#if equals notification_type 'event_join'}}
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                              
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+
+                            Joined your event 
+                            {{ #each show_event_name }}
+
+                            <span class="go_inside_event">
+                              <a class="user" href="#" >  
+                               {{ event_name }}
+                              </a> 
+                            </span>
+
+                            {{ /each }}
+                            
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+                      {{/if}}
+
+                    {{#if equals notification_type 'Private_Event_Invite'}}
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                              
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+
+                            invited you to a private event  
+                            {{ #each show_event_name }}
+
+                            <span class="go_inside_event">
+                              <a class="user" href="#" >  
+                               {{ event_name }}
+                              </a> 
+                            </span>
+
+                            {{ /each }}
+                            
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+                      {{/if}}
+
+                      {{#if equals notification_type 'event_comment_lvl1'}}
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}} 
+
+                            Replied to your comment on event 
+                            <!-- replied in Blog on your post  -->
+                            {{ #each show_event_name }}
+                            <span class="go_inside_event">
+                              <a class="user" href="#" >  
+                               {{ event_name }}
+                              </a> 
+                            </span>
+                            {{ /each }}
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+                      {{/if}}
+
+                 {{#if equals notification_type 'event_comment_lvl0'}}
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}} 
+
+                            has commented on your Event   
+
+                            {{ #each show_event_name }}
+                            <span class="go_inside_event">
+                              <a class="user" href="#" >  
+                               {{ event_name }}
+                              </a> 
+                            </span>
+                            {{ /each }}
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+                      {{/if}}
+
+                   {{#if equals notification_type 'event_like'}}
+                      
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            liked on your comment on event
+
+                            {{ #each show_event_name }}
+                            <span class="go_inside_event">
+                              <a class="user" href="#" >  
+                               {{ event_name }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+<!-- ************* event notifications End ********************* -->
+
+<!-- ************* connection notifications start ******************** -->
+
+                   {{#if equals notification_type 'Friend_request'}}
+                      
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            
+
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+
+                            is now a connection
+<!-- 
+                            {{ #each show_event_name }}
+                            <span class="go_inside_event">
+                              <a class="user" href="#" >  
+                               {{ event_name }}
+                              </a> 
+                            </span> 
+                            {{/each}} -->
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+               {{#if equals notification_type 'Friend_request_sent'}}
+                      
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            
+
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+
+                            sent you a 
+
+                            <!-- {{ #each show_event_name }} -->
+                            <span class="go_inside_connections">
+                              <a class="user" href="#" >  
+                               connection request
+                              </a> 
+                            </span> 
+                            <!-- {{/each}} -->
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+<!-- **************** connection notifications end *************************-->
+
+<!-- **************** Group notifications Start *************************-->
+
+                  {{ #if equals notification_type 'discussion_created' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            created a Discussion on 
+
+                            {{ #each show_discussion_name }}
+                            <span class="go_inside_discussion">
+                              <a class="user" href="#" >  
+                               {{ discussion_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+                      
+                  {{ #if equals notification_type 'discussion_comment_lvl0' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            commented on your discussion 
+
+                            {{ #each show_discussion_name }}
+                            <span class="go_inside_discussion">
+                              <a class="user" href="#" >  
+                               {{ discussion_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+                      
+                  {{ #if equals notification_type 'discussion_comment_lvl1' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            commented on discussion on
+
+                            {{ #each show_discussion_name }}
+                            <span class="go_inside_discussion">
+                              <a class="user" href="#" >  
+                               {{ discussion_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+                      
+                  {{ #if equals notification_type 'discussion_comment_like' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            liked your comment on 
+
+                            {{ #each show_discussion_name }}
+                            <span class="go_inside_discussion">
+                              <a class="user" href="#" >  
+                               {{ discussion_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+                      
+                  {{ #if equals notification_type 'main_discussion_like' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            like your discussion on 
+
+                            {{ #each show_discussion_name }}
+                            <span class="go_inside_discussion">
+                              <a class="user" href="#" >  
+                               {{ discussion_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+                      
+                  {{ #if equals notification_type 'group_join' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            Joined your group 
+
+
+                            {{ #each show_group_name }}
+                            <span class="go_inside_group">
+                              <a class="user" href="#" >  
+                               {{ grp_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+                  {{ #if equals notification_type 'group_leave' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            left your group 
+
+                            {{ #each show_group_name }}
+                            <span class="go_inside_group">
+                              <a class="user" href="#" >  
+                               {{ grp_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+                  {{ #if equals notification_type 'public_group_join_request' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            has requested to join your group 
+
+                            {{ #each show_group_name }}
+                            <span class="go_inside_group_members">
+                              <a class="user" href="#" >  
+                               {{ grp_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+         {{ #if equals notification_type 'public_request_accepted' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            has accpted your request in group 
+
+                            {{ #each show_group_name }}
+                            <span class="go_inside_group">
+                              <a class="user" href="#" >  
+                               {{ grp_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+
+         {{ #if equals notification_type 'Private_group_Invite' }}
+          
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            has invited you to his private group 
+
+                            {{ #each show_group_name }}
+                            <span class="go_inside_group">
+                              <a class="user" href="#" >  
+                               {{ grp_title }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+<!-- **************** Group notifications End *************************-->
+
+<!-- **************** Blog notifications Start *************************-->
+
+
+                  {{ #if equals notification_type 'blog_published' }}
+           
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                <!-- {{name}} --> 
+                                your
+                               </a>
+                            </span>
+                            {{/each}}
+                            blog has been published with name 
+
+                            {{ #each show_blog_name }}
+                            <span class="go_inside_blog">
+                              <a class="user" href="#" >  
+                               {{ blog_title }}
+                              </a>                   
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+                      
+   {{ #if equals notification_type 'commment_on_blog_detail_thread_continued_level_1' }}
+           
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            has commented on your blog 
+
+                            {{ #each show_blog_name }}
+                            <span class="go_inside_blog">
+                              <a class="user" href="#" >  
+                               {{ blog_title }}
+                              </a>                   
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}    
+                      
+
+   {{ #if equals notification_type 'like_on_blog' }}
+           
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            liked on your blog 
+
+                          {{ #each show_blog_name }}
+                            <span class="go_inside_blog">
+                              <a class="user" href="#" >  
+                               {{ blog_title }}
+                              </a>                   
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+
+    {{ #if equals notification_type 'commment_on_blog_detail_thread_continued' }}
+           
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            has commented on your blog 
+
+                            {{ #each show_blog_name }}
+                            <span class="go_inside_blog">
+                              <a class="user" href="#" >  
+                               {{ blog_title }}
+                              </a>                   
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+                      </div>
+
+                      {{/if}}
+
+     {{ #if equals notification_type 'like_on_comment' }}
+           
+                       <div class="event" style="margin-bottom: 0px !important;">
+                        
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            liked on your blog 
+
+                          {{ #each show_blog_name }}
+                            <span class="go_inside_blog">
+                              <a class="user" href="#" >  
+                               {{ blog_title }}
+                              </a>                   
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+         {{ #if equals notification_type 'commment_on_blog_detail_level_1' }}
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            replied in Blog on your post 
+
+                            {{ #each show_blog_name }}
+                            <span class="go_inside_blog">
+                              <a class="user" href="#" >  
+                               {{ blog_title }}
+                              </a>                   
+                            </span> 
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+                      </div>
+
+                      {{/if}}
+
+
+<!-- **************** Blog notifications End *************************-->
+
+<!-- **************** Hub notifications Start *************************-->
+
+         {{ #if equals notification_type 'like_on_hub_posted_comment' }}
+           
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            liked on your comment in hub post 
+
+                            {{ #each show_hub_post_name }}
+                           
+                            <span class="go_inside_hub_post">
+                              <a class="user" href="#" >  
+                               {{ post_text }}
+                              </a> 
+                            </span> 
+
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+
+         {{ #if equals notification_type 'like_on_hub_posting' }}
+           
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            {{/each}}
+                            liked on hub post 
+
+                            {{ #each show_hub_post_name }}
+                           
+                            <span class="go_inside_hub_post">
+                              <a class="user" href="#" >  
+                               {{ post_text }}
+                              </a> 
+                            </span> 
+
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+
+         {{ #if equals notification_type 'commment_on_hub_post' }}
+           
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            
+                            {{#each fetch_user_information}}
+                           
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+
+                            {{/each}}
+
+                            Commented on hub post
+
+                            {{ #each show_hub_post_name }}
+                           
+                            <span class="go_inside_hub_post">
+                              <a class="user" href="#" >  
+                               {{ post_text }}
+                              </a> 
+                            </span>                                                 
+
+                            {{/each}}
+
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+
+                      </div>
+
+                      {{/if}}
+
+
+         {{ #if equals notification_type 'commment_on_hub_post_continued_level_1' }}
+               
+                      <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          {{#each fetch_user_information}}
+                            <img class="width_hub_dp" src="{{profile_pic}}"> 
+                          {{/each}}
+                        </div>
+                        <div class="content width_hub_content">
+                            <div class="summary text">
+                            {{#each fetch_user_information}}
+                            <span class="redirect_click_1">
+                               <a class="user"> 
+                                {{name}} 
+                               </a>
+                            </span>
+                            
+                            {{/each}}
+                            replied in hub on your post   
+                            {{ #each show_hub_post_name }}
+                            <span class="go_inside_hub_post">
+                              <a class="user" href="#" >  
+                               {{ post_text }}
+                              </a> 
+                            </span> 
+                            {{/each}}
+                            </div>
+                            <div class="summary new_headline_hub visible-lg">{{calculate_time_difference created_at}} </div>
+                        </div>
+                      </div>
+
+                      {{/if}}
+
+<!-- **************** Hub notifications End *************************-->
+
+                </div>
+
+                  {{else}}
+                      <!-- {{ loader_for_mins }}         -->
+                    <p style="text-align: center" > No New Notifications. </p>
+                  {{/each}}
+
+           </div>
+    </div>
+</template>

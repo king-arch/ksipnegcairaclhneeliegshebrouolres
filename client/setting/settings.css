@@ -1,0 +1,62 @@
+
+.make_bg_1{
+	background-color: #C7E8F5 !important;
+}
+
+.make_bg_2{
+	background-color: #F5D7D7 !important;
+}
+
+.make_bg_3{
+	background-color: #F5F5F5 !important;
+}
+
+.make_bg_default{
+	background-color: #F5F5F5 !important;
+}
+
+.border_setttings_bg_lightgray{
+  background-color: #C7E8F5 !important;
+
+}
+
+.border_setttings_bg_lightorange{
+  background-color: #F5D7D7 !important;
+
+}
+
+.border_setttings_bg_lightskyblue{
+  background-color: #F5F5F5 !important;
+}
+.pink_background{
+	border-right-color: #F5D7D7 !important;
+border-right: 34px solid #F5D7D7 !important;
+}
+.blue_background{
+	border-right-color: #C7E8F5 !important;
+border-right: 34px solid #C7E8F5  !important;
+}
+.default_background{
+	border-right-color: #F5F5F5 !important;	
+border-right: 34px solid #F5F5F5 !important;
+}
+
+.increase_fonted{
+    padding: 10px !important;
+    background-color:#338EA7;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    border: 1px solid #338ea7;
+
+}
+
+.dec_font{
+    padding: 10px !important;
+    border: 1px solid #338EA7;
+    color: #338EA7;
+    text-align: center;
+}
+
+.dropdown-toggle .dropdown-menu{
+	left: -143px !important;
+}

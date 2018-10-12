@@ -1,0 +1,95 @@
+<template name="edit_passion">
+   <head>
+      <title>Search</title>
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1">      
+      <link rel = "stylesheet"
+         href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel = "stylesheet" 
+         href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+      <script type = "
+      text/javascript"
+         src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
+      </script> 
+
+   </head>
+   <!-- <body style="background-color: #F5F5F5 !important;"> -->
+   <body>
+    <!--   {{> header}} -->
+      {{> passion_details}}
+   </body>
+</template>
+<template name="passion_details">
+   <div style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i> Edit Passion</h5>
+         </div>
+         <div class="modal-body">
+         <div id="basic" class="section scrollspy">
+               <p class="caption">Add Interests</p>
+               <div id="chips_check" class="chips chips-initial yyy"></div>
+            </div>
+
+            </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" data-dismiss="modal">Cancel</button>
+            <button type="button" class="save_passion btn btn-primary edit_save_btn_profile" id="save_passion">Save</button>
+         </div>
+      </div>
+   </div>
+
+
+
+ <script type="text/javascript">
+       
+  var elem = document.querySelector('.chips');
+  var instance = M.Chips.init(elem, options);
+
+  // Or with jQuery
+
+  $('.chips').chips();
+  $('.chips-initial').chips({
+    data: [{
+      tag: 'Apple',
+    }, {
+      tag: 'Microsoft',
+    }, {
+      tag: 'Google',
+    }],
+  });
+  $('.chips-placeholder').chips({
+    placeholder: 'Enter a tag',
+    secondaryPlaceholder: '+Tag',
+  });
+  $('.chips-autocomplete').chips({
+    autocompleteOptions: {
+      data: {
+        'Apple': null,
+        'Microsoft': null,
+        'Google': null
+      },
+      limit: Infinity,
+      minLength: 1
+    }
+  });
+        
+
+    </script>
+    <script type="text/javascript">
+       
+  var chip = {
+    tag: 'chip content',
+    image: '', //optional
+  };
+        
+    </script>
+   <script type="text/javascript">
+      $('.ui.dropdown').dropdown({
+        allowAdditions: true
+      })
+      ;
+   </script>
+   
+</template>

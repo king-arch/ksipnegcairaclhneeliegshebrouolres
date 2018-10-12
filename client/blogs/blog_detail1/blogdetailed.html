@@ -1,0 +1,387 @@
+<template name="blog_detail1">
+  
+
+<body class="body_bg">
+{{> header}}
+{{> blogdetails1}}
+</body>
+
+</template>
+
+
+<template name="blogdetails1"> 
+    {{#each detailed_blog_array}}
+     <div class="page_wh">
+        {{> ticker}}
+              <div class="row">
+                      <div class="col m12 l12 s12 top_row row_margin_btn" style="padding: 0px !important;"> 
+                        <p style="margin-bottom: 0px;"><img class="event_detail_banner" src="{{blog_image}}"></p>
+                      </div>
+                      <div class="col m12 l9 s12 right_row row_margin_right row_margin_btn section"> 
+                        <p class="event_names_for_headlline" style="margin-left: 0px !important;">  {{changeDateFormat createdAt}}  
+                          {{#if check_users_for_a_follower blog_creator_id}}
+
+                          <span class="pull-right visible-lg pointer" id="follow_button" style="margin-top: 5px;">
+                          <a style="background-color: #338EA7; padding: 5px 10px; color: #fff !important;">{{check_users_for_a_follower blog_creator_id}}</a>
+                        </span>
+                        
+                        {{else}}
+
+                        {{/if}}
+                        </p>
+
+                        <p class="event_title_detail"><a href="#">{{blog_title}}</a></p>
+                        <ul class="pull-left col m12 l9 s12 collection">
+                            <li style="cursor:unset;">
+                              {{#each fetch_blog_creator_information blog_creator_id}}
+                              <img class="img_collection_detail_event pointer redirect_to_profile" src="{{profile_pic}}">
+                              <span class="event_names_for_name pointer redirect_to_profile"><a href="#"  class="blog_writer_name event_names_for_all">{{name}}</a> <span class="new_headline_hub"> (Author) </span></span><br/>
+                               <span class="event_names_for_headlline new_headline_hub pointer redirect_to_profile">{{headline}} </span>
+                               {{/each}}
+                            </li>
+                         </ul>
+                        
+                        
+                          <div class="clearfix"></div>
+                          <div class="col m12 s12 l12 justify detail_description"><span id="temp_data">{{temp_data blog_description}}</span></div>
+                             <!-- <textarea disabled id="edit_blog_description" class="materialize-textarea blog_description frmt_inpt justify" style="display: none;" value={{blog_description}} ></textarea> -->
+
+<div class="row" id="loader"> 
+         <div class="loading  loader_visiblity_block col-md-offset-5"></div> 
+      </div>
+                          <div style="clear:both;"></div>
+
+                              <p class="col m12 l12 s12" style="text-align:  center;"> 
+                            <span class="text_center color_dard_gray">
+                          <span style="margin-right: 10px;" class="blog_description color_dard_gray">
+                             {{#if equals Like_unlike_txt_event 'Like'}} 
+                         <a  class="reply event_names_for_headlline like_Button_event pointer color_dard_gray"  title="like" id="like_Button_event">Like</a>
+                            <a class="display_like_count modal-trigger trigger_helper color_dard_gray"  href="#Show_invited_list"  >({{show_like_count}}) &nbsp; </a>
+                              {{else}}
+                            <a class="reply like_Button_event like_Button_event pointer color_dard_gray" title="like" id="like_Button_event">
+                            Liked</a>
+                            <a class="display_like_count modal-trigger trigger_helper color_dard_gray"  href="#Show_invited_list"  >({{show_like_count}})
+                            &nbsp;  </a>
+                            
+                              {{/if}}
+                            </span>
+                           <span style="margin-right: 10px;" class="blog_description"><a href="#" class="parent_comment color_dard_gray">
+                            <i class="color_dard_gray" title="Comment"></i> Comments ({{fetch_count_total_level_zero_comments}}) </a>
+                          </span>
+                          </span>
+                        </p>
+
+                        
+                                                                         
+                         
+                            <br/> <br/><br/>
+                          <div class="col m12 s12 l12">
+                              <div class="ui small comments ">
+                                <div class="comment">
+    {{#each get_current_logged_in_user_details}} 
+                                     
+    <a class="avatar">
+      <img src="{{profile_pic}}" class="circle pointer redirect_to_profile">
+    </a>
+    <div class="content">
+      <a class="author pointer redirect_to_profile">Me</a>
+      
+      <div class="text new_headline_hub pointer redirect_to_profile">
+       {{headline}} 
+      </div>
+      
+    </div>
+    {{/each}}
+  </div>
+  <form class="ui reply form" id="comment_form">
+    <div class="field"  >
+      <textarea class="textarea textareaall" placeholder="Type here  to comment" id="parent_comment"></textarea>
+    </div>
+    <div class="ui blue labeled submit icon button "  id="submit_comment" style="  background-color: #338EA7 !important; padding: 10px 30px !important; float: right; ">
+      Post
+    </div><br/> <br/>
+ </form>
+  <script type="text/javascript">
+       $('#parent_comment').keyup(function(event){
+                // event.preventDefault();
+                      if (event.which === 13) {
+                           $("#submit_comment").click();
+                       }
+        });
+</script>
+
+
+    {{#if count_for_level_zero_comments}}
+    <h3 class="ui dividing header blog_description">Comments</h3>
+  {{/if}}
+
+  {{#each show_comment_lvl0}}
+  <div class="comment" >
+    <span class="parent_div">
+{{#each show_commenter_info}}
+    <a class="avatar" >     
+        <img src={{profile_pic}} class="circle redirect_to_profile pointer" >      
+    </a>
+{{/each}}  
+    <div class="content" style="margin-bottom: 10px; margin-left:  50px;">
+
+
+   {{#each show_commenter_info}}
+      <a class="author redirect_to_profile">{{name}}</a>
+      {{/each}}
+
+      <div class="metadata">
+        <span class="reply">{{calculate_time_difference createdAt}}</span>
+      </div>
+<!-- 
+      <div class="text justify blog_description">
+        <p>{{comment_txt}}</p>
+      </div> -->
+
+      <div class="text justify blog_description" style="padding: 0px;">
+                        <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">{{comment_txt}} 
+                          <span class="metadata reply">{{#if check_for_edited comment_id}}
+                          (Edited) 
+                        {{/if}}
+                        </span>
+                         </span>
+                        {{#if check_if_commented_by_is_user comment_by }}
+                        <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+
+                                          <div class="btn-group show-on-hover" >
+                                                      <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" 
+                                                          class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                      {{/if}}
+                    <!-- <i class="fa fa-camera"></i> -->
+                    <span>
+
+                      <textarea data-toggle="modal" class="loader_visiblity_block hidden_comment edit_box_styling" 
+                      value={{comment_txt}}  id="hidden_comment_{{comment_id}}"
+                      data-target="#modalhubtop" resize="none" placeholder="Edit ..." ></textarea></span>
+
+
+                    
+                   </div>
+                     <div class="clearfix"></div>
+      <div class="text justify actions ">
+        <a class="reply like_button_comments pointer">{{Like_unlike_txt}}</a>
+            <a class="reply modal-trigger trigger_helper display_like_count_level_1" style="margin-right: 0px !important;" href="#Show_invited_list"  >({{show_like_count_comment}}) &nbsp; </a>
+        <a class="reply comments_with_count">Comment ({{show_count}})</a>
+
+      </div>
+      
+         </div>
+  </span>
+{{#if show_more_comment_reply}}
+        {{#if show_limit_comment_reply}}
+
+            <div id="show_more" >
+                  <a href="javascript:void(0);"  class="an_style read_more show_more_comment_reply" id="show_more_comment_reply" style="color: #338ea7; padding: 5px 10px;" > Read more</a> 
+                                    
+                  <input type="hidden" value={{summary}} id="hidden_summary">
+            </div>
+            {{else}}
+            <div id="show_more"  >
+             <a href="javascript:void(0);"  class="an_style read_more show_less_comment_reply" id="show_less_comment_reply" style="color: #338ea7; padding: 5px 10px;">Read less</a> 
+           </div>
+        {{/if}}
+    {{/if}}
+
+{{#each show_comment_reply}}
+
+    <div class="comments level_2_commenting_div">
+      <div class="comment">
+
+{{#each show_commenter_info}}
+
+    <a class="avatar">     
+        <img src={{profile_pic}} class="circle redirect_to_profile pointer" >      
+    </a>
+
+{{/each}} 
+        <div class="content">
+          {{#each show_commenter_info}}
+          <a class="author pointer redirect_to_profile" >{{name}}</a>
+          {{/each}}
+          <div class="metadata">
+            <span class="reply">{{calculate_time_difference createdAt}}</span>
+          </div>
+
+          <!-- <div class="text blog_description justify" style="margin-top: -5px;">
+            {{comment_txt}}
+          </div> -->
+
+
+
+            <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px;">
+                        <span class="comment_txt pull-left" id="show_comment_level_2_{{comment_id}}">{{comment_txt}} 
+                          <span class="metadata reply">{{#if check_for_edited comment_id}}
+                          (Edited) 
+                        {{/if}}
+                        </span>
+                         </span>
+                        {{#if check_if_commented_by_is_user comment_by }}
+                        <span class="card-title pull-right" style="display: none;" id="level_2_commenting_three_dots_{{comment_id}}">
+
+                                          <div class="btn-group show-on-hover" >
+                                                      <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response level_2_edit_comment" id="{{comment_id}}" > Edit</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" 
+                                                          class="level_2_remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                      {{/if}}
+                    <!-- <i class="fa fa-camera"></i> -->
+                    <span>
+                      <textarea data-toggle="modal" class="loader_visiblity_block hidden_comment" 
+                      value={{comment_txt}}  id="hidden_comment_level_2_{{comment_id}}"
+                      data-target="#modalhubtop" resize="none" placeholder="Edit ..." style="padding: 5px;
+                    border: 1px solid #e4e4e4;
+                  border-radius: 5px;" ></textarea>
+                      </span>
+
+
+                     </div>
+
+                           <!-- <div class="text" style="margin-top: -5px;">
+                              {{comment_txt}}
+                           </div> -->
+
+                            {{#if check_if_commented_by_is_user comment_by }}
+                          <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+
+                                          <div class="btn-group show-on-hover" >
+                                                      <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" 
+                                                          class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                                      </ul>
+                           
+                                                  </div> 
+                        </span>
+                      {{/if}}
+
+
+          <div class="actions">
+            <a class="reply like_button_comments" >{{Like_unlike_txt}} </a>
+               <a class="reply modal-trigger trigger_helper display_like_count_level_2" href="#Show_invited_list"  >({{show_like_count_comment}}) &nbsp; </a>
+            <!-- <input type="hidden" id="" value="like_{{}}" > -->
+          </div>
+        </div>
+      </div>
+    </div>
+{{/each}}
+<div class="ui fluid icon input " style="margin-top: 10px;">
+  <input placeholder="Enter your comment here ..." class="secomdcomment comment_input_first .comment_input_first" type="text" id="commentlvl1_{{comment_id}}" >
+  <button class="submit_comment_lvl1" value={{comment_id}} style="display: none !important;"> send </button>
+</div>
+ 
+  </div>
+  {{/each}}
+
+</div>
+                           </div> 
+                      </div>
+
+                      <div class="col m12 l3 s12 visible-lg" style="padding: 0px;"> 
+                      <div class="section">
+                        <div class="btn-group show-on-hover text-center" style="width:100% !important;">
+                            <button type="button" class="dropdown-toggle brn_add_health btn_clor" data-toggle="dropdown" id="create_blog_btn">Create Blog  </button>
+                       
+                        </div>                      
+                          
+                      </div>
+                     <div class="section">
+    <h5> You may like to read 
+      <div class="divider"></div>
+     </h5> 
+    
+     <ul class="collection">
+ {{#each you_may_like_to_read }} 
+    <li class="collection-item avatar">
+      <img src="{{blog_image}}"  alt="" class="circle blog_detail_redirect">
+      <span class="title blog_detail_redirect"   ><a style="font-size: 16px !important; color: #333 !important; font-size: 16px !important;">{{trim_content blog_title}}</a>  </span>
+      <p> <a href="" id="redirect_click_1">{{fetch_blog_creator blog_creator_id}}</a><br>
+      </p>
+    </li>
+      {{else}}
+    <p align="center">Blogs from others people will appear here. </p>
+    {{/each}}
+
+</ul>
+
+  </div>              
+                         
+                      </div>
+                      
+              </div>
+      </div>
+{{#if check_if_current_logged_in_is_admin}}
+<div class="fixed-action-btn horizontal">
+    <a href={{edit_blog_link}} class="btn-floating btn-large red floating_btn_all redirect_click_1">
+      <i class="fa fa-pencil fa-2x"></i>
+    </a>
+    
+  </div>
+{{/if}}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+{{/each}}
+
+<div id="Show_invited_list" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important; z-index: +9999 !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><i class="fa fa-angle-left hidden-lg close_modal" style="margin-right: 20px !important;"></i>Total Likes ({{likes_count}}) <span class="pull-right pointer hide_modal_class"><i class="fa fa-times"></i></span></h5>
+
+         </div>
+         <div class="modal-body">
+            <ul class="collection">
+            {{#each fetch_all_liked_users}}
+    {{#each fetch_user_information}}
+
+    <li class="collection-item avatar ">
+      <img src="{{profile_pic}}" alt="" class="circle modal_invitees_img_page">
+      <p class="invitees_name"><a href="#">{{name}}</a></p>
+      <p class="invitees_headline new_headline_hub ">{{headline}}
+       <!-- <span style="float: right;">
+      <input type="checkbox" class="inviteuser invitees_headline_label" name="inviteuser[]" value="{{user_id}}" id="{{_id}}" />
+      <label class="invitees_headline_label" for="{{_id}}"></label>
+        </span> -->
+
+      </p>
+    </li>
+    {{/each}}
+    {{else}}
+    <p align="center">No likes</p>
+    {{/each}}
+  </ul>
+         </div>
+         <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-default cncl_btn_profile close_modal" id="" data-dismiss="modal">Cancel</button>
+            <button type="button" class="save_summary btn btn-primary save_btn_profile save_heading" id="agreeto">Save</button>
+         </div> -->
+      </div>
+      <!-- /.modal-content -->
+   </div>
+
+<script type="text/javascript">
+ $(document).ready(function(){
+    $('.modal').modal();
+  });
+ 
+</script>
+
+
+</template>

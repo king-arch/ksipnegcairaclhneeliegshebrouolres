@@ -1,0 +1,26 @@
+.admin_ac_btn{
+	background-color: #338EA7;
+	width: 100%;
+	border:1px solid #338EA7;
+	margin: 5px 5px;
+	color: #fff !important;
+	padding: 6%;
+
+}
+
+.admin_de_btn{
+	background-color: #fff;
+	width: 100%;
+	border:1px solid #338EA7;
+	margin: 5px;
+	color: #338EA7 !important;
+	padding: 6%;
+}
+
+.margin_admin_5{
+	margin: 5px !important
+}
+.join_btn_admin{
+	font-size: 14px !important;
+}
+

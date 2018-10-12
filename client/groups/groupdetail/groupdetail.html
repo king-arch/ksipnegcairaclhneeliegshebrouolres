@@ -1,0 +1,268 @@
+
+
+<template name="groupdetail">
+<head>
+  <title>Group Listing</title>
+</head>
+
+  <!-- <body style="background-color: #F5F5F5 !important;"> -->
+  <body>
+    {{> header}}            
+    {{> grpdetail}}       
+  </body>
+
+</template>                
+
+<template name="grpdetail"> 
+
+<div class="page_wh">
+    <div class="row">
+      {{> ticker}}
+{{#each show_group_details}}
+      <div class="col m12 l12 s12 top_row row_margin_btn"> <p><img src={{Show_grp_image}} alt="No Image" class="image_banner"  ></p></div>
+   
+    <div class="col m12 l9 s12 right_row row_margin_right row_margin_btn">
+      <div class="col m11 s12 l11" style="padding: 0px;"> 
+            <p class="event_title_detail">{{grp_title}}</p>
+             <!-- <p class="event_title_detail">Group Type: {{grp_type}}</p> -->
+      </div> 
+      
+      <div class="col m1 s12 l1"> 
+             {{#if current_user_admin}}
+             <div id="group_type_drop_down"  class="ui fluid dropdown frmt_inpt" style="border: medium none !important;
+background-color: transparent !important; box-shadow: none !important; min-width: 20px !important;">
+                  <input type="hidden" name="eventtype" value=""/>
+                  
+                  <div class="text" style="margin-left: 15% !important; text-align: right !important;"><i class="fa fa-ellipsis-v fa-2x "></i></div>
+                  <!-- <i class="dropdown icon"></i> -->
+                  <div class="menu">
+                     <!--  {{#if activity_status}}
+                     <div class="item  activity_status" data-value="Activate" >Activate Group</div>
+                      {{else}}
+                       <div class="item activity_status" data-value="Deactivate">Deactivate Group</div>
+                       {{/if}} -->
+                     <div class="item" data-value="Edit" id="edit_group_3">Edit Group</div>
+<!--                      <div class="item" data-value="Admission">Free Exchange</div>
+ -->                  </div>
+               </div>
+
+               <script type="text/javascript">
+                  $("#group_type_drop_down").dropdown("set selected","");        
+               </script>
+              
+             {{/if}}
+      </div>      
+      
+      <div class="clearfix"></div>
+              <div class="col m12 s12 l12 justify detail_description"> {{grp_discription}}</div>
+               <div class="clearfix"></div>
+          <div class="row">
+              <h3 class="detail_description"> Admin</h3> 
+
+{{#each show_admin_details}} 
+        <ul class="collection">
+          <li class="collection-item avatar mrgin_top" style="padding: 0px !important;">
+            <img src="{{Show_admin_image}}" alt="No image" class="image_circle_for_all">
+               <span class="title "><a href="" class="redirect_click_1 name_aboveimage" valu={{user_id}} > {{name}} </a> </span>
+                <p class="name_aboveimage new_headline_hub">{{headline}} </p>
+           </li>
+         </ul>
+{{/each}}            
+          </div>
+          <div class="row">
+            <h3 class="detail_description"> Connections you know ({{connections_you_may_know}})</h3> 
+            <div class="col m6 l6 s12">
+        <ul class="collection">
+          {{#each frientlist}}
+           <!-- {{#each userinfo}} -->
+          <li class="collection-item avatar mrgin_top profile_page_redirect" style="padding: 0px !important;">
+            <img src={{profile_pic}} alt="No Image" class="image_circle_for_all">
+               <span class="title"><a href="#" class="redirect_click_1 name_aboveimage"> {{name}} </a> </span>
+                <p class="name_aboveimage new_headline_hub">{{headline}} </p>
+          </li>
+                 
+           <!-- {{/each}}     -->
+           {{else}}
+              <p>No member in this group from your connections :(</p>
+         {{/each}}
+
+         </ul>
+      </div>
+          </div>  
+
+      
+    </div>
+  
+ <div class="col s12 m12 l3 "> 
+      <div class="section">
+          {{#each join_status_check_array}}
+        <!--  {{#if join_status}}
+            <button id="Join_group" > Join</button>
+           {{else}} -->
+           {{#if leave_status }}  
+           <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite modal-trigger edit_7" href="#health" id="leave_group" style="border: 1px solid rgb(51, 142, 167);
+color: rgb(51, 142, 167) !important;
+background-color: rgb(255, 255, 255) !important;
+border-radius: 5px !important;"> Leave</a>
+                  
+         <!-- {{/if}} -->
+         {{else if join_status}}
+         <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite modal-trigger edit_7" href="#" id="Join_group" > Join</a>
+
+         {{else if Send_invitee_request}}
+         <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite modal-trigger edit_7" href="#health" id="send_Join_group_request" > Send request</a>
+
+         {{else if check_invitee_request_status}}
+         <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite " href="#" > Request Sent and Pending for approval by Admin</a>
+         {{else}}
+             <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite" href="#" disable="disabled">  Sorry you are not invited :)</a>
+         {{/if}} 
+         {{else}}
+         <a class="waves-effect col m6 s6 waves-effect waves-light btn_members_invite" href="#" disable="disabled">  Welcome Admin :)</a>
+         
+          {{/each}}
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="section">
+      
+      <h5>
+        <span id="route_to_member" class="pointer"> Members ({{show_all_group_members_count}})</span>
+         <div class="divider"></div>
+      </h5>
+
+        <p class="head-format"><a class="font_plus_class_b" href="#"></a></p>
+          <div class="row"  style="margin-bottom:0px; ">
+             <span >
+                                    
+        {{#each all_memeber}}       
+           <!-- {{#each all_memeber_2}}   -->
+              <img src={{profile_pic}} style="" alt="No Image" class="circle img_member member_groups" >    
+             {{else}}    
+              <h4><p>No members Yet</p> </h4>        
+           <!-- {{/each}}      -->
+         {{/each}}  
+          
+         </span> 
+             <div>  
+                  <!-- <a class="waves-effect waves-light btn blog_button" style="width: 100%; margin-top: 10px;">Invite</a>  -->
+              {{#if check_group_visibility}}
+                <p> <a  href="#modal1" class="waves-effect waves-light btn btn_members_invite modal-trigger trigger_helper" style="width: 100%; margin-top: 10px;" id="invitemem" >Invite</a> 
+                </p>
+                 
+                {{/if}}
+
+            </div>
+            <input type="hidden" name="emembers[]" id="emembers"  >        
+    </div>  
+
+      <div id="modal1" class="modal modal-fixed-footer modal_invitees modal_content_height">
+        <div class="modal-header modal_header_create_event">
+      <p class="modal_heading_p" style="margin-bottom: 0px;"><span style="margin-right: 20px;"><i class="fa fa-chevron-left"></i> </span>Select invitees</p>
+        </div>
+
+    <div class="modal-content">
+       <ul class="collection">
+   
+     {{#each frientlist_for_invite_modal}}
+     {{#each userinfo_for_invite_modal}}
+{{#if check_if_checked}}
+    <li class="collection-item avatar " style="margin-bottom: 10px;">
+      <img src="{{profile_pic}}" alt="" class="circle modal_invitees_img_page">
+      <p class="invitees_name">{{name}}</p>
+      <p class="invitees_headline">{{headline}}
+       <span style="float: right;">
+      <input type="checkbox" class="inviteuser invitees_headline_label" name="inviteuser[]" value="{{user_id}}" id="{{_id}}" />
+      <label class="invitees_headline_label" for="{{_id}}"></label>
+        </span>
+
+      </p>
+    </li>
+    {{/if}}
+    {{/each}}
+     <!-- <p> All friends are already invited :) </p> -->
+    {{/each}} 
+   
+  </ul>
+  {{check_if_all_users_already_invited}}
+    </div>
+    <div class="modal-footer modal_footer_last">
+       <a href="#!" id="agreeto" class="modal-action modal-close waves-effect waves-green btn-flat modal_footer_last_btn ">Invite</a>
+ <!--         <a href="#!" id="agreeto" class="modal-action modal-close waves-effect waves-green btn-flat save_button">Agree</a>
+ -->    </div>
+
+  </div>
+
+<script type="text/javascript">
+ $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>
+
+      </div>
+<!--     <div class="section visible-lg">
+      <h5> Last <div class="divider"></div> </h5>
+
+      <div class="image">
+      
+         <span class="hnum">+33</span>
+         <div class="clearfix"></div>
+
+      </div>
+
+       <div class="clearfix"></div>
+       <script type="text/javascript">
+         $(function() {
+          $("h2")
+        .wrapInner("<span>")
+
+    $("h2 br")
+        .before("<span class='spacer'>")
+        .after("<span class='spacer'>");
+
+});
+       </script>
+     </div> -->
+
+  {{#if join_status_Show_discussion_btn}}
+    
+     <div class="section">
+         <h5>  Discussions<div class="divider"></div> </h5>
+
+            <div class="row" style="margin-bottom:0px; ">
+                <p class="detail_description redirect_to_discusiion" >There is <a href="#"> {{get_discussion_count}} </a> discussion in this group</p>
+                <p><span  class="waves-effect waves-light btn_members_invite redirect_to_discusiion" style="width: 100%;" id="redirect_to_discusiion" >Start Discussion</span>  
+                </p>
+            </div>  
+      
+      </div>
+    {{/if}}
+
+         <!-- <div class="section visible-lg">
+            <h5>  ll Group Listing <div class="divider"></div> </h5>
+                 {{#each all_group_list}}
+                        
+                        <span id="show_group_details" >
+                           <div style="margin-bottom: 10px;" class="redirect_click_2" >
+                             <a class="avatar">   <img src={{grp_image}} > </a> 
+
+                             <span class="event_detail_more"> {{grp_title}} <span class="pull-right">{{grp_type}}</span></span><br/>
+                             <span class="event_detail_more_date"> {{createdAt}}</span>
+
+                           </div> 
+                        </span>                       
+                       
+                      {{/each}}
+
+        </div> 
+ -->
+    </div>
+
+  {{/each}}
+
+</div>
+</div>
+
+
+</template>
+

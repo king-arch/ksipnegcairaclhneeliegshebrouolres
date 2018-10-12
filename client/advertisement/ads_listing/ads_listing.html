@@ -1,0 +1,649 @@
+
+
+<template name="ads_listing">
+
+<head>
+  <title>Event Listing</title>
+</head>
+
+ <!-- <body style="background-color: #F5F5F5 !important;"> -->
+ <body>
+
+{{> header}}
+{{> adslist}}
+</body>
+</template>
+
+<template name="adslist"> 
+
+     <div class="page_wh">
+  <div class="">
+
+    <div class="row">
+      <div class="col m3 l3 s12">
+<ul class="nav nav-pills nav-stacked  left_row hidden-md hidden-xs visible-lg">
+      <h3>Promotion </h3>
+       <li><p class="create_event_btn" id="create_event"> + Promotion </p> </li>
+<!--       <li><a href="/create_event"><p class="create_event_btn">CREATE EVENT</p></a></li>
+ -->      
+      <li class="active"><a href="#Dashboard" data-toggle="pill"> Dashboard </a></li>
+      <ul id="tree1">
+                <li><a href="#" style="background-color: transparent !important;">Picture</a>
+
+                    <ul>
+                        <li><a href="#pictorial_promotion_active" data-toggle="pill" style="background-color: transparent !important;">Active ({{all_active_picture_count}})</a></li>
+                        <li><a href="#pictorial_promotion_archived" data-toggle="pill" style="background-color: transparent !important;"> Archived ({{all_archived_picture_count}})</a> </li>
+                    </ul>
+                </li>
+                <li>Ticker
+                    <ul>
+                        <li><a href="#ticker_active" data-toggle="pill" style="background-color: transparent !important;"> Active({{all_active_ticker_count}})</a></li>
+                        <li><a href="#ticker_archived" data-toggle="pill" style="background-color: transparent !important;"> Archived ({{all_archived_ticker_count}})</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <script type="text/javascript">
+              
+              $.fn.extend({
+    treed: function (o) {
+      
+      var openedClass = 'glyphicon-minus-sign';
+      var closedClass = 'glyphicon-plus-sign';
+      
+      if (typeof o != 'undefined'){
+        if (typeof o.openedClass != 'undefined'){
+        openedClass = o.openedClass;
+        }
+        if (typeof o.closedClass != 'undefined'){
+        closedClass = o.closedClass;
+        }
+      };
+      
+        //initialize each of the top levels
+        var tree = $(this);
+        tree.addClass("tree");
+        tree.find('li').has("ul").each(function () {
+            var branch = $(this); //li with children ul
+            branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
+            branch.addClass('branch');
+            branch.on('click', function (e) {
+                if (this == e.target) {
+                    var icon = $(this).children('i:first');
+                    icon.toggleClass(openedClass + " " + closedClass);
+                    $(this).children().children().toggle();
+                }
+            })
+            branch.children().children().toggle();
+        });
+        //fire event from the dynamically added icon
+      tree.find('.branch .indicator').each(function(){
+        $(this).on('click', function () {
+            $(this).closest('li').click();
+        });
+      });
+        //fire event to open branch if the li contains an anchor instead of text
+        tree.find('.branch>a').each(function () {
+            $(this).on('click', function (e) {
+                $(this).closest('li').click();
+                e.preventDefault();
+            });
+        });
+        //fire event to open branch if the li contains a button instead of text
+        tree.find('.branch>button').each(function () {
+            $(this).on('click', function (e) {
+                $(this).closest('li').click();
+                e.preventDefault();
+            });
+        });
+    }
+});
+
+//Initialization of treeviews
+
+$('#tree1').treed();
+
+$('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
+
+$('#tree3').treed({openedClass:'glyphicon-chevron-right', closedClass:'glyphicon-chevron-down'});
+
+
+            </script>
+
+<!--       <li class="all_picture_ads_count" > pictureeee active ({{all_active_picture_count}})</li>
+ -->
+<!-- 
+      <li class="Show_active_ads"><a href="#pictorial_promotion_archived" data-toggle="pill"> picture archived ({{all_archived_picture_count}})</a></li>  -->
+    
+
+  <!--   <li class=""><a href="#ticker_active" data-toggle="pill"> ticker active({{all_active_ticker_count}})</a></li>
+
+    <li class=""><a href="#ticker_archived" data-toggle="pill"> ticker archived ({{all_archived_ticker_count}})</a></li> -->
+
+    </ul>
+
+    <div class="fixed-action-btn horizontal hidden-lg">
+      <a class="btn-floating btn-large red floating_btn_all" href="/create_event" style="margin-bottom:170% !important; width: 100px !important; height: 100px !important;">   <i class="fa fa-plus fa-4x" style="font-size: 40px !important; line-height: 103px !important;"></i>
+       </a>
+    </div>
+</div>
+
+    <div class="col m12 l9 s12 tab-content right_row">
+
+                <div class="tab-pane active" id="Dashboard">
+
+                  <div id="row custom-search-input">
+                    <div class="col m12 l7 s12">
+
+                     <p class="heading_create">Dashboard</p></div>
+
+                                    <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search promotion by name" id="search_all_text_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_all_text_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                
+                             <div class="row" style="margin-top: 10px;" >
+                                            <div class="col l6 m6 s12 ">
+                                                  <span class="go_inside_group" id="show_whereadmin">
+                                                    <div style="padding-top: 0;" class="card">
+                                                      <div class="card-image" style="padding: 11%;
+text-align: center;"><span style="font-size: 30px;">Picture Promotions </span> </div>
+                                                     
+                                                      
+                                                      <div class="clearfix"></div>
+                                                     <!-- date  <p>sjdklasjlk</p> -->
+                                                      <div class="card-action visible-lg">
+                                                         <p style="margin-bottom: 5px;"><b>Promotion: </b>{{displayPromotionPictureCount}} </p>
+                                                        <p style="margin-bottom: 5px;"><b>Clicks :</b>{{displaylClicksOnPictureCount}} </p>
+                                                        </div>
+                                                    </div>                          
+                                                  </span>  
+                                             </div> 
+                                              <div class="col l6 m6 s12 ">
+                                                  <span class="go_inside_group" id="show_whereadmin">
+                                                    <div style="padding-top: 0;" class="card">
+                                                      <div class="card-image" style="padding: 11%;
+text-align: center;"> <span style="font-size: 30px;">  Ticker Promotions  </span></div>
+                                                    
+                                                     
+                                                      <div class="clearfix"></div>
+                                                      <div class="card-action visible-lg">
+                                                         <p style="margin-bottom: 5px;"><b>Promotion: </b>{{displayPromotionTickerCount}} </p>
+                                                       <p style="margin-bottom: 5px;"><b>Clicks: </b>{{displayClicksOnTickerCount}} </p>
+                                                        </div>
+                                                    </div>
+                                                  </span>  
+                                             </div> 
+                                                      
+                      </div>
+                       
+                </div>
+
+              <div class="tab-pane " id="ticker_active">
+                  <div id="row custom-search-input">
+                    <div class="col m12 l7 s12">
+
+                     <p class="heading_create">Ticker active ({{all_active_ticker_count}})</p></div>
+
+                                    <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search promotion by name" id="search_all_text_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_all_text_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                  
+                             <div class="row" style="margin-top: 10px;" >
+                              {{#each Show_all_active_ticker}}
+                                            <div class="col l4 m6 s12 ">
+                          <span id="show_all_event" class="" >
+                                             <!--  <a class="list-quotes" href="#">               
+                                                              <img src={{event_cover_image}} alt="img" class="banner_image_for_all pointer go_inside_event">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+                                                          
+                                                      </div>
+                                                  </a> -->
+                                                  <div class="row listing_" style="height: 180px;" >
+                                                      <!-- <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span><br> 
+                                                            <span class="date">{{datenm}}</span> <br> 
+                                                            <samp class="week">{{dateday}}</samp>
+                                                          </div>
+                                                        </div> 
+                                                      </div> -->
+                                                      <div class="col l12 m12 s12">
+                                                        <a class="event_name" href="#"> <span style="font-size: 20px; color: black;">{{promotion_title}}</span></a> <br>
+                                                        <a class="event_name" href="#" style="font-size:14px !important; " > {{promotion_content_trim}}</a> <br>
+                                                        <!-- <a href="event_type"><span class="event_type">{{promotion_type}}</span></a><br> -->
+
+                                                      Start: {{promotion_start_date}}<br>
+                                                      End: {{promotion_end_date}}
+                                                      clicks: {{clicks_count}} 
+
+                                                      </div>
+
+
+
+                                                           <!--  <i class="fa fa-trash delete_add" title="del" ></i> -->
+                                      <span class="pull-right"> 
+                                        <a class="waves-light edit_promotion" href="javascript:void(0)" ><i class="fa fa-pencil  login_forgot_pass"></i></a> 
+                                       </span>
+
+                                                    {{#if check_promotion_inactive_or_not }}
+                                                          <button class="pull-right admin_de_btn" id="activate" > Archive </button>
+                                                      <!-- {{else}}
+                                                          <button class="pull-right" id="in_activate" > Activate </button> -->
+                                                    {{/if}}
+
+                                                   </div>
+
+<!--                                                     <div class="row">
+                                                        <div class="col m12 s12 l12" style="padding: 0px;">
+                                                        <p class="join_btn">
+                                                          <a href="#" style="color: #fff !important;">
+                                                            {{#if display_event_response}}
+                                                                <p> Pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+                                                          </a></p>
+
+                                                        </div>
+                                                    </div>  -->
+
+                                                    </span>  
+                                              </div>
+                                      {{else}}
+                                      <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> You dont have any promotion to display today</p>
+                           </div>
+</div>
+                                             
+                              {{/each}}                
+                      </div>
+                       
+                </div>
+
+                                <div class="tab-pane" id="ticker_archived">
+
+                  <div id="row custom-search-input">
+                    <div class="col m12 l7 s12">
+
+                     <p class="heading_create">Ticker archived ({{all_archived_ticker_count}})</p></div>
+
+                                    <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search promotion by name" id="search_all_text_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_all_text_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                  
+                             <div class="row" style="margin-top: 10px;" >
+                              {{#each Show_all_archived_ticker}}
+                                            <div class="col l4 m6 s12 ">
+                          <span id="show_all_event" class="" >
+                                             <!--  <a class="list-quotes" href="#">               
+                                                              <img src={{event_cover_image}} alt="img" class="banner_image_for_all pointer go_inside_event">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+                                                          
+                                                      </div>
+                                                  </a> -->
+                                                  <div class="row listing_" style="height: 180px;" >
+                                                     <!--  <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span><br> 
+                                                            <span class="date">{{datenm}}</span> <br> 
+                                                            <samp class="week">{{dateday}}</samp>
+                                                          </div>
+                                                        </div> 
+                                                      </div> -->
+                                                      <div class="col l10 m10 s10">
+                                                        <a class="event_name" href="#"> <span style="font-size: 20px; color: black;">{{promotion_title}}</span></a> <br>
+                                                        <a class="event_name" href="#" style="font-size:14px !important; " > {{promotion_content_trim}}</a> <br>
+                                                        <!-- <a href="event_type"><span class="event_type">{{promotion_type}}</span></a><br> -->
+                                                        Start: {{promotion_start_date}}<br>
+                                                      End: {{promotion_end_date}}
+                                                      clicks: {{clicks_count}} 
+
+                                                      </div>
+
+                                                              <!--  <span class="pull-right"> 
+         <a class="waves-light edit_promotion" href="javascript:void(0)" ><i class="fa fa-pencil  login_forgot_pass"></i></a> 
+         </span> -->
+                                                           <!--  <i class="fa fa-trash delete_add" title="del" ></i> -->
+
+                                                  <!--   {{#if check_promotion_inactive_or_not }}
+                                                          <button class="pull-right" id="activate" > Deactivate </button>
+                                                      {{else}}
+                                                          <button class="pull-right" id="in_activate" > Activate </button>
+                                                    {{/if}} -->
+
+                                                   </div>
+
+<!--                                                     <div class="row">
+                                                        <div class="col m12 s12 l12" style="padding: 0px;">
+                                                        <p class="join_btn">
+                                                          <a href="#" style="color: #fff !important;">
+                                                            {{#if display_event_response}}
+                                                                <p> Pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+                                                          </a></p>
+
+                                                        </div>
+                                                    </div>  -->
+
+                                                    </span>  
+                                              </div>
+                                      {{else}}
+                                      <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> You dont have any promotion to display today</p>
+                           </div>
+</div>
+                                             
+                              {{/each}}                
+                      </div>
+                       
+                </div>
+
+                <div class="tab-pane" id="pictorial_promotion_active">
+                  <div id="row custom-search-input">
+                    <div class="col m12 l7 s12">
+
+                     <p class="heading_create">Picture promotion Active({{all_active_picture_count}})</p></div>
+                                    <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search promotion by name" id="search_upcoming_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_upcoming_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                   <div class="clearfix"></div>
+
+        
+ <div class="row" style="margin-top: 10px;" >
+               {{#each Show_all_active_picture}}
+                                            <div class="col l4 m6 s12 ">
+                         <span id="show_all_picture_ads_count" class="" >
+                                              <a class="list-quotes" href="#">               
+                                                              <img alt="img" src={{promotion_content}} class="banner_image_for_all pointer go_inside_event ">  
+                                                      <!-- <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+                                                          
+                                                      </div> -->
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <!-- <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span><br> 
+                                                            <span class="date">{{datenm}}</span> <br> 
+                                                            <samp class="week">{{dateday}}</samp>
+                                                          </div>
+                                                        </div> 
+                                                      </div> -->
+                                                      <div class="col l10 m10 s10">
+                                                        <a class="event_name" href="#"> {{promotion_title}}</a> <br>
+                                                       <!--  <a class="event_name" href="#"> {{promotion_content}}</a> <br> -->
+                                                        <!-- <a href="event_type"><span class="event_type">{{promotion_type}}</span></a><br> -->
+                                                        Start: {{promotion_start_date}}<br>
+                                                      End: {{promotion_end_date}}
+                                                      clicks: {{clicks_count}} 
+
+
+                                                      </div>
+
+                                                               <span class="pull-right"> 
+         <a class="waves-light edit_promotion" href="javascript:void(0)" ><i class="fa fa-pencil  login_forgot_pass"></i></a> 
+         </span>
+                                                        <!-- <i class="fa fa-trash delete_add" title="del"></i> -->
+
+                                                    {{#if check_promotion_inactive_or_not }}
+                                                          <button class="pull-right admin_de_btn"  id="activate" > Archive </button>
+                                                     <!--  {{else}}
+                                                          <button class="pull-right" id="in_activate" > Activate </button> -->
+                                                    {{/if}}
+
+                                                   </div>
+
+
+                                                   <!--  <div class="row">
+                                                        <div class="col m12 s12 l12" style="padding: 0px;">
+                                                        <p class="join_btn">
+                                                          <a href="#" style="color: #fff !important;">
+                                                             {{#if display_event_response}}
+                                                                <p> Pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+
+                                                          </a></p>
+
+                                                        </div>
+                                                    </div> --> 
+                                                    </span>  
+                                              </div>
+                                  {{else}}
+                                  <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> You dont have any promotion to display today</p>
+                           </div>
+                        </div>
+                                              <p>  </p>
+                {{/each}}
+                                              <div>
+                                              </div>
+                                            </div>
+                  
+                </div>
+
+                <div class="tab-pane" id="pictorial_promotion_archived">
+                  <div id="row custom-search-input">
+                    <div class="col m12 l7 s12">
+
+                     <p class="heading_create">Picture promotion Archived({{all_archived_picture_count}})</p></div>
+                                    <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search promotion by name" id="search_upcoming_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_upcoming_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                   <div class="clearfix"></div>
+ <div class="row" style="margin-top: 10px;" >
+               {{#each Show_all_archived_picture}}
+                                            <div class="col l4 m6 s12 ">
+                         <span id="show_all_picture_ads_count" class="" >
+                                              <a class="list-quotes" href="#">     
+                                                <img alt="img" src={{promotion_content}} class="banner_image_for_all pointer go_inside_event ">  
+                                                      <!-- <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+                                                          
+                                                      </div> -->
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <!-- <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span><br> 
+                                                            <span class="date">{{datenm}}</span> <br> 
+                                                            <samp class="week">{{dateday}}</samp>
+                                                          </div>
+                                                        </div> 
+                                                      </div> -->
+                                                      <div class="col l10 m10 s10">
+                                                        <a class="event_name" href="#"> {{promotion_title}}</a> <br>
+                                                       <!--  <a class="event_name" href="#"> {{promotion_content}}</a> <br> -->
+                                                       <!--  <a href="event_type"><span class="event_type">{{promotion_type}}</span></a><br> -->
+
+                                                       Start: {{promotion_start_date}}<br>
+                                                      End: {{promotion_end_date}}
+
+                                                      clicks: {{clicks_count}} 
+
+                                                      </div>
+
+                                                               <!-- <span class="pull-right"> 
+         <a class="waves-light edit_promotion" href="javascript:void(0)" ><i class="fa fa-pencil  login_forgot_pass"></i></a>  --><!-- 
+         </span> -->
+                                                        <!-- <i class="fa fa-trash delete_add" title="del"></i> -->
+
+                                                 <!--    {{#if check_promotion_inactive_or_not }}
+                                                          <button class="pull-right" id="activate" > Deactivate </button>
+                                                      {{else}}
+                                                          <button class="pull-right" id="in_activate" > Activate </button>
+                                                    {{/if}} -->
+
+                                                   </div>
+
+
+                                                   <!--  <div class="row">
+                                                        <div class="col m12 s12 l12" style="padding: 0px;">
+                                                        <p class="join_btn">
+                                                          <a href="#" style="color: #fff !important;">
+                                                             {{#if display_event_response}}
+                                                                <p> Pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+
+                                                          </a></p>
+
+                                                        </div>
+                                                    </div> --> 
+                                                    </span>  
+                                              </div>
+                                  {{else}}
+                                  <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> You dont have any promotion to display today</p>
+                           </div>
+                        </div>
+                                              <p>  </p>
+                {{/each}}
+                                              <div>
+                                              </div>
+                                            </div>
+                  
+                </div>
+
+        </div><!-- tab content -->
+        
+<script type="text/javascript">
+  $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Deactivate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
+       
+
+</script>
+<script type="text/javascript">
+    $('.dropdown-button').dropdown('open');
+</script>
+<script type="text/javascript">
+ $('.dropdown-button').dropdown('close');
+</script>
+</div>
+</div>
+</div>
+ <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+   <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+      <li class="col m4 s4 text-center total_number_bg_padding" id="tdevent">
+        <a class="total_number_bg">
+          <span class="numbr_below" >{{all_textual_ads_count}}</span><br/>
+         
+          <span href="#connection"   class="total_number_name">Today's Event </span>
+        </a>
+      </li>
+      <li class="col m4 s4 text-center total_number_bg_padding" id="upevent" >
+        <a class="total_number_bg">
+         <span class="numbr_below">{{all_picture_ads_count}}</span><br/>
+         
+         <span href="#request" class="total_number_name">Upcoming Event </span>
+        </a>
+      </li>
+       <li class="col m4 s4 text-center total_number_bg_padding_last" id="pastevent">
+        <a class="total_number_bg">
+          <span class="numbr_below">{{Show_active_ads}}</span><br/>
+          <span href="#ignore" class="total_number_name">Past Events</span>
+        </a>
+      </li>
+   </ul>
+</div>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</template>

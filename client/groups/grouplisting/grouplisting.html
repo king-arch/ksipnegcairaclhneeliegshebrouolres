@@ -1,0 +1,636 @@
+
+<template name="grplisting">
+<head>
+  <title>Group Listing</title>
+</head>
+<!-- <body style="background-color: #F5F5F5 !important;"> -->
+<body>
+  {{> header}}            
+  {{> grouplisting}}       
+</body>
+</template>                
+
+<template name="grouplisting">
+
+{{#if user_is_admin}}
+
+  <div class="page_wh">
+    <div class="row">
+      <div class="col m3 l3 s12">
+        <ul class="nav nav-pills nav-stacked left_row hidden-md hidden-xs visible-lg">
+          <h3>Group</h3>
+          <li><p id="creategroup" class="create_event_btn">CREATE GROUP</p></li>
+         
+          <li class="active"><a href="#allgrp" data-toggle="pill">All ({{fetch_count_where_user_is_member_or_admin}})</a></li>
+
+          <li><a href="#byme" data-toggle="pill">Created by me ({{fetch_created_by_me_counter}})</a></li>
+
+<!--           <li><a href="#Pending" data-toggle="pill">Pending ({{fetch_count_where_invitation_is_pending}})</a></li>
+          
+           <li><a href="#invite" data-toggle="pill">Invite ({{fetch_count_from_where_invitation_arrived}})</a></li> -->
+         
+        </ul>
+      </div>
+
+<div class="fixed-action-btn horizontal hidden-lg">
+               <a class="btn-floating btn-large red floating_btn_all" href="/creategroup" style="margin-bottom:170% !important; width: 100px !important; height: 100px !important;">
+               <i class="fa fa-plus fa-4x" style="font-size: 40px !important; line-height: 103px !important;"></i>
+               </a>
+               <!--<ul>
+                  <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+                  <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+                  <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+                  <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+               </ul> -->
+            </div>
+
+
+        <div class="col m12 l9 s12 tab-content right_row">
+                <div class="tab-pane active" id="allgrp">
+
+                  <div id="row custom-search-input">
+                            <div class="col m12 l7 s12"> 
+                              <p class="heading_create">All Groups ({{fetch_count_where_user_is_member_or_admin_for_admin}})</p> 
+                            </div>
+                             <div class="input-group col m12 l5 s12">
+                                <div id="imaginary_container">
+                                 <div class="input-group stylish-input-group">
+                              <input type="text" class="margin_inpu_search search-query form-control search_all_text_on_enter" placeholder="Search Group by Group Title" id="search_all_text" />
+                                  <span class="input-group-addon search_format_iocn">
+                                      <button type="button" id="search_grp_all" >
+                                      <span class=" glyphicon glyphicon-search"></span>
+                                      </button>
+                                  </span>
+                               </div>
+                             </div>
+                           </div>
+                    </div>  
+<!-- <script>
+        $(document).ready(function(){
+         $('#search_all_text_on_enter').keyp(function(e){
+          alert('inside passion');
+                            var code = e.keyCode || e.which;
+                            if( code === 13 ) {
+                                e.preventDefault();
+                                $("#search_format_iocn").click();
+                            };
+                        });
+       });
+</script> -->
+                              
+
+                            <div class="clearfix"></div>
+                          <div class="row">
+
+                            {{#each fetch_where_user_is_member_or_admin_for_admin}}
+
+                            <div class="col l4 m6 s12">
+                              <span id="show_group_details" class="" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} class="image_banner_all pointer go_inside_group">
+                                </div>
+                                <div class="card-content" style="padding-bottom: 0px !important;"> 
+                                   <p class="card-title event_name pointer">{{grp_title}} </p>
+                                </div>
+                                 <p class="pull-left event_type col m12 s12 l12">{{grp_type}}<!--  <span class="pull-right btn_status_grp" href="#">{{group_join_status}} </span> --></p>
+
+                                                    
+                                <div class="clearfix"></div>
+                                <div class="card-action visible-lg">   
+                                 <div class="row">
+                                  <span style="margin-right: 10px;"><i class="fa fa-object-group" title="Members"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Discussions"></i> {{get_total_discussions}} </span>
+                                </div>
+                                   <div class="clearfix"></div>
+
+                                   <div class="row" style="margin-bottom: 0px;">
+                                     <span class=" pull-right">
+                                 <div class="btn-group show-on-hover">
+                                         <button aria-expanded="false" style="width: 100% !important; border: 0px !important; background-color: #fff;" data-toggle="dropdown" class="dropdown-toggle" type="button"><i style="color:#000 !important; margin-right: 0px; margin-top: 0px;" class="fa fa-ellipsis-v"> </i></button>
+                                          <ul style="width: 100%; left: 0 !important;" role="menu" class="dropdown-menu">
+                                           <li>
+                                              {{#if check_group_inactive_or_not }}
+                                              <a id="activate"> Deactivate </a>
+                                               {{else}}
+                                               <a id="in_activate"> Activate </a>
+                                               {{/if}}
+
+                                           </li>
+                                           
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                                                    
+                                                  </div>
+                                </div> 
+
+                              </div>
+                            </span>
+                            </div>
+                            
+                            {{else}}
+                            <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No Groups To Display</p>
+                           </div>
+                        </div>
+                           
+                            {{/each}}                     
+                      </div>
+                 </div>
+
+                <div class="tab-pane" id="byme">
+                    <div id="row custom-search-input">
+                        <div class="col m12 l12 s12"> 
+                                <p class="heading_create">Created by me ({{fetch_created_by_me_counter}})</p></div>
+                                     
+                                </div>
+
+                        <div class="row">
+                        {{#each show_whereadmin_admin}}
+                            <div class="col l4 m6 s12">
+                              <span id="show_whereadmin" class="" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} class="image_banner_all go_inside_group">
+                                </div>
+                                <div class="card-content" style="padding-bottom: 0px !important;"> 
+                                   <p class="card-title event_name">{{grp_title}} </p>
+                                </div>
+                                 <p class="pull-left event_type col m12 s12 l12">{{grp_type}} <!-- <span class="pull-right btn_status_grp" href="#">{{group_join_status}} </span> --></p>
+
+
+                                <div class="clearfix"></div>
+                                <div class="card-action visible-lg">
+                                   <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> {{get_total_discussions}} </span>
+
+                                  </div>
+                                  <div class="clearfix"></div>
+                                   <div class="row" style="margin-bottom: 0px;">
+                                     <span class=" pull-right">
+                                 <div class="btn-group show-on-hover">
+                                         <button aria-expanded="false" style="width: 100% !important; border: 0px !important; background-color: #fff;" data-toggle="dropdown" class="dropdown-toggle" type="button"><i style="color:#000 !important; margin-right: 0px; margin-top: 0px;" class="fa fa-ellipsis-v"> </i></button>
+                                          <ul style="width: 100%; left: 0 !important;" role="menu" class="dropdown-menu">
+                                           <li>
+                                              {{#if check_group_inactive_or_not }}
+                                              <a id="activate"> Deactivate </a>
+                                               {{else}}
+                                               <a id="in_activate"> Activate </a>
+                                               {{/if}}
+
+                                           </li>
+                                           
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                                                    
+                                                  </div>
+                                  
+                              </div>
+                            </span>
+                            </div>
+                            {{else}}
+                            <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No Groups created yet</p>
+                           </div>
+                        </div>
+                           
+                         {{/each}}   
+                          </div>
+                </div>
+
+                 <div class="tab-pane" id="invite">
+                    <div id="custom-search-input">
+                    <div class="col m12 l12 s12">
+                      <p class="heading_create">Invite ({{fetch_count_from_where_invitation_arrived}})</p></div>
+                                    
+                                </div>
+
+                        <div class="row">
+                        {{#each where_i_am_invited_to_join_a_group}}
+                            <div class="col l4 m6 s12">
+                              <span id="show_whereadmin" class="go_inside_group" >
+                             <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} class="image_banner_all">
+                                </div>
+                                <div class="card-content" style="padding-bottom: 0px !important;"> 
+                                   <p class="card-title event_name">{{grp_title}} </p>
+                                </div>
+                                 <p class="pull-left event_type col m12 s12 l12">{{grp_type}} <!-- <span class="pull-right btn_status_grp" href="#">{{group_join_status}} </span> --></p>
+                                <div class="clearfix"></div>
+                                <div class="card-action visible-lg">
+                                  
+                                   <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> {{get_total_discussions}} </span>
+
+                                </div>
+                              </div>
+                            </span>
+                            </div>
+                            {{else}}
+                            <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No one has invited you to join the Group. Check Again after sometime.</p>
+                           </div>
+                        </div>
+                            <div class="clearfix"></div>
+                           
+                         {{/each}}   
+                          </div>
+                </div>
+                <div class="tab-pane" id="Pending">
+                    <div id="custom-search-input">
+                    <div class="col m12 s12 l12">
+                      <p class="heading_create">Pending ({{fetch_count_where_invitation_is_pending}})</p></div>
+                      
+                                </div>
+                          <div class="row">
+                            {{#each show_where_invitation_is_pending}}
+                            <div class="col l4 m6 s12">
+                              <span id="show_pending_details" class="go_inside_group" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} class="image_banner_all">
+                                </div>
+                                <div class="card-content" style="padding-bottom: 0px !important;"> 
+                                   <p class="card-title event_name">{{grp_title}} </p>
+                                </div>
+                                 <p class="pull-left event_type col m12 s12 l12">{{grp_type}} <!-- <span class="pull-right btn_status_grp" href="#">{{group_join_status}} </span> --></p>
+                                <div class="clearfix"></div>
+                                <div class="card-action visible-lg">
+                                  
+                                   <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> {{get_total_discussions}} </span>
+                                  
+                                </div>
+                              </div>
+                            </span>
+                             </div>
+                             {{else}}
+                             <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No Group with Pending Status</p>
+                           </div>
+                        </div>
+                             
+                            {{/each}} 
+                          </div>
+                </div>
+        </div><!-- tab content -->
+
+      </div>
+</div>
+<script type="text/javascript">
+  $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
+       
+
+</script>
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+<div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+   <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+      <li class="col m3 s3 text-center total_number_bg_padding" id="allgrp">
+        <a class="total_number_bg">
+          <span class="numbr_below" >{{fetch_count_where_user_is_member_or_admin}}</span>
+         
+          <span href="#connection"   class="total_number_name">All</span>
+        </a>
+      </li>
+      <li class="col m3 s3 text-center total_number_bg_padding" id="byme" >
+        <a class="total_number_bg">
+         <span class="numbr_below">{{fetch_created_by_me_counter}}</span>
+         
+         <span href="#request" class="total_number_name">by me </span>
+        </a>
+      </li>
+       <li class="col m3 s3 text-center total_number_bg_padding" id="Pending">
+        <a class="total_number_bg">
+          <span class="numbr_below">{{fetch_count_where_invitation_is_pending}}</span>
+          
+          <span href="#ignore"  class="total_number_name">Pending</span>
+        </a>
+      </li>
+       <li class="col m3 s3 text-center total_number_bg_padding_last" id="invite">
+        <a class="total_number_bg">
+          <span class="numbr_below">{{fetch_count_from_where_invitation_arrived}}</span>
+          
+          <span href="#ignore"  class="total_number_name">Invite</span>
+        </a>
+      </li>
+   </ul>
+</div>
+
+{{else}}
+
+  <div class="page_wh">
+    {{> ticker}}
+    <div class="row">
+      
+        <ul class="nav nav-pills nav-stacked col m3 l3 s12 left_row hidden-md hidden-xs visible-lg" id="group_container">
+          <h3>Group</h3>
+          <li><p id="creategroup" class="create_event_btn">CREATE GROUP</p></li>
+         
+          <li class="active"><a href="#allgrp" data-toggle="pill">All ({{fetch_count_where_user_is_member_or_admin}})</a></li>
+
+          <li><a href="#byme" data-toggle="pill">Created by me ({{fetch_created_by_me_counter}})</a></li>
+
+          <li><a href="#Pending" data-toggle="pill">Pending ({{fetch_count_where_invitation_is_pending}})</a></li>
+          
+           <li><a href="#invite" data-toggle="pill">Invite ({{fetch_count_from_where_invitation_arrived}})</a></li>
+         
+        </ul>
+
+<div class="fixed-action-btn horizontal hidden-lg">
+               <a class="btn-floating btn-large red floating_btn_all" href="/creategroup" style="margin-bottom:170% !important; width: 100px !important; height: 100px !important;">
+               <i class="fa fa-plus fa-4x" style="font-size: 40px !important; line-height: 103px !important;"></i>
+               </a>
+               <!--<ul>
+                  <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+                  <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+                  <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+                  <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+               </ul> -->
+            </div>
+
+
+        <div class="col m12 l9 s12 tab-content right_row">
+                <div class="tab-pane active" id="allgrp">
+                  <div id="row custom-search-input">
+                            <div class="col m12 l7 s12"> 
+                              <p class="heading_create">All Groups ({{fetch_count_where_user_is_member_or_admin}})</p> 
+                            </div>
+                             <div class="input-group col m12 l5 s12">
+                                <div id="imaginary_container">
+                                 <div class="input-group stylish-input-group">
+                              <input type="text" class="margin_inpu_search search-query form-control" placeholder="Search Group by Group Title" id="search_all_text" />
+                                  <span class="input-group-addon search_format_iocn">
+                                      <button type="button" id="search_grp_all" >
+                                      <span class=" glyphicon glyphicon-search"></span>
+                                      </button>
+                                  </span>
+                               </div>
+                             </div>
+                           </div>
+                    </div>
+                                  <div class="clearfix"></div>
+                          <div class="row">
+
+                            {{#each fetch_where_user_is_member_or_admin}}
+                            <div class="col l4 m6 s12">
+                              <span id="show_group_details" class="go_inside_group" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} class="image_banner_all pointer">
+                                </div>
+                                <div class="card-content" style="padding-bottom: 0px !important;"> 
+                                   <p class="card-title event_name pointer">{{grp_title}} </p>
+                                </div>
+                                 <p class="pull-left event_type col m12 s12 l12">{{grp_type}} <span class="pull-right btn_status_grp" href="#">{{group_join_status}} </span></p>
+                                <div class="clearfix"></div>
+                                <div class="card-action visible-lg">
+                                  
+                                  <span style="margin-right: 10px;"><i class="fa fa-object-group" title="Members"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Discussions"></i> {{get_total_discussions}} </span>
+                                </div>     
+                              </div>
+                            </span>
+                            </div>
+                            {{else}}
+                            <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No Groups To Display</p>
+                           </div>
+                        </div>
+                           
+                            {{/each}}                     
+                      </div>
+                 </div>
+
+                <div class="tab-pane" id="byme">
+                    <div id="row custom-search-input">
+                        <div class="col m12 l12 s12"> 
+                                <p class="heading_create">Created by me ({{fetch_created_by_me_counter}})</p></div>
+                                     
+                                </div>
+
+                        <div class="row">
+                        {{#each show_whereadmin}}
+                            <div class="col l4 m6 s12">
+                              <span id="show_whereadmin" class="go_inside_group" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} class="image_banner_all">
+                                </div>
+                                <div class="card-content" style="padding-bottom: 0px !important;"> 
+                                   <p class="card-title event_name">{{grp_title}} </p>
+                                </div>
+                                 <p class="pull-left event_type col m12 s12 l12">{{grp_type}} <span class="pull-right btn_status_grp" href="#">{{group_join_status}} </span></p>
+                                <div class="clearfix"></div>
+                                <div class="card-action visible-lg">
+                                   <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> {{get_total_discussions}} </span>
+                                  </div>
+                              </div>
+                            </span>
+                            </div>
+                            {{else}}
+                            <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No Groups created yet</p>
+                           </div>
+                        </div>
+                           
+                         {{/each}}   
+                          </div>
+                </div>
+
+                 <div class="tab-pane" id="invite">
+                    <div id="custom-search-input">
+                    <div class="col m12 l12 s12">
+                      <p class="heading_create">Invite ({{fetch_count_from_where_invitation_arrived}})</p></div>
+                                    
+                                </div>
+
+                        <div class="row">
+                        {{#each where_i_am_invited_to_join_a_group}}
+                            <div class="col l4 m6 s12">
+                              <span id="show_whereadmin" class="go_inside_group" >
+                             <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} class="image_banner_all">
+                                </div>
+                                <div class="card-content" style="padding-bottom: 0px !important;"> 
+                                   <p class="card-title event_name">{{grp_title}} </p>
+                                </div>
+                                 <p class="pull-left event_type col m12 s12 l12">{{grp_type}} <span class="pull-right btn_status_grp" href="#">{{group_join_status}} </span></p>
+                                <div class="clearfix"></div>
+                                <div class="card-action visible-lg">
+                                  
+                                   <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> {{get_total_discussions}} </span>
+
+                                </div>
+                              </div>
+                            </span>
+                            </div>
+                            {{else}}
+                            <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No one has invited you to join the Group. Check Again after sometime.</p>
+                           </div>
+                        </div>
+                            <div class="clearfix"></div>
+                           
+                         {{/each}}   
+                          </div>
+                </div>
+                <div class="tab-pane" id="Pending">
+                    <div id="custom-search-input">
+                    <div class="col m12 s12 l12">
+                      <p class="heading_create">Pending ({{fetch_count_where_invitation_is_pending}})</p></div>
+                      
+                                </div>
+                          <div class="row">
+                            {{#each show_where_invitation_is_pending}}
+                            <div class="col l4 m6 s12">
+                              <span id="show_pending_details" class="go_inside_group" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} class="image_banner_all">
+                                </div>
+                                <div class="card-content" style="padding-bottom: 0px !important;"> 
+                                   <p class="card-title event_name">{{grp_title}} </p>
+                                </div>
+                                 <p class="pull-left event_type col m12 s12 l12">{{grp_type}} <span class="pull-right btn_status_grp" href="#">{{group_join_status}} </span></p>
+                                <div class="clearfix"></div>
+                                <div class="card-action visible-lg">
+                                  
+                                   <span style="margin-right: 10px;"><i class="fa fa-object-group" title="group"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Like"></i> {{get_total_discussions}} </span>
+                                  
+                                </div>
+                              </div>
+                            </span>
+                             </div>
+                             {{else}}
+                             <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No Group with Pending Status</p>
+                           </div>
+                        </div>
+                             
+                            {{/each}} 
+                          </div>
+                </div>
+        </div><!-- tab content -->
+
+      </div>
+</div>
+<script type="text/javascript">
+  $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
+       
+
+</script>
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+<div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+   <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+      <li class="col m3 s3 text-center total_number_bg_padding" id="allgrp">
+        <a class="total_number_bg">
+          <span class="numbr_below" >{{fetch_count_where_user_is_member_or_admin}}</span>
+         
+          <span href="#connection"   class="total_number_name">All</span>
+        </a>
+      </li>
+      <li class="col m3 s3 text-center total_number_bg_padding" id="byme" >
+        <a class="total_number_bg">
+         <span class="numbr_below">{{fetch_created_by_me_counter}}</span>
+         
+         <span href="#request" class="total_number_name">by me </span>
+        </a>
+      </li>
+       <li class="col m3 s3 text-center total_number_bg_padding" id="Pending">
+        <a class="total_number_bg">
+          <span class="numbr_below">{{fetch_count_where_invitation_is_pending}}</span>
+          
+          <span href="#ignore"  class="total_number_name">Pending</span>
+        </a>
+      </li>
+       <li class="col m3 s3 text-center total_number_bg_padding_last" id="invite">
+        <a class="total_number_bg">
+          <span class="numbr_below">{{fetch_count_from_where_invitation_arrived}}</span>
+          
+          <span href="#ignore"  class="total_number_name">Invite</span>
+        </a>
+      </li>
+   </ul>
+</div>
+
+{{/if}}
+</template>

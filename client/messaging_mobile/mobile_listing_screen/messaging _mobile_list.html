@@ -1,0 +1,215 @@
+<template name="messagingpage_mobile">
+  <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.9/howler.min.js"></script>
+  <title>messanging</title>
+</head>
+<body id="body_scroller" style="background-color: #f5f5f5;">
+  {{> messanging_mobile}}
+
+  </body>
+ <script>
+  /*
+$(window).on('beforeunload', function() {
+  console.log("beforeunload called");
+    changeUserStatus("offline"); 
+  return 'Your own message goes here...';
+});*/
+function changeUserStatus(status){
+  Meteor.call('change_user_online_status',Session.get("userId"),status,function(error,result){
+             if(error){
+              console.log('failed');
+             }else{
+              if(status == "offline"){
+              console.log('success offline');
+            
+              }else{
+              console.log('success online');
+              }
+             }                  
+            });
+}
+window.myApp = {
+    // Create `myApp` namespace.
+  // Function to use for the `focus` event.
+
+  onFocus: function () {
+      // online
+        changeUserStatus("online"); 
+        
+      },
+  // Function to use for the `blur` event.
+  onBlur: function () {
+      changeUserStatus("offline");          
+     }
+};
+
+if(window.addEventListener) {
+  window.addEventListener('load', function () {
+    window.addEventListener('focus', window.myApp.onFocus);
+    window.addEventListener('blur', window.myApp.onBlur);
+
+  });
+}
+/* Detect if the browser supports `attachEvent`
+  Only Internet Explorer browsers support that. */
+else if(window.attachEvent) {
+  // Handle window's `load` event.
+  window.attachEvent('onload', function () {
+    // Wire up the `focus` and `blur` event handlers.
+    window.attachEvent('onfocus', window.myApp.onFocus);
+    window.attachEvent('onblur', window.myApp.onBlur); 
+  });
+}
+/* If neither event handler function exists, then overwrite 
+the built-in event handers. With this technique any previous event
+handlers are lost. */
+else {
+  // Handle window's `load` event.
+  window.onload = function () {
+    // Wire up the `focus` and `blur` event handlers.
+    window.onfocus = window.myApp.onFocus;
+    window.onblur = window.myApp.onBlur;
+   
+  };
+}
+  </script>
+</template>
+
+<template name="messanging_mobile">
+  <div class="hidden-lg ">
+    <div class="col s12 m12 l12" id="firstdiv" style="min-height: 1200px !important; background-color: #fff !important;">
+
+         <div class="col s12 m12 l12 cbg_toofull card card_two">
+           <div class="row bor_top wid_row_tp" style="padding: 10px !important; margin-bottom: 0px !important; border: 0px !important; margin-left: -15px !important; margin-right: -15px !important; background-color: #338EA7 !important; height: 150px !important;">
+         <div class="col m1" style="width: 8%;">
+          <i class="fa fa-long-arrow-left" style="margin-top: 71% !important; font-size: 50px !important; color: #fff !important;" id="back_button"></i>
+        </div>
+        <div class="col m11 l11 s11">
+           <p style="font-size: 55px; padding: 20px 10px 20px 10px !important; margin-bottom: 20px; color: #fff !important;">Conversation ({{conversation_count}})</p>
+        </div>  
+      </div>
+
+ <ul class="nav navbar-nav col s12 m12 l12" style="padding: 0px;">
+        <li class="dropdown col s12 m12 l12 drop_dwn_tw">
+         
+        </li>
+      </ul>
+         </div>
+         <div class="clearfix"></div>
+
+      <div class="card" style="box-shadow: none;">
+    <div class="card-content">
+      <p style="margin: 10px 0px; padding: 15px;"> <input type="text" class="form-control input-sm chat_input borde_search_user" placeholder="Search Conversations" style="margin-bottom: 0px; font-size: 45px; height: 75px !important;" id="search_connection_msg" /></p>
+    </div>
+ 
+    <div class="card-content">
+  
+      <div id="connnection">
+
+
+  <ul class="collection">
+ 
+ <div id="display_connection" class="display_hide_conversation" > 
+
+{{#each show_connections}}
+{{#each show_connections_2}}
+
+            <div  class="collection-item avatar change_msg_onright send_person_to_msg_page">
+        <span> <img src={{profile_pic}} alt="No Image" class="circle" style="width: 100px !important; height:100px !important;"  >
+        <span class="bottom-left-2">  
+        <input type="hidden" id="hidden_conversation_user_id" value={{user_id}}  > 
+  {{#if online_status}} 
+        <i class="fa fa-circle color_green_messaging"></i>
+     {{else}}   
+        <i class="fa fa-circle color_red"></i>
+  {{/if}}
+        </span></span>
+      <span class="title title_name">
+        {{name}}
+      </span> 
+
+  {{#each show_message_details}}
+      <span class="pull-right"><p>{{calculate_time_difference last_msg_time}} </p> </span>     
+      <p class="lisimg_msg name_headline">
+      {{#if check_lastmsg_sender}}
+        Me: {{last_msg}} 
+       {{else}}
+       {{sender}}: {{last_msg}} 
+      {{/if}}
+
+        <!-- {{last_msg}}       -->
+  {{#if check_unread}}
+  <span class="pull-right new_no_chat"> 
+      {{unread_msg_count}}    
+      </span>
+    {{/if}}
+  </p>
+  {{/each}}    
+    </div>
+
+{{/each}}
+{{/each}}
+
+</div>
+
+<div id="display_conversation" >
+  {{#each recent_list}}
+  {{#each recent_list_2}}
+            <li class="collection-item avatar change_msg_onright send_person_to_msg_page">
+        <span> <img src={{profile_pic}} alt="No Image" class="circle"  style="width: 100px !important; height:100px !important;">
+        <span class="bottom-left-2">
+        
+        <input type="hidden" id="hidden_conversation_user_id" value={{user_id}}  > 
+  {{#if online_status}} 
+        <i class="fa fa-circle color_green_messaging"></i>
+     {{else}}   
+        <i class="fa fa-circle color_red"></i>
+  {{/if}}
+        </span></span>
+      <span class="title title_name">
+        {{name}}
+      </span> 
+  {{#each show_message_details}}
+      <span class="pull-right fo_size_time"><p>{{calculate_time_difference last_msg_time}} </p> </span>
+      
+      <p class="lisimg_msg name_headline">
+
+      {{#if check_lastmsg_sender}}
+        Me: {{last_msg}} 
+       {{else}}
+       {{sender}}: {{last_msg}} 
+      {{/if}}
+      
+  {{#if check_unread}}
+  <span class="pull-right new_no_chat"> 
+      {{unread_msg_count}}    
+      </span>
+    {{/if}}
+  </p>
+  {{/each}}      
+
+    </li>
+     <!-- <li class="collection-item avatar">
+     <span> <img src="https://i0.wp.com/tricksmaze.com/wp-content/uploads/2017/04/Stylish-Girls-Profile-Pictures-36.jpg?resize=300%2C300&ssl=1" alt="" class="circle"> <span class="bottom-left-2"><i class="fa fa-circle color_red"></i></span></span>
+      <span class="title"><a href="#">Shobhita Yadav</a></span> <span class="pull-right fo_size_time"> 20m </span>
+      <p class="typing">Typing ...</p>
+    </li> -->
+    {{/each}} 
+        {{else}}
+
+ <!-- {{set_session_false_for_right}} -->
+<p  style="padding-top: 20%; text-align: center !important; font-size: 30px!important;"> Search your connections to start coneversations</p>
+    {{/each}}
+    </div> 
+  </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+
+</div>
+
+</template>
+
+
+

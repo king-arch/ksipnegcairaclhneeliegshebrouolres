@@ -1,0 +1,1024 @@
+<template name="event_listing">
+
+    <head>
+        <title>Event Listing</title>
+    </head>
+
+    <!-- <body style="background-color: #F5F5F5 !important;"> -->
+
+    <body>
+
+        {{> header}} {{> eventlist}}
+    </body>
+
+</template>
+
+<template name="eventlist">
+
+    {{#if user_is_admin}}
+
+    <div class="page_wh">
+        <div class="">
+
+            <div class="row">
+                <div class="col m3 l3 s12 ">
+                    <ul class="nav nav-pills nav-stacked left_row hidden-md hidden-xs visible-lg">
+                        <h3>Event</h3>
+                        <li>
+                            <p class="create_event_btn" id="create_event">CREATE EVENT</p>
+                        </li>
+                        <li class="active todays_event"><a href="#tdevent" data-toggle="pill">Today's Event ({{todays_event_count}})</a></li>
+                        <li class="upcoming_event"><a href="#upevent" data-toggle="pill">Upcoming Event ({{upcoming_event}})</a></li>
+                        <li class="Past_event"><a href="#pastevent" data-toggle="pill">Past Events ({{Past_event}})</a></li>
+                        <li class="event_created_by_me"><a href="#bymeevent" data-toggle="pill"> Created by me ({{event_created_by_me}})</a></li>
+
+                    </ul>
+                </div>
+                <div class="fixed-action-btn horizontal hidden-lg">
+                    <a class="btn-floating btn-large red floating_btn_all" href="/create_event" style="margin-bottom:170% !important; width: 100px !important; height: 100px !important;">
+                        <i class="fa fa-plus fa-4x" style="font-size: 40px !important; line-height: 103px !important;"></i>
+                    </a>
+
+                </div>
+
+                <div class="col m12 l9 s12 tab-content right_row">
+                    <div class="tab-pane active" id="tdevent">
+
+                        <div id="row custom-search-input">
+                            <div class="col m12 l7 s12">
+
+                                <p class="heading_create">Today's Event({{todays_event_count}})</p>
+                            </div>
+
+                            <div class="input-group col m12 l5 s12">
+                                <div id="imaginary_container">
+                                    <div class="input-group stylish-input-group">
+                                        <input type="text" class="search_input_box_value form-control margin_inpu_search" placeholder="Search event by name" id="search_all_text_conn">
+                                        <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_all_text_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="row" style="margin-top: 10px;">
+                            {{#each Show_all_todays_events_for_admin}}
+                            <div class="col l4 m6 s12 " style="margin-bottom: 10px;">
+                                <span id="show_all_event" class="">
+                                              <a class="list-quotes" href="#">               
+                                                              <img src={{event_cover_image}} alt="img" class="banner_image_for_all pointer go_inside_event">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+
+                                                      </div>
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span>
+                                <br>
+                                <span class="date">{{datenm}}</span>
+                                <br>
+                                <samp class="week">{{dateday}}</samp>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l10 m10 s10">
+                        <a class="event_name" href="#"> {{event_title}}</a>
+                        <br>
+                        <a href="event_type"><span class="event_type">{{event_type}}</span></a>
+                        <br>
+                    </div>
+<div class="clearfix"></div>  
+                     <div class="row" style="margin-bottom: 0px;">
+                      <span class=" pull-right">
+                                 <div class="btn-group show-on-hover">
+                                         <button aria-expanded="false" style="width: 100% !important; border: 0px !important; background-color: #fff;" data-toggle="dropdown" class="dropdown-toggle" type="button"><i style="color:#000 !important; margin-right: 0px; margin-top: 0px;" class="fa fa-ellipsis-v"> </i></button>
+                                          <ul style="width: 100%; left: 0 !important;" role="menu" class="dropdown-menu">
+                                           <li>
+                                              {{#if check_event_inactive_or_not }}
+                                              <a id="activate"> Deactivate </a>
+                                               {{else}}
+                                               <a id="in_activate"> Activate </a>
+                                               {{/if}}
+
+                                           </li>
+                                          <!--  <li>{{#if display_event_response}}
+                                                                <a> Not Attended  </a>
+                                                                        {{else if check_accept_status}}    
+                                                                  <a> Attended </a>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <a> Not Attended </a>
+                                                                  {{else}}
+                                                                        <a> Attended </a>
+                                                                      {{/if}}
+                                            </li> -->
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+        
+       <!--  <div class="col m6 s6 l6" style="padding: 0px;">
+            <p class="join_btn join_btn_admin margin_admin_5">
+                <a href="#" style="color: #fff !important;">
+                                                             
+                                                            </a>
+            </p>
+        </div> -->
+    </div>
+
+             <!--        {{#if check_event_inactive_or_not }}
+                    <button class="pull-right admin_de_btn" id="activate">
+                        Deactivateee </button>
+                    {{else}}
+                    <button class="pull-right admin_ac_btn" id="in_activate"> Activate </button>
+                    {{/if}}
+
+                </div>
+
+                <div class="row">
+                    <div class="col m12 s12 l12" style="padding: 0px;">
+                        <p class="join_btn">
+                            <a href="#" style="color: #fff !important;">
+                                                            {{#if display_event_response}}
+                                                                <p> Invitation pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+                                                          </a></p>
+
+                    </div>
+                </div> -->
+
+                </div>
+ </span>
+            </div>
+            {{else}}
+            <div class="row">
+                <div class="col m12 s12 l12">
+                    <p class="noreq_screen none_listing"> You dont have any events to display today</p>
+                </div>
+            </div>
+
+            {{/each}}
+        </div>
+
+    </div>
+    <div class="tab-pane" id="upevent">
+        <div id="row custom-search-input">
+            <div class="col m12 l7 s12">
+
+                <p class="heading_create">Upcoming Events ({{upcoming_event}})</p>
+            </div>
+            <!--      <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search event by name" id="search_upcoming_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_upcoming_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div> -->
+        </div>
+        <div class="clearfix"></div>
+        <div class="row" style="margin-top: 10px;">
+            {{#each Show_all_upcoming_events_for_admin}}
+            <div class="col l4 m6 s12 " style="margin-bottom: 10px;">
+                <span id="show_upcoming_event" class="">
+                                              <a class="list-quotes" href="#">               
+                                                              <img alt="img" src={{event_cover_image}} class="banner_image_for_all pointer go_inside_event ">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+
+                                                      </div>
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span>
+                <br>
+                <span class="date">{{datenm}}</span>
+                <br>
+                <samp class="week">{{dateday}}</samp>
+            </div>
+        </div>
+    </div>
+    <div class="col l10 m10 s10">
+        <a class="event_name" href="#">{{event_title}}</a>
+        <br>
+        <a href="event_type"><span class="event_type">{{event_type}}</span></a>
+        <br>
+    </div>
+    <p class=" pull-right">
+                                 <div class="btn-group show-on-hover">
+                                         <button aria-expanded="false" style="width: 100% !important; border: 0px !important; background-color: #fff;" data-toggle="dropdown" class="dropdown-toggle" type="button"><i style="color:#000 !important; margin-right: 0px; margin-top: 0px;" class="fa fa-ellipsis-v"> </i></button>
+                                          <ul style="width: 100%; left: 0 !important;" role="menu" class="dropdown-menu">
+                                           <li>
+                                              {{#if check_event_inactive_or_not }}
+                                              <a id="activate"> Deactivate </a>
+                                               {{else}}
+                                            <a  id="in_activate"> Activate </a>
+                                               {{/if}}
+
+                                           </li>
+                                       
+                                                      </ul>
+                           
+                                                  </div> 
+                      </p>
+    </div>
+ 
+        
+     <!-- <div class="row">
+        {{#if check_event_inactive_or_not }}
+        <div class="col m6 s6 l6">
+            <button class="pull-right admin_de_btn" id="activate"> Deactivate </button>
+        </div>
+        {{else}}
+        <div class="col m6 s6 l6">
+            <button class="pull-right admin_ac_btn" id="in_activate"> Activate </button>
+        </div>
+        {{/if}} -->
+
+        <!-- <div class="col m6 s6 l6" style="padding: 0px;">
+            <p class="join_btn join_btn_admin margin_admin_5">
+                <a href="#" style="color: #fff !important;">
+                                                             {{#if display_event_response}}
+                                                                <p> Not Attended  </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attended </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attended </p>
+                                                                  {{else}}
+                                                                        <p> Attended </p>
+                                                                      {{/if}}
+                                                            </a>
+            </p>
+        </div> -->
+    <!-- </div> -->
+
+    <!-- <div class="row">
+        {{#if check_event_inactive_or_not }}
+        <div class="col m6 s6 l6">
+            <button class="pull-right admin_de_btn" id="activate"> Deactivate </button>
+        </div>
+        {{else}}
+        <div class="col m6 s6 l6">
+            <button class="pull-right admin_ac_btn" id="in_activate"> Activate </button>
+        </div>
+        {{/if}}
+
+        <div class="col m6 s6 l6" style="padding: 0px;">
+            <p class="join_btn join_btn_admin margin_admin_5">
+                <a href="#" style="color: #fff !important;">
+                                                            {{#if display_event_response}}
+                                                                <p> Invitation pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+                                                            </a>
+            </p>
+        </div>
+    </div>
+   -->
+
+
+    </span>
+    </div>
+    {{else}}
+    <div class="row">
+        <div class="col m12 s12 l12">
+            <p class="noreq_screen none_listing"> You dont have any events to display today</p>
+        </div>
+    </div>
+    <p> </p>
+    {{/each}}
+    <div>
+    </div>
+    </div>
+
+    </div>
+
+    <div class="tab-pane" id="pastevent">
+        <div id="row custom-search-input">
+            <div class="col m12 l7 s12">
+
+                <p class="heading_create">Past Events ({{Past_event}})</p>
+            </div>
+            <!--  <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search event by name" id="search_past_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_past_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div> -->
+        </div>
+        <div class="clearfix"></div>
+        <div class="row" style="margin-top: 10px;">
+            {{#each Show_all_past_events_for_admin}}
+            <div class="col l4 m6 s12 " style="margin-bottom: 10px;">
+                <span id="show_past_event" class="">
+                                              <a class="list-quotes" href="#">               
+                                                              <img alt="img" src={{event_cover_image}} class="banner_image_for_all pointer go_inside_event ">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+
+                                                      </div>
+                                                  </a>
+
+                                                  <div class="row listing_">
+                                                      <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span>
+                <br>
+                <span class="date">{{datenm}}</span>
+                <br>
+                <samp class="week">{{dateday}}</samp>
+            </div>
+        </div>
+    </div>
+
+    <div class="col l10 m10 s10">
+        <a class="event_name" href="#">{{event_title}}</a>
+        <br>
+        <a href="event_type"><span class="event_type">{{event_type}}</span></a>
+        <br>
+    </div>
+     <p class=" pull-right">
+                                 <div class="btn-group show-on-hover">
+                                         <button aria-expanded="false" style="width: 100% !important; border: 0px !important; background-color: #fff;" data-toggle="dropdown" class="dropdown-toggle" type="button"><i style="color:#000 !important; margin-right: 0px; margin-top: 0px;" class="fa fa-ellipsis-v"> </i></button>
+                                          <ul style="width: 100%; left: 0 !important;" role="menu" class="dropdown-menu">
+                                           <li>
+                                              {{#if check_event_inactive_or_not }}
+                                              <a id="activate"> Deactivate </a>
+                                               {{else}}
+                                            <a  id="in_activate"> Activate </a>
+                                               {{/if}}
+
+                                           </li>
+                                       
+                                                      </ul>
+                           
+                                                  </div> 
+                      </p>
+
+    </div>
+<!-- 
+    <div class="row">
+        {{#if check_event_inactive_or_not }}
+        <div class="col m6 s6 l6">
+            <button class="pull-right admin_de_btn" id="activate"> Deactivate </button>
+        </div>
+        {{else}}
+        <div class="col m6 s6 l6">
+            <button class="pull-right admin_ac_btn" id="in_activate"> Activate </button>
+        </div>
+        {{/if}} -->
+
+        <!-- <div class="col m6 s6 l6" style="padding: 0px;">
+            <p class="join_btn join_btn_admin margin_admin_5">
+                <a href="#" style="color: #fff !important;">
+                                                             {{#if display_event_response}}
+                                                                <p> Not Attended  </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attended </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attended </p>
+                                                                  {{else}}
+                                                                        <p> Attended </p>
+                                                                      {{/if}}
+                                                            </a>
+            </p>
+        </div> -->
+   <!--  </div> -->
+
+    </span>
+    </div>
+    {{else}}
+    <div class="row">
+        <div class="col m12 s12 l12">
+            <p class="noreq_screen none_listing"> You dont have any Past event</p>
+        </div>
+    </div>
+
+    {{/each}}
+    <div>
+    </div>
+    </div>
+
+    </div>
+
+    <div class="tab-pane" id="bymeevent">
+        <div id="row custom-search-input">
+            <div class="col m12 l7 s12">
+
+                <p class="heading_create">Created by Me ({{event_created_by_me}})</p>
+            </div>
+            <!--    <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search event by name" id="search_created_by_me_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_created_by_me_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div> -->
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row" style="margin-top: 30px;">
+            {{#each Show_all_by_me_events}}
+            <div class="col l4 m12 s12" style="margin-bottom: 10px;">
+                <span id="show_whereadmin" class="">
+                                              <a class="list-quotes" href="#">               
+                                                              <img alt="img" src={{event_cover_image}} class="banner_image_for_all pointer  go_inside_event ">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+
+                                                      </div>
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span>
+                <br>
+                <span class="date">{{datenm}}</span>
+                <br>
+                <samp class="week">{{dateday}}</samp>
+            </div>
+        </div>
+    </div>
+    <div class="col l10 m10 s10">
+        <a class="event_name" href="#">{{event_title}}</a>
+        <br>
+        <a href="event_type"><span class="event_type">{{event_type}}</span></a>
+        <br>
+    </div>
+
+  <!--   {{#if check_event_inactive_or_not }}
+    <button class="pull-right" id="activate"> Deactivate </button>
+    {{else}}
+    <button class="pull-right" id="in_activate"> Activate </button>
+    {{/if}} -->
+    <p class=" pull-right">
+                                 <div class="btn-group show-on-hover">
+                                         <button aria-expanded="false" style="width: 100% !important; border: 0px !important; background-color: #fff;" data-toggle="dropdown" class="dropdown-toggle" type="button"><i style="color:#000 !important; margin-right: 0px; margin-top: 0px;" class="fa fa-ellipsis-v"> </i></button>
+                                          <ul style="width: 100%; left: 0 !important;" role="menu" class="dropdown-menu">
+                                           <li>
+                                              {{#if check_event_inactive_or_not }}
+                                              <a id="activate"> Deactivate </a>
+                                               {{else}}
+                                            <a  id="in_activate"> Activate </a>
+                                               {{/if}}
+
+                                           </li>
+                                       
+                                                      </ul>
+                           
+                                                  </div> 
+                      </p>
+    </div>
+    <!-- <div class="row">
+        <div class="col m12 s12 l12" style="padding: 0px;">
+            <p class="join_btn">
+                <a href="#" style="color: #fff !important;">
+                                                             {{#if display_event_response}}
+                                                                <p> Invitation pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+
+                                                          </a></p>
+
+        </div>
+    </div> -->
+    </span>
+
+    </div>
+    {{else}}
+    <div class="row">
+        <div class="col m12 s12 l12">
+            <p class="noreq_screen none_listing"> You have not created any events till now</p>
+        </div>
+    </div>
+
+    {{/each}}
+    <div>
+    </div>
+    </div>
+
+    </div>
+    </div>
+    <!-- tab content -->
+
+    <script type="text/javascript">
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrainWidth: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left', // Displays dropdown with edge aligned to the left of button
+            stopPropagation: false // Stops event propagation
+        });
+    </script>
+    <script type="text/javascript">
+        $('.dropdown-button').dropdown('open');
+    </script>
+    <script type="text/javascript">
+        $('.dropdown-button').dropdown('close');
+    </script>
+    </div>
+    </div>
+    </div>
+    <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+        <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+            <li class="col m4 s4 text-center total_number_bg_padding" id="tdevent">
+                <a class="total_number_bg">
+                    <span class="numbr_below">{{todays_event_count}}</span>
+                    <br/>
+
+                    <span href="#connection" class="total_number_name">Today's Event </span>
+                </a>
+            </li>
+            <li class="col m4 s4 text-center total_number_bg_padding" id="upevent">
+                <a class="total_number_bg">
+                    <span class="numbr_below">{{upcoming_event}}</span>
+                    <br/>
+
+                    <span href="#request" class="total_number_name">Upcoming Event </span>
+                </a>
+            </li>
+            <li class="col m4 s4 text-center total_number_bg_padding_last" id="pastevent">
+                <a class="total_number_bg">
+                    <span class="numbr_below">{{Past_event}}</span>
+                    <br/>
+                    <span href="#ignore" class="total_number_name">Past Events</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> {{else}}
+
+    <div class="page_wh">
+        <div class="">
+
+            <div class="row">
+                {{> ticker}}
+                <ul class="nav nav-pills nav-stacked col m3 l3 s12 left_row hidden-md hidden-xs visible-lg" id="event_container">
+                    <h3>Event</h3>
+                    <li>
+                        <p class="create_event_btn" id="create_event">CREATE EVENT</p>
+                    </li>
+                    <!--       <li><a href="/create_event"><p class="create_event_btn">CREATE EVENT</p></a></li>
+ -->
+                    <li class="active todays_event"><a href="#tdevent" data-toggle="pill">Today's Event ({{todays_event_count}})</a></li>
+                    <li class="upcoming_event"><a href="#upevent" data-toggle="pill">Upcoming Event ({{upcoming_event}})</a></li>
+                    <li class="Past_event"><a href="#pastevent" data-toggle="pill">Past Events ({{Past_event}})</a></li>
+                    <li class="event_created_by_me"><a href="#bymeevent" data-toggle="pill"> Created by me ({{event_created_by_me}})</a></li>
+
+                </ul>
+
+                <div class="fixed-action-btn horizontal hidden-lg">
+                    <a class="btn-floating btn-large red floating_btn_all" href="/create_event" style="margin-bottom:170% !important; width: 100px !important; height: 100px !important;">
+                        <i class="fa fa-plus fa-4x" style="font-size: 40px !important; line-height: 103px !important;"></i>
+                    </a>
+
+                </div>
+
+                <div class="col m12 l9 s12 tab-content right_row">
+                    <div class="tab-pane active" id="tdevent">
+
+                        <div id="row custom-search-input">
+                            <div class="col m12 l7 s12">
+
+                                <p class="heading_create">Today's Event ({{todays_event_count}})</p>
+                            </div>
+
+                            <div class="input-group col m12 l5 s12">
+                                <div id="imaginary_container">
+                                    <div class="input-group stylish-input-group">
+                                        <input type="text" class="search_input_box_value form-control margin_inpu_search" placeholder="Search event by name" id="search_all_text_conn">
+                                        <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_all_text_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="row" style="margin-top: 10px;">
+                            {{#each Show_all_todays_events}}
+                            <div class="col l4 m6 s12 ">
+                                <span id="show_all_event" class="go_inside_event">
+                                              <a class="list-quotes" href="#">               
+                                                              <img src={{event_cover_image}} alt="img" class="banner_image_for_all pointer">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+
+                                                      </div>
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span>
+                                <br>
+                                <span class="date">{{datenm}}</span>
+                                <br>
+                                <samp class="week">{{dateday}}</samp>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l10 m10 s10">
+                        <a class="event_name" href="#"> {{event_title}}</a>
+                        <br>
+                        <a href="event_type"><span class="event_type">{{event_type}}</span></a>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col m12 s12 l12" style="padding: 0px;">
+                        <p class="join_btn">
+                            <a href="#" style="color: #fff !important;">
+                                                            {{#if display_event_response}}
+                                                                <p> Invitation pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+
+                                                          </a></p>
+
+                    </div>
+                </div>
+                </span>
+            </div>
+            {{else}}
+            <div class="row">
+                <div class="col m12 s12 l12">
+                    <p class="noreq_screen none_listing"> You dont have any events to display today</p>
+                </div>
+            </div>
+
+            {{/each}}
+        </div>
+
+    </div>
+    <div class="tab-pane" id="upevent">
+        <div id="row custom-search-input">
+            <div class="col m12 l7 s12">
+
+                <p class="heading_create">Upcoming Events ({{upcoming_event}})</p>
+            </div>
+            <!--   <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search event by name" id="search_upcoming_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_upcoming_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div> -->
+        </div>
+        <div class="clearfix"></div>
+        <div class="row" style="margin-top: 10px;">
+            {{#each Show_all_upcoming_events}}
+            <div class="col l4 m6 s12 ">
+                <span id="show_upcoming_event" class="go_inside_event">
+                                              <a class="list-quotes" href="#">               
+                                                              <img alt="img" src={{event_cover_image}} class="banner_image_for_all pointer">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+
+                                                      </div>
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span>
+                <br>
+                <span class="date">{{datenm}}</span>
+                <br>
+                <samp class="week">{{dateday}}</samp>
+            </div>
+        </div>
+    </div>
+    <div class="col l10 m10 s10">
+        <a class="event_name" href="#">{{event_title}}</a>
+        <br>
+        <a href="event_type"><span class="event_type">{{event_type}}</span></a>
+        <br>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col m12 s12 l12" style="padding: 0px;">
+            <p class="join_btn">
+                <a href="#" style="color: #fff !important;">
+                                                             {{#if display_event_response}}
+                                                                <p> Invitation pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+
+                                                          </a></p>
+
+        </div>
+    </div>
+    </span>
+    </div>
+    {{else}}
+    <div class="row">
+        <div class="col m12 s12 l12">
+            <p class="noreq_screen none_listing"> You dont have any events to display today</p>
+        </div>
+    </div>
+    <p> </p>
+    {{/each}}
+    <div>
+    </div>
+    </div>
+
+    </div>
+
+    <div class="tab-pane" id="pastevent">
+        <div id="row custom-search-input">
+            <div class="col m12 l7 s12">
+
+                <p class="heading_create">Past Events ({{Past_event}})</p>
+            </div>
+            <!-- <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search event by name" id="search_past_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_past_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div> -->
+        </div>
+        <div class="clearfix"></div>
+        <div class="row" style="margin-top: 10px;">
+            {{#each Show_all_past_events}}
+            <div class="col l4 m6 s12 ">
+                <span id="show_past_event" class="go_inside_event">
+                                              <a class="list-quotes" href="#">               
+                                                              <img alt="img" src={{event_cover_image}} class="banner_image_for_all pointer">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+
+                                                      </div>
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span>
+                <br>
+                <span class="date">{{datenm}}</span>
+                <br>
+                <samp class="week">{{dateday}}</samp>
+            </div>
+        </div>
+    </div>
+    <div class="col l10 m10 s10">
+        <a class="event_name" href="#">{{event_title}}</a>
+        <br>
+        <a href="event_type"><span class="event_type">{{event_type}}</span></a>
+        <br>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col m12 s12 l12" style="padding: 0px;">
+            <p class="join_btn">
+                <a href="#" style="color: #fff !important;">
+                                                             {{#if display_event_response}}
+                                                                <p> Not Attended  </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attended </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attended </p>
+                                                                  {{else}}
+                                                                        <p> Attended </p>
+                                                                      {{/if}}
+
+                                                          </a></p>
+
+        </div>
+    </div>
+    </span>
+    </div>
+    {{else}}
+    <div class="row">
+        <div class="col m12 s12 l12">
+            <p class="noreq_screen none_listing"> You dont have any Past event</p>
+        </div>
+    </div>
+
+    {{/each}}
+    <div>
+    </div>
+    </div>
+
+    </div>
+
+    <div class="tab-pane" id="bymeevent">
+        <div id="row custom-search-input">
+            <div class="col m12 l7 s12">
+
+                <p class="heading_create">Created by Me ({{event_created_by_me}})</p>
+            </div>
+            <!-- <div class="input-group col m12 l5 s12">
+                                     <div id="imaginary_container"> 
+                                          <div class="input-group stylish-input-group">
+                                              <input type="text" class="search_input_box_value form-control margin_inpu_search"  placeholder="Search event by name" id="search_created_by_me_conn" >
+                                              <span class="input-group-addon search_format_iocn">
+                                                  <button type="submit" id="search_connection_all" class="search_created_by_me_conn search_event" >
+                                                      <span class="glyphicon glyphicon-search"></span>
+                                                  </button>  
+                                              </span>
+                                          </div>
+                                      </div>
+                                    </div> -->
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row" style="margin-top: 30px;">
+            {{#each Show_all_by_me_events}}
+            <div class="col l4 m12 s12 ">
+                <span id="show_whereadmin" class="go_inside_event">
+                                              <a class="list-quotes" href="#">               
+                                                              <img alt="img" src={{event_cover_image}} class="banner_image_for_all pointer">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+
+                                                      </div>
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span>
+                <br>
+                <span class="date">{{datenm}}</span>
+                <br>
+                <samp class="week">{{dateday}}</samp>
+            </div>
+        </div>
+    </div>
+    <div class="col l10 m10 s10">
+        <a class="event_name" href="#">{{event_title}}</a>
+        <br>
+        <a href="event_type"><span class="event_type">{{event_type}}</span></a>
+        <br>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col m12 s12 l12" style="padding: 0px;">
+            <p class="join_btn">
+                <a href="#" style="color: #fff !important;">
+                                                             {{#if display_event_response}}
+                                                                <p> Invitation pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+
+                                                          </a></p>
+
+        </div>
+    </div>
+    </span>
+    </div>
+    {{else}}
+    <div class="row">
+        <div class="col m12 s12 l12">
+            <p class="noreq_screen none_listing"> You have not created any events till now</p>
+        </div>
+    </div>
+
+    {{/each}}
+    <div>
+    </div>
+    </div>
+
+    </div>
+    </div>
+    <!-- tab content -->
+
+    <script type="text/javascript">
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrainWidth: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left', // Displays dropdown with edge aligned to the left of button
+            stopPropagation: false // Stops event propagation
+        });
+    </script>
+    <script type="text/javascript">
+        $('.dropdown-button').dropdown('open');
+    </script>
+    <script type="text/javascript">
+        $('.dropdown-button').dropdown('close');
+    </script>
+    </div>
+    </div>
+    </div>
+    <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+        <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+            <li class="col m4 s4 text-center total_number_bg_padding" id="tdevent">
+                <a class="total_number_bg">
+                    <span class="numbr_below">{{todays_event_count}}</span>
+                    <br/>
+
+                    <span href="#connection" class="total_number_name">Today's  </span>
+                </a>
+            </li>
+            <li class="col m4 s4 text-center total_number_bg_padding" id="upevent">
+                <a class="total_number_bg">
+                    <span class="numbr_below">{{upcoming_event}}</span>
+                    <br/>
+
+                    <span href="#request" class="total_number_name">Upcoming  </span>
+                </a>
+            </li>
+            <li class="col m4 s4 text-center total_number_bg_padding_last" id="pastevent">
+                <a class="total_number_bg">
+                    <span class="numbr_below">{{Past_event}}</span>
+                    <br/>
+                    <span href="#ignore" class="total_number_name">Past </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> {{/if}}
+</template>

@@ -1,0 +1,79 @@
+
+
+.cropper-modal{
+     opacity: 10 !important;
+    background-color: #000 !important;
+}
+
+
+.display_hide{
+	display: none !important;
+}
+
+.display_show{
+	display: block !important;
+}
+.emptyfield{
+	border: 1px solid red !important;
+}
+
+.pac-container {
+    z-index: 10000 !important;
+}
+
+.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-bottom{
+	display: none !important;
+	/*margin-left: 780px !important;*/
+}
+
+
+@media only screen and (min-width : 1200px) {
+.pp_pic{
+	border: 1px solid #fff; 
+	border-radius: 50%; 
+	width: 100px; 
+	margin-left: 44%;
+}
+}
+
+@media only screen and (min-width : 1200px) {
+	.pp_pic{
+	border: 1px solid #fff; 
+	border-radius: 50%; 
+	width: 100px; 
+	margin-left: 44%;
+}
+
+}
+
+@media only screen and (min-width : 1200px) {
+	.pp_pic{
+	border: 1px solid #fff; 
+	border-radius: 50%; 
+	width: 100px; 
+	margin-left: 44%;
+}
+
+}
+
+.cropper-example-lena
+{
+	width:100% !important;
+	height:100% !important;
+}
+
+.stop_scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.img-container {
+  /* Never limit the container height here */
+  max-width: 100%;
+}
+
+.img-container img {
+  /* This is important */
+  max-width: 50%;
+  width: 100%;
+}

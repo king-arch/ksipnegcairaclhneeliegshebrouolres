@@ -1,0 +1,13 @@
+
+.trumbowyg-viewHTML-button{
+	display: none !important;
+}
+
+#datepicker-container {
+  z-index: 10000;
+}
+
+
+.toastr-sucess{
+	width: 510px !important;
+}

@@ -1,0 +1,96 @@
+.toast-error{
+	width: 310px !important;
+
+}
+* {
+    font-family: sans-serif;
+}
+#imageCanvas {
+    width: 300px;
+    height: 300px;
+    background: white;
+}
+#cropCanvas {
+    width: 100px;
+    height: 100px;
+}
+#imageCanvas,[class^='canvasScreen'] {
+    pointer-events: none;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.canvasCon {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    cursor: move;
+    float: left;
+    margin-right: 50px;
+}
+.toolbar {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    font-size: small;
+}
+.error {
+    color: red;
+}
+#crop, #reset, .canvasCon, #cropCanvas, .instructions, .error {display: none;}
+.cropResult {
+    display: none;
+    margin: 90px 0 0;
+    float: left;
+    border: 6px solid #eee;
+}
+.cropResult img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 4px;
+}
+[class^='canvasScreen'] {
+    position: absolute;
+    background: white;
+    opacity: 0.9;
+}
+.canvasScreenTop {
+    top: 0;
+    left: 0;
+    height: 100px;
+    right: 0;
+}
+.canvasScreenBottom {
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    right: 0;
+}
+.canvasScreenLeft {
+    top: 100px;
+    bottom: 100px;
+    left: 0;
+    width: 100px;
+}
+.canvasScreenRight {
+    top: 100px;
+    bottom: 100px;
+    right: 0;
+    width: 100px;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#crop_cover_image_selection{
+    background-color: #338EA7 !important;
+    color: rgb(255, 255, 255);
+    border-radius: 5px !important;
+}

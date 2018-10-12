@@ -1,0 +1,533 @@
+
+<template name="event_detail">
+
+<head>
+  <title>Event Listing</title>
+</head>
+<body>
+{{> header}}
+{{> eventdetail}}
+{{> sAlert}}
+</body>
+</template>
+
+<template name="eventdetail"> 
+{{#each show_event_details}}  
+      <div class="page_wh">
+        {{> ticker}}
+              <div class="row">
+                      <div class="col m12 l12 s12 top_row row_margin_btn"> 
+                        <p style="margin-bottom: 0px;"><img height="300" src={{event_cover_image}}></p>
+                      </div>
+                      <div class="col m12 l9 s12 right_row row_margin_right row_margin_btn"> 
+                        <p class="col m9 l11 s12 event_title_detail" style="padding-left: 0px;"><a href="#">{{event_name}} </a></p>
+                        <p class="col m3 l1 s12 event_title_detail pull-right" style="text-align: right;">
+                          
+
+                          {{#if show_edit_if_creater}}
+                              <span style="margin-right: 10px;" class="blog_description"><a href="#" id="evedit" class="redirect_click_1" >
+                                <i class="fa fa-pencil" title="edit"></i> </a> 
+                              </span>
+                          {{/if}}
+
+                        </p>
+
+                       {{#each show_event_creater}} 
+                        <div class="pull-left col m12 l9 s12 collection"  style="padding-left: 0px;">
+                           
+                              <img class="img_collection_detail_event pointer redirect_click_onprofilepic" src={{profile_pic}}>
+                              <span class="event_names_for_name"><a href="#"  class="blog_writer_name event_names_for_all redirect_click_onprofilepic pointer redirect_click_onprofilepic">{{name}} </a><span class="new_headline_hub">(Host)</span></span><br/>
+                               <span class="event_names_for_headlline new_headline_hub pointer redirect_click_onprofilepic">{{headline}}</span>
+                          
+                         </div>
+                         {{/each}}
+
+                                     
+                      
+
+                          <p class="col m12 l3 s12"> 
+                          
+                          <span class="pull-right">
+
+
+                          {{#each check_invited_count_array}}
+
+                        <!--   <p> <a  href="#Show_invited" class="waves-effect waves-light  modal-trigger trigger_helper" style="width: 100%; margin-top: 10px;" id="Show_invited" >Invite</a> 
+                </p> -->
+
+                         {{#if hide_if_event_is_public}}
+                          <span style="margin-right: 10px;" class="blog_description">
+                            <a  href="#Show_invited_list" class="modal-trigger trigger_helper" style="width: 100%; margin-top: 10px;" id="Show_invited" >
+
+                            <i class="fa fa-user-o" title="People Invited"></i> {{people_invited_count}} </a> 
+                          </span>
+                          {{/if}}
+
+
+                           <span style="margin-right: 10px;" class="blog_description">
+                            
+                            <a  href="#Show_attending_list" class="modal-trigger trigger_helper" style="width: 100%; margin-top: 10px;" id="Show_accepted_list" >
+
+                            <i class="fa fa-user-o" title="People Attending"></i> {{invite_rejected_count}} </a>
+
+                          </span>
+
+                          {{/each}}
+
+                         <!--  <span class="blog_description">
+                            <a class="reply like_Button_event"  id="like_Button_event" >{{Like_unlike_txt_event}} </a>
+                          
+                          <a href="#Show_liked_list" class="modal-trigger trigger_helper reply like_Button_event Show_liked_list"  >
+
+                          {{show_like_count}}</a>
+                            
+                          </span> -->
+
+                          </span></p>
+                          <div class="col m12 s12 l12 justify detail_description">
+                                      {{#if show_Readmore}}
+                                         <!-- <p class="justify blog_description"> {{event_description}} </p> -->
+                                         <div id="show_readmore_div"  >
+                                         {{event_description}}
+                                   
+                                          <a href="javascript:void(0);"  class="an_style " id="read_more_description" style="color: #338ea7; padding: 5px 10px;" > ... Read more</a>
+                                          </div>
+                                          {{else}}
+                                          {{description}} 
+                                      {{/if}}
+
+                                      {{#if show_Readless}}
+                                          <div id="show_readless_div" class="hide_showmore_comments" >
+                                          {{event_description_full}}
+                                          
+                                           <a href="javascript:void(0);"  class="an_style" id="read_less_description" style="color: #338ea7; padding: 5px 10px;">... Read less</a>           
+                                          
+                                           </div>
+                                      {{/if}} 
+                                          <!-- {{#if show_Readless}}
+                                          {{event_description_full}}
+                                          <div id="show_readmore"  >
+                                           <a href="javascript:void(0);"  class="an_style hide_showmore_comments  hide_showmore_comments" id="read_less_description" style="color: #338ea7; padding: 5px 10px;">Read less</a>  
+                                                          
+                                          
+                                           </div> {{/if}}  -->
+                                           <input type="hidden" value={{description}} id="hidden_event_description">
+                          </div>
+                          <div style="clear:both;"></div>
+                          <hr/>
+                            <div class="col m12 s12 l12 date_mid_event_detail event_detail_date"> <i class="fa fa-calendar"></i> {{event_start_date}} to {{event_end_date}}</div>
+                                                
+                          <div style="clear:both;"></div>
+                           <hr/>   
+
+
+                            <div class="col m12 s12 l12 date_mid_event_detail"> <i class="fa fa-map-marker"></i> {{event_location}} <a href="https://maps.google.com/maps?q={{event_location}}" target="_blank" style="margin-top:10px;"> <u>GET DIRECTION</u></a></div>
+                             <div style="clear: both;"></div> 
+                            <br/> <br/><br/>
+                          <div class="col m12 s12 l12">
+                              <div class="ui small comments ">
+
+  {{#each logged_in_user}}                                 
+  <div class="comment">
+    <a class="avatar">
+      <img src={{profile_pic}} class="circle  pointer redirect_click_onprofilepic">
+    </a>   
+    <div class="content">
+      <a class="author pointer redirect_click_onprofilepic">Me</a>     
+      <div class="text pointer redirect_click_onprofilepic new_headline_hub">
+        {{headline}}
+      </div>    
+    </div>
+  </div>
+  {{/each}}
+  <form class="ui reply form" id="comment_form1" >
+    <div class="field">
+      <textarea class="textarea" placeholder="Type here  to comment" id="comment" ></textarea>
+    </div>
+    <div class="ui blue labeled submit icon button " style="  background-color: #338EA7 !important; padding: 10px 30px !important; float: right;" id="submit_comment" >
+      Post
+    </div>
+    <br/> <br/>
+  </form>
+
+    <script type="text/javascript">
+       $('#comment').keyup(function(){
+        // alert('gg');
+                // event.preventDefault();
+                 if (event.ctrlKey && event.which == 13) {
+                      // Ctrl-Enter pressed
+                       $("#submit_comment").click();
+                       }
+                 else if (event.which === 13) {
+                           $("#submit_comment").click();
+                         }
+        });
+</script>
+  {{#if show_comment_lvl0}}
+  <h3 class="ui dividing header blog_description">Comments</h3>
+  {{/if}}
+
+  {{#each show_comment_lvl0}}
+  <div class="comment parent_div">
+{{#each show_commenter_info}}
+    <a class="avatar" >     
+        <img src={{profile_pic}} class="circle pointer redirect_click_onprofilepic" >      
+    </a>
+{{/each}}  
+
+<div class="content">
+
+      {{#each show_commenter_info}}
+      <a class="author redirect_click_onprofilepic pointer redirect_click_onprofilepic">{{name}}</a>
+      {{/each}}
+
+      <div class="metadata">
+        <span class="reply">
+        {{calculate_time_difference createdAt}}</span>
+      </div>
+
+      <div class="text justify blog_description " id="show_comment_{{comment_id}}">
+        <p>{{comment_txt}}
+
+        <span class="metadata reply">{{#if check_for_edited comment_id}}
+          <!-- {{comment_id}} -->
+                          (Edited) 
+                        {{/if}}
+                        </span>
+                        </p>
+      </div>
+
+      
+            {{#if check_if_commented_by_is_user comment_by }}
+                        <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+
+                                          <div class="btn-group show-on-hover" >
+                                                      <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" 
+                                                          class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                      {{/if}}
+                    <!-- <i class="fa fa-camera"></i> -->
+                    <span>
+
+                      <textarea data-toggle="modal" class="loader_visiblity_block hidden_comment edit_box_styling" 
+                      value={{comment_txt}}  id="hidden_comment_{{comment_id}}"
+                      data-target="#modalhubtop" resize="none" placeholder="Edit ..." ></textarea>
+                    </span>
+
+      <div class="actions">
+        <a class="reply like_button_comments" style="margin-right: 0px !important;">{{Like_unlike_txt}}</a>
+         <a href="#Show_liked_list" class="modal-trigger trigger_helper reply like_Button_event Show_liked_list"  >
+          ({{show_like_count_comment}})</a>
+        <a class="reply focus_on_comment_box" >Comment ({{show_count}})</a>
+
+      </div>
+     
+    </div>
+
+{{#each show_comment_reply}}
+
+    <div class="comments">
+      <div class="comment level_2_commenting_div">
+
+{{#each show_commenter_info}}
+
+    <a class="avatar">     
+        <img class="circle pointer redirect_click_onprofilepic" src={{profile_pic}} >      
+    </a>
+
+{{/each}} 
+        <div class="content">
+          {{#each show_commenter_info}}
+          <a class="author redirect_click_onprofilepic pointer redirect_click_onprofilepic">{{name}}</a>
+          {{/each}}
+          <div class="metadata">
+            <span class="reply">{{calculate_time_difference createdAt}}</span>
+          </div>
+
+          <div class="text blog_description justify " style="margin-top: -4px;" id="show_comment_level_2_{{comment_id}}" >
+            {{comment_txt}}
+
+            <span class="metadata reply">{{#if check_for_edited comment_id}}
+              <!-- {{comment_id}} -->
+                          (Edited) 
+                        {{/if}}
+            </span>
+
+          </div>
+
+
+                  {{#if check_if_commented_by_is_user comment_by }}
+                        <span class="card-title pull-right" style="display: none;" id="level_2_commenting_three_dots_{{comment_id}}">
+
+                                          <div class="btn-group show-on-hover" >
+                                                      <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response level_2_edit_comment" id="{{comment_id}}" > Edit</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" 
+                                                          class="level_2_remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                                      </ul>
+                           
+                                                  </div> 
+                      </span>
+                      {{/if}}
+                    <!-- <i class="fa fa-camera"></i> -->
+                    <span>
+                      <textarea data-toggle="modal" class="loader_visiblity_block hidden_comment" 
+                      value={{comment_txt}}  id="hidden_comment_level_2_{{comment_id}}"
+                      data-target="#modalhubtop" resize="none" placeholder="Edit ..." style="padding: 5px;
+                    border: 1px solid #e4e4e4;
+                  border-radius: 5px;" ></textarea>
+                      </span>
+
+
+
+          <div class="actions">
+            <a class="reply like_button_comments" >{{Like_unlike_txt}} </a>
+        <a href="#Show_liked_list" class="modal-trigger trigger_helper reply like_Button_event Show_liked_list"  >({{show_like_count_comment}})</a>
+            <!-- <input type="hidden" id="" value="like_{{}}" > -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{{/each}}
+ <div class="ui fluid icon input" style="margin-top: 10px;">
+<!-- <form class="" > -->
+  <input placeholder="Enter your comment here ..." class=" secomdcomment comment_input_first" type="text" id="commentlvl1_{{comment_id}}" > 
+<!-- </form> -->
+  <button class="submit_comment_lvl1" value={{comment_id}} style="display:none"> send </button>
+      </div>
+    {{#if show_more_comment_reply}}
+        {{#if show_limit_comment_reply}}
+
+            <div id="show_more" >
+                  <a href="javascript:void(0);"  class="an_style read_more show_more_comment_reply" id="show_more_comment_reply" style="color: #338ea7; padding: 5px 10px;" > Read more</a> 
+                                    
+                  <input type="hidden" value={{summary}} id="hidden_summary">
+            </div>
+            {{else}}
+            <div id="show_more"  >
+             <a href="javascript:void(0);"  class="an_style read_more show_less_comment_reply" id="show_less_comment_reply" style="color: #338ea7; padding: 5px 10px;">Read less</a> 
+           </div>
+        {{/if}}
+    {{/if}}
+
+  </div>
+  {{/each}}
+</div>
+                           </div> 
+                      </div>
+
+                      <div class="col m12 l3 s12" style="padding: 0px;"> 
+                        <div class="section">
+                      {{#if check_invite_status}}
+                  {{#if checkIfEventIsPastEvent}}
+                          <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="dropdown-toggle brn_add_health btn_clor btn_members_invite" > Not Attended</a>                                {{else}}
+                           <div class="btn-group show-on-hover text-center" style="width: 100% !important;">
+                            <button type="button" class="dropdown-toggle btn_clor brn_add_health" data-toggle="dropdown" style="width: 100% !important;" >Invitation Pending   </button>
+                            
+                            <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                              <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" invitation="1" id="event_invite_accpted" > Accept</a></li>
+                              <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" invitation="2" id="event_invite_rejected" > Reject</a></li>
+                            </ul>  
+                        </div>
+                      {{/if}}
+                        
+                      <!-- {{else}} -->
+                        {{else if check_accept_status}} 
+
+                         {{#if checkIfEventIsPastEvent}}
+                          <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="btn_members_invite dropdown-toggle brn_add_health btn_clor" > Attended</a> 
+                                {{else}}
+                          <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="btn_members_invite dropdown-toggle brn_add_health btn_clor" > Attending</a> 
+                      {{/if}}
+
+                        {{else if check_reject_status}} 
+                         {{#if checkIfEventIsPastEvent}}
+                          <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="dropdown-toggle brn_add_health btn_clor btn_members_invite" > Not Attended</a>
+                                {{else}}
+                          <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="dropdown-toggle brn_add_health btn_clor btn_members_invite" > Not Attending</a>
+                      {{/if}}
+                             
+                          {{else if check_if_admin}} 
+                          <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="dropdown-toggle brn_add_health btn_clor btn_members_invite" > Welcome Creator :)</a>
+                          <!-- <p> Welcome Creator :)  </p> -->
+                          {{else}}
+                          <a href="javascript:void(0)" style="text-align:center; color: #fff !important;" class="dropdown-toggle brn_add_health btn_clor btn_members_invite" > Not invited :(</a>
+                          <!-- <p> Not invited :(  </p> -->
+                       {{/if}}
+
+
+                      </div>
+
+                      {{#if more_events}}
+                      <div class="section visible-lg"> 
+                      <h5>More Events</h5>
+                      <div class="divider"></div>  
+                      <ul class="collection">  
+                      {{#each more_events}}
+                        {{#if ignore_loggedin_user_created_events}}
+                        <li class="redirect_click_2 collection-item avatar">
+                           <a class="">
+                                  <img src="{{event_cover_image}}" class="circle">
+                           </a> 
+                           <span class="title" style="color: #338EA7 !important;"> {{event_name}}</span><br/>
+                           <p><a href="#" style="color: #686868 !important;"> {{event_start_date}}</a></p>
+                           
+                          </li>  
+                             {{/if}}
+
+                      {{/each}}   
+                          </ul>  
+
+                    </div>
+                    {{/if}}
+                      </div>
+                   
+              </div>
+      </div>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- Attending people-->
+<div id="Show_attending_list" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><!-- <i class="fa fa-angle-left close_modal hide_modal_class" data-dismiss="modal" style="margin-right: 20px !important;"></i> -->Attending People ({{show_count_of_attending}})</h5>
+         </div>
+         <div class="modal-body">
+             <ul class="collection">
+   
+    {{#each show_attending_list }}
+        <li class="collection-item avatar " style="margin-bottom: 10px;">
+          <img src="{{profile_pic}}" alt="" class="circle modal_invitees_img_page">
+          <p class="invitees_name redirect_click_onprofilepic">{{name}}</p>
+          <p class="invitees_headline">{{headline}}
+        <!--    <span style="float: right;">
+          <input type="checkbox" class="inviteuser invitees_headline_label" name="inviteuser[]" value="{{user_id}}" id="{{_id}}" />
+          <label class="invitees_headline_label" for="{{_id}}"></label>
+            </span> -->
+
+          </p>
+        </li>
+       
+    {{/each}}
+   
+  </ul>
+         </div>
+         <div class="modal-footer">
+             <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat closed_modal_window closed_modal_window">Ok</a>
+            <!-- <button type="button" class="save_summary btn btn-primary save_btn_profile save_heading" id="save_summary">Save</button> -->
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+
+
+
+
+
+<!-- Invited list-->
+
+
+<div id="Show_invited_list" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><!-- <i class="fa fa-angle-left close_modal hide_modal_class" style="margin-right: 20px !important;"></i> -->Invited People ({{show_count_of_invite}})</h5>
+         </div>
+         <div class="modal-body">
+              <ul class="collection">
+   
+    {{#each show_invited_list }}
+
+        <li class="collection-item avatar " style="margin-bottom: 10px;">
+          <img src="{{profile_pic}}" alt="" class="circle modal_invitees_img_page">
+          <p class="invitees_name redirect_click_onprofilepic"><a href="#">{{name}}</a></p>
+          <p class="invitees_headline">{{headline}}
+           <span style="float: right;">
+         <!--  <input type="checkbox" class="inviteuser invitees_headline_label" name="inviteuser[]" value="{{user_id}}" id="{{_id}}" />
+          <label class="invitees_headline_label" for="{{_id}}"></label> -->
+            </span>
+
+          </p>
+        </li>
+
+    {{/each}}
+   
+  </ul> 
+         </div>
+         <div class="modal-footer">
+             <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat closed_modal_window closed_modal_window">Ok</a>
+            <!-- <button type="button" class="save_summary btn btn-primary save_btn_profile save_heading" id="save_summary">Save</button> -->
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+
+
+<!-- Liked list-->
+
+
+<div id="Show_liked_list" class="modal profile_modal_header_top" style="background-color: transparent !important; box-shadow: none !important;" >
+      <div class="modal-content" style="box-shadow: none !important; padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+            <h5 class="modal-title"><!-- <i class="fa fa-angle-left close_modal hide_modal_class" data-dismiss="modal" style="margin-right: 20px !important;"></i> -->total Likes ({{show_count_of_like}})</h5>
+         </div>
+         <div class="modal-body">
+              <ul class="collection">
+   
+    {{#each show_liked_list_2 }}
+          {{#each fetch_user_information}}
+        <li class="collection-item avatar " style="margin-bottom: 10px;">
+          <img src="{{profile_pic}}" alt="" class="circle modal_invitees_img_page">
+          <p class="invitees_name redirect_click_onprofilepic">{{name}}</p>
+          <p class="invitees_headline">{{headline}}
+           <span style="float: right;">
+         <!--  <input type="checkbox" class="inviteuser invitees_headline_label" name="inviteuser[]" value="{{user_id}}" id="{{_id}}" />
+          <label class="invitees_headline_label" for="{{_id}}"></label> -->
+            </span>
+
+          </p>
+        </li>
+
+    {{/each}}
+                {{else}}
+                    <p> No likes :) </p>
+    {{/each}}
+   
+  </ul>
+         </div>
+         <div class="modal-footer">
+           <!--  <button type="button" class="btn btn-default cncl_btn_profile closed_modal_window" data-dismiss="modal">Cancel</button> -->
+
+             <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat closed_modal_window closed_modal_window">Ok</a>
+            <!-- <button type="button" class="save_summary btn btn-primary save_btn_profile save_heading" id="save_summary">Save</button> -->
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+
+
+
+
+  <script type="text/javascript">
+ $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>
+
+
+
+
+{{/each}}
+</template>

@@ -1,0 +1,32 @@
+
+
+<template name="ticker">
+
+<ul id="ticker">
+	{{#each change_textual_ads}}
+		 <li style="text-align:  center !important " title={{promotion_title}}>
+	 	   <a href={{promotion_url}} style="color: #333 !important;" class="update_count" id="OpenNewTab" target="_blank" > <span class="update_count" >{{promotion_content}}</span></a>
+		</li>
+	 {{/each}}
+</ul>
+
+
+ </template>
+
+ <template name="picture_ticker">
+ 	{{#if change_picture_ads}}
+	<ul id="ticker2" class="visible-lg" style="margin-bottom: 0px !important; padding: 0px !important; width:260px !important; height:220px !important; ">
+		{{#each change_picture_ads}}
+		  <li style=" width:260px !important; height:220px !important; text-align:  center !important " title={{promotion_title}} >
+	      <a href={{promotion_url}} class="update_count" id="OpenNewTab" target="_blank" >
+	           <span class="update_count" > <img src={{promotion_content}} style="padding-right: 15px ;width:260px !important; height:220px !important; " ></span>
+	      </a>
+	   
+	    	</li>
+		 {{/each}}
+    </ul>
+    {{else}}
+    <p>Advertisement</p>
+   {{/if}}
+
+ </template>

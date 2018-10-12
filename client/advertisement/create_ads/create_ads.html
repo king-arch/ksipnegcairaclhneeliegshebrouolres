@@ -1,0 +1,145 @@
+
+
+<template name="createads">
+
+	<head>
+	  <title>Event Listing</title>
+	</head>
+
+    <!-- <body style="background-color: #F5F5F5 !important;"> -->
+    <body>
+		{{> header}}
+		{{> ads_create}}
+	</body>
+
+</template>
+
+<template name="ads_create"> 
+
+  <div class="page_wh">
+  <div class="page_all_white">
+
+        <div class="row" style="margin-bottom: 0px !important;">
+            <div class="col s9 m6 l6" style="padding: 0px;">
+              <h5 class="heading_create"> Create promotion </h5> 
+            </div>
+            <div class="col s3 m6 l6">
+              <h5> <i class="fa fa-times pull-right clicked_cancel heading_create"></i> </h5> 
+            </div>
+        </div>
+
+  <div class="row">
+            <div class="input-field col s12 m12 l12"><p class="heading_create_inside">promotion Type</p>
+               
+               
+                     <div id="promotion_type" class="ui selection dropdown frmt_inpt" style="border: 1px solid #ADA7A7 !important; border-radius:5px !important;">
+                                           <input type="hidden" name="hidden_promotion_type" id="hidden_promotion_type" value=""/>
+                                           <div class="text">Select Event Type</div>
+                                           <i class="dropdown icon"></i>
+                                           <div class="menu ">
+                                              <div class="item " data-value="Textual">Textual promotion </div>
+                                     		  <div class="item" data-value="Picture">Picture promotion </div>
+                                            </div>
+            </div>
+            </div>
+   </div>
+
+    <div class="row">
+            <div class="input-field col s12 m12 l6">
+              <p class="heading_create_inside">Promotion start date</p>
+               <input type="text" class="datepicker frmt_inpt" id="promotion_start_date" name="promotion_start_date">
+            </div>
+            <div class="input-field col s12 m12 l6"><p class="heading_create_inside">Promotion end date</p>
+                      <input type="text" name="promotion_end_date" id="promotion_end_date" class="datepicker frmt_inpt">
+            </div>
+   </div>
+
+      <div class="row show_or_hide" id="hide_discription_box" >
+      <div class="input-field col s12 m12 12">
+              <p class="heading_create_inside"> promotion discription </p>
+  
+ <input value="" type="text" name="event_name" id="promotion_discription" class="validate frmt_inpt" maxlength="180"  >      
+            </div>
+  </div>
+
+  <div class="row show_or_hide" id="hide_picture_box" >
+
+          <div class="col s12 m12 ll2" style="padding: 0px;">
+             <div class="card" style="padding: 0px; box-shadow: none; margin-bottom: 0px;">
+            <div class="card-image" id="imagebox">
+             
+              <img id="my_image" src={{uploaded_image}} style="height: 300px;"  > 
+
+
+              <input type="hidden" name="cover_image" id="cover_image" value={{uploaded_image}}>
+               <label for="coverimage">
+              <span style="cursor: pointer; padding: 0px;" class="card-title cover_pic_dropdown">
+
+               <!--  <i class="fa fa-camera"></i> -->
+<button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  padding: 10px;" ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: -120px !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" id="cover_image" > Upload</a></li>
+                                                        <li><a href="javascript:void(0)" style="display: none;text-align:center;" class="invitation_response" id="remove_cover"> Remove</a></li>
+                                                      </ul>
+              </span></label>
+              <input type="file" name="cover_pic" id="coverimage" style="display:none !important;">
+              <span style="display: none;cursor: pointer;" id="removecoverpic" class="card-title sppan_icons_two"><i class="fa fa-trash sppan_icons_two"></i></span>
+  
+            <div style="display: none;" class="card-image" id="divcrop">
+                <img id="my_image2">
+                <span style="cursor: pointer;" id="crop_image" class="card-title sppan_icons_one"><i class="fa fa-crop sppan_icons_one"></i></span>
+            </div> 
+          </div>
+
+          </div>
+          </div>
+      </div>
+   
+        <script type="text/javascript">
+          
+$("#edit_edu_start_month").dropdown("set selected","");
+        </script>
+
+  <div class="row">
+      <div class="input-field col s12 m12 l6">
+              <p class="heading_create_inside"> promotion title </p>
+  
+ <input value="" type="text" name="event_name" id="promotion_title" class="validate frmt_inpt" maxlength="40" >      
+            </div>
+
+      <div class="input-field col s12 m12 l6">
+              <p class="heading_create_inside"> promotion URL </p>
+ <input value="" type="text" name="event_name" id="promotion_url" class="validate frmt_inpt">      
+            </div>
+  </div>
+
+ <div class="row">
+    <div class="col s12 m12 l8"> &nbsp;  </div>
+        <div class="col s12 m12 l2"><a class="waves-effect waves-light save_button" id="save_promotion" > Save</a> </div>
+
+    <div class="col s12 m12 l2"> <a class="waves-effect waves-light cncl_btm clicked_cancel">Cancel</a> </div>
+  </div>
+
+  <script type="text/javascript">
+    $('.datepicker').pickadate({
+      min:new Date(),
+     // format:"DD-MM-YY",
+      format: 'yyyy mm dd',
+    formatSubmit: 'yyyy mm dd',
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('select').material_select();
+  });
+  </script>
+</div>
+</div>
+</template>

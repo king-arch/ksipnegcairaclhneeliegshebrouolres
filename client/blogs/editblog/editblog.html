@@ -1,0 +1,167 @@
+
+<template name="editblog">
+  <head>
+  <title>messanging</title>
+</head>
+
+ <style>
+  .cropper-example-lena
+{
+  width:100% !important;
+}
+  </style>
+  <body class="body_bg">
+  {{> header}}
+  {{> blog_edit}}
+ {{> sAlert}}
+</body>
+
+</template>
+
+<template name="blog_edit">
+    <!-- <button id="check_alert" > check alert</button> -->
+{{#each edit_blog_array }}      
+<div class="page_wh">
+   {{> ticker}}
+  <div class="page_all_white">
+
+        <div class="row ">
+          <div class="col s12 m6 l6"><h5 class="heading_create"> Edit Blog</h5> </div>
+            <div class="col s12 m6 l6">
+             <h5> <i class="fa fa-times hand_on_hover pull-right clicked_cancel heading_create"></i> </h5> 
+          </div>
+          <div class="col s12 m6 l6"><h5 class="heading_create_inside"> <i class="fa fa-times pull-right" style="display: none !important;"></i> </h5> </div>
+      </div>
+      <div class="row">
+          <div class="col s12 m12 ll2" style="padding: 0px;">
+             <div class="card" style="padding: 0px; box-shadow: none; margin-bottom: 0px;">
+            <div class="card-image" id="imagebox">
+             
+              <img id="my_image" src={{uploaded_image}} style="height: 300px;"  > 
+
+
+              <input type="hidden" name="cover_image" id="cover_image" value={{uploaded_image}} >
+               <label>
+              <span style="cursor: pointer; padding: 0px;" class="card-title cover_pic_dropdown">
+
+               <!--  <i class="fa fa-camera"></i> -->
+                  <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  padding: 10px;" ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: -120px !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" id="cover_image" > Upload</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class=" invitation_response" id="remove_cover"> Remove</a></li>
+                                                      </ul>
+              </span>
+            </label>
+              <input type="file" name="cover_pic" id="coverimage" style="display:none !important;">
+              <span style="display: none;cursor: pointer;" id="removecoverpic" class="card-title sppan_icons_two"><i class="fa fa-trash sppan_icons_two"></i></span>
+  
+<!--             <div style="display: none;" class="card-image" id="divcrop">
+                <img id="my_image2">
+                <span style="cursor: pointer;" id="crop_image" class="card-title sppan_icons_one"><i class="fa fa-crop sppan_icons_one"></i></span>
+            </div>  -->
+
+
+ <!-- // start croping html -->
+
+<input type="file" id="upload_cover" accept="image/*" style="display:none"/>
+
+            <input type="hidden" data-target="crop_cover_image" class="btn modal-trigger" id="cover_pic_modal" >
+
+            <div id="crop_cover_image" class="modal modal-fixed-footer">
+               <div class="modal-content">
+                  <h2>Crop cover Pic</h2>
+                  <div id="divcrop_cover"> <img id="my_image_cover"  > </div>
+               </div>
+               <div class="modal-footer"> 
+                  <button class="modal-action modal-close waves-effect waves-green btn-flat " id="crop_cover_image_selection" >Crop</button>
+               </div>
+            </div>
+
+  
+
+ <!-- // end croping html -->
+ 
+          </div>
+
+          </div>
+          </div>
+      </div>
+  <div class="row">
+      <div class="input-field col s12 m12 l6">
+              <p class="heading_create_inside"> Blog Title <sup><span class="red_start"> * </span></sup> </p>
+  
+ 					<input id="edit_blog_title" type="text" class="validate frmt_inpt" value={{blog_title}}>        
+ 					 <!--      <input value="" id="grp_title" type="text" class="validate frmt_inpt"> -->        
+            </div>
+           <div class="input-field col s12 m12 l6">
+              <p class="heading_create_inside">When to publish <sup><span class="red_start"> * </span></sup> </p>
+                      <input type="text" class="datepicker frmt_inpt" id="edit_Blog_publish_date" value={{changed_format_date Blog_publish_date}}>
+            </div>
+  </div>
+
+   <div class="row">
+    <form >
+      <div class="row">
+        <div class="input-field col s12">
+        	 <p class="heading_create_inside"> Description </p>
+          <textarea id="edit_blog_description" class="materialize-textarea frmt_inpt" value={{blog_description}} ></textarea>
+         
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+ <!-- 
+<script type="text/javascript">       
+  $("#edit_blog_visibility").dropdown("set selected","");
+</script> -->
+ 
+
+ <div class="row">
+    <div class="col s12 m6 l4"> &nbsp;  </div>
+    <div class="col s12 m6 l3 text-right">
+         <a class="waves-effect waves-light save_button" id="save_edit_blog" > Save & Publish</a>
+    </div>
+    <div class="col s12 m6 l3 text-right">
+      <a class="waves-effect waves-light save_button" id="save_blog_draft_btn"> Save in draft</a>
+    </div>
+    <div class="col s12 m6 l2 text-right">
+          <a class="waves-effect waves-light clicked_cancel cncl_btm">Cancel</a> 
+    </div>
+  </div>
+
+  <div class="loading loader_visiblity_block"  id="loading_div" ></div>
+
+  <script type="text/javascript">
+
+
+     
+    $('.datepicker').pickadate({
+
+    format: 'yyyy-mm-dd',
+    formatSubmit: 'yyyy-mm-dd',
+    min: new Date(), 
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('select').material_select();
+  });
+  </script>
+</div>
+</div>
+<!-- {{load_blog_data}} -->
+{{/each}}
+
+</template>
+ 
+ 

@@ -1,0 +1,273 @@
+/* @media only screen and (min-width : 800px) {
+    .title_name{
+    font-size: 40px !important;
+    font-weight: 500 !important;
+margin-left: 10% !important;
+}
+
+.name_headline{
+    font-size: 30px !important;
+margin-left: 10% !important;
+}
+
+.ui.statistics .statistic > .label {
+    font-size: 30px !important;
+    color: #333 !important;
+
+}
+.ui.statistics .statistic > .value2{
+  font-size: 65px !important;
+}
+    
+
+.ui.statistics > .statistic {
+    margin: 8px 35px !important;
+    float: left !important;
+    text-align: center !important;
+line-height: 55px !important;
+}
+    	.section h3{
+    	font-size: 50px !important;
+    }
+    	.section h5{
+    	font-size: 50px !important;
+    }
+    .profile_margin_center_sections {
+    margin: 15px 0px;
+}
+header{
+	height: 150px !important;
+}
+header .container{
+	height: 150px !important;
+}
+header .container i{
+	font-size: 90px;
+margin-top: 20px !important;
+}
+header .container img{
+padding: 25px 10px !important;
+width: 250px;
+}
+    #display_conversation .avatar {
+    min-height:130px;
+}
+    #display_connection .avatar {
+    min-height:130px;
+}
+   #display_conversation .avatar .send_person_to_msg_page {
+    padding-left: 45px !important;
+}
+ #display_conversation .avatar .send_person_to_msg_page  .title{
+font-size: 35px !important;
+}
+ #display_conversation .avatar .send_person_to_msg_page  p{
+font-size: 26px !important;
+}
+.msg_user {
+    font-size: 32px !important;
+   
+}
+.brn_add_health{
+font-size: 40px !important;
+padding: 20px !important;
+width:100% !important;
+text-align: center !important; 
+}
+.bottom-left {
+    position: absolute;
+    bottom: -2px;
+    left: 49px !important;
+}
+
+.bottom-left-2 {
+    position: absolute;
+left: 52px !important;
+bottom: 3px;
+margin-bottom: 5px;
+font-size: 15px;
+}
+
+.color_green_messaging{
+    
+    font-size: 40px !important;
+      color: #77C903 !important;
+  border:2px solid #fff;
+   border-radius: 50%;
+}
+
+.color_red{
+    font-size: 40px !important;
+    color: #E12626;
+  border:2px solid #fff;
+  border-radius: 50%;
+}
+.fo_size_time{
+
+  font-size: 27px !important;
+  margin-left: 0px !important;
+}
+ .new_no_chat{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 1px;
+    background: #E12626 none repeat scroll 0% 0%;
+    border: 1px solid #fff;
+    color: #fff;
+    font-weight: 100;
+    text-align: center;
+    font-size: 26px;
+}
+
+}
+
+@media only screen and (min-width : 1024px) {
+    .title_name{
+    font-size: 55px !important;
+    font-weight: 500 !important;
+margin-left: 10% !important;
+}
+
+.name_headline{
+    font-size: 40px !important;
+margin-left: 10% !important;
+}
+
+.ui.statistics > .statistic {
+    margin: 8px 20px !important;
+    float: left !important;
+    text-align: center !important;
+line-height: 55px !important;
+}
+.section h5 {
+    font-size: 2px !important;
+}
+}
+
+@media only screen and (min-width : 1200px) {
+    .title_name{
+    font-size: 55px !important;
+    font-weight: 500 !important;
+margin-left: 10% !important;
+}
+
+.name_headline{
+    font-size: 40px !important;
+margin-left: 10% !important;
+}
+
+.reply_input{
+    margin-left: 40px !important;
+    margin-bottom: ;
+    max-width: 80% !important;
+    height: 14px !important;
+    font-size: 12px !important;
+}
+.comment_input_first{
+   margin-top: 10px !important;
+    height: 15px !important;
+    font-size: 14px !important;
+}
+
+.fo_size_time{
+
+  font-size: 12px !important;
+  margin-left: 0px !important;
+}
+ .new_no_chat{
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    padding: 2px 1px;
+    background: #E12626 none repeat scroll 0% 0%;
+    border: 1px solid #fff;
+    color: #fff;
+    font-weight: 100;
+    text-align: center;
+    font-size: 12px;
+}
+
+    .ui.statistics .statistic > .label {
+    font-size: 10px !important;
+    color: #333 !important;
+
+}
+#display_conversation .avatar {
+  min-height: 70px !important;
+}
+.ui.statistics .statistic > .value2{
+  font-size: 21px !important;
+}
+    
+
+.ui.statistics > .statistic {
+    margin: 0 auto !important;
+    float: left !important;
+    text-align: center !important;
+line-height: 25px !important;
+}
+	.container{
+		width: 94% !important;
+	}
+	 .section h3{
+    	font-size: 25px !important;
+    }
+	.section h5{
+    	font-size: 18px !important;
+    }
+	.profile_margin_center_sections {
+    margin: 15px 0px;
+}
+	.profile_fields_heading{
+    	font-size: 18px !important;
+    }
+header{
+	height: 65px !important;
+}
+header .container{
+	height: 65px !important;
+}
+header .container i{
+	font-size: 50px;
+margin-top: 9px;
+}
+header .container img{
+padding: 6px 10px !important;
+width: 140px!important;
+}
+.brn_add_health{
+font-size: 15px !important;
+padding: 8px !important;
+text-align: center !important;
+width: 100% !important;
+}
+.send_btn_commenting{
+        background-color: transparent;
+    border: none;
+    margin-left: -32px;
+    margin-right: 12px;
+    padding-right: 50p;
+    padding: 1px;
+    color: rgba(34,36,38,.15);
+}
+.bottom-left-2 {
+    position: absolute;
+left: 34px !important;
+bottom: 3px;
+margin-bottom: 5px;
+font-size: 15px;
+}
+
+.color_green_messaging{
+    color: #77C903;
+    font-size: 15px !important
+}
+
+.color_red{
+
+    font-size: 15px !important
+}
+
+}
+*/

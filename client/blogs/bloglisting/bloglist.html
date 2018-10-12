@@ -1,0 +1,30 @@
+
+<template name="listblog">
+<head>
+  <title> List Blog </title>
+</head>
+  {{> header }}
+  {{> blog_list }}
+ {{> sAlert }}
+</template>
+
+<template name="blog_list">
+<br>
+<br>
+{{#each blog_fulllist}}
+       <p>
+          <h4>  <a href="" class="redirect_click_1" valu={{blog_id}} target="_blank" > {{blog_title}} </a> </h4>
+          <!-- <h4>  {{blog_description}}</h4> -->
+       </p>
+
+       <br>
+    {{/each}} <br>
+    <br>
+<br>
+    <a href="create_blog" target="_blank" > Create Blog</a><br><br>
+    <!-- <a id="edit_blog" target="_blank" > Edit Blog</a> -->
+
+</template>
+
+
+ 

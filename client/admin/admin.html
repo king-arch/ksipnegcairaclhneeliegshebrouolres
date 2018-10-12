@@ -1,0 +1,362 @@
+
+<template name="admin_templete" >
+		{{>admin_panel}}
+</template>
+
+
+<template name="admin_panel" >
+   <div class="page_wh">
+      <div class="">
+         <div class="row">
+           <ul class="nav nav-pills nav-stacked col m3 l3 s12 left_row hidden-md hidden-xs visible-lg">
+                <h3>Connection</h3>
+
+               <li class="active"><a href="#all_peope" data-toggle="pill">All People ({{connection}})</a></li>
+               <li><a href="#group_listing" data-toggle="pill" >groups ({{connection}})</a></li>
+               <li><a href="#event_listng" data-toggle="pill" >event ({{request}})</a></li>
+               <li><a href="#blog_listing" data-toggle="pill">blogs ({{ignore}})</a></li>
+            </ul>
+            
+            <div class="col m12 l9 s12 tab-content right_row">
+
+               <div class="tab-pane active" id="all_peope" >
+                  <div id="custom-search-input">
+                     <div class="col m12 l7 s12">
+                        <p class="heading_create">All Users ({{connection}})</p>
+                     </div>
+                     <div class="input-group col m12 l5 s12">
+                        <div id="imaginary_container">
+                           <div class="input-group stylish-input-group">
+                              <input type="text" class="form-control margin_inpu_search"  placeholder="Search connection by name" id="search_all_text_conn" >
+                              <span class="input-group-addon search_format_iocn">
+                              <button type="submit" id="search_connection_all">
+                              <span class="glyphicon glyphicon-search"></span>
+                              </button>  
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <script type="text/javascript">
+                     $('#search_all_text_conn').keypress(function(e){
+                         var code = e.keyCode || e.which;
+                     
+                         if( code === 13 ) {
+                             e.preventDefault();
+                             $( "#search_connection_all" ).click();
+                         };
+                     });
+                  </script> 
+               
+                  <div class="row" >
+
+                     {{#each show_all_user }}
+
+                     <div class="col m6 l4 s12">
+                        <div class="card row_nomargin_padd text-center no_box_shadow" style="padding: 0px;">
+                           <div class="card-content" style="padding: 0px;">
+                           	<div class="text-center padding_image_right col m12 l12 s12">
+				                      	 	<img class="img_connection ui medium image pointer redirect_to_profile" src={{profile_pic}} alt="No image" >
+				                      	 </div>
+                              <span class="card-title activator event_name">{{name}}</span>
+                              <p class="activator event_type">{{headline_online_only}}</p>
+                              <p class="event_type activator"><i class="fa fa-map-marker"></i> {{location_country}} <p class="connected_since_text"><span style="color: #23527c;">created at</span> {{calculate_time_difference createdAt}}</p>
+                              </p>
+                           </div>
+                       <!--     <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                              <div class="col m12 l12 s12 icon_for_site ignore_req pointer" id="remove_connection" ><a href="#" style="color: #fff !important; margin-right: 0px !important">Remove </a></div>
+                           </div> -->
+                        </div>
+                     </div>
+                 
+                        {{else}}
+                        <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p class="noreq_screen none_listing"> No user created on SN </p>
+                           </div>
+                        </div>
+                     {{/each}}
+                  </div>
+               </div>
+
+               <div class="tab-pane" id="group_listing">
+                  <div class="row">
+                        <div class="col m12 l12 s12">
+                           <p class="heading_create"> Groups ({{reuest}})</p>
+                        </div>
+                  </div>
+                  <div class="row">
+                     <ul class="collection ">
+                        {{#each show_all_groups}}
+                        <!-- {{#each show_pending2}} -->
+                        <li>
+                            <div class="col l4 m6 s12">
+                              <span id="show_group_details" class="go_inside_group" >
+                              <div class="card" style="padding-top: 0;">
+                                <div class="card-image">
+                                  <img src={{Show_grp_image}} class="image_banner_all pointer">
+                                </div>
+                                <div class="card-content" style="padding-bottom: 0px !important;"> 
+                                   <p class="card-title event_name pointer">{{grp_title}} </p>
+                                </div>
+                                 <!-- <p class="pull-left event_type col m12 s12 l12">{{grp_type}} <span class="pull-right btn_status_grp" href="#">{{group_join_status}} </span></p> -->
+                                <div class="clearfix"></div>
+                                <div class="card-action visible-lg">
+                                  
+                                  <span style="margin-right: 10px;"><i class="fa fa-object-group" title="Members"></i> {{get_total_members}} </span>
+                                  <span><i class="fa fa-comment-o" title="Discussions"></i> {{get_total_discussions}} </span>
+                                </div>     
+                              </div>
+                            </span>
+
+                            </div>
+                            <!-- {{else}} -->
+                          <!--   <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No Groups To Display</p>
+                           </div>
+                        </div> -->
+                        </li>
+                        <!-- {{/each}} -->
+                        {{else}}
+                          <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No Groups created on SN </p>
+                           </div>
+                        </div>
+                        {{/each}}
+                     </ul>
+                  </div>
+               </div>
+
+               <div class="tab-pane" id="event_listng">
+                  <div class="row">
+                        <div class="col m12 l12 s12">
+                           <p class="heading_create">Events ({{request}})</p>
+                        </div>
+                  </div>
+                  <div class="row">
+                     <ul class="collection ">
+                        {{#each show_all_events}}
+
+                  <div class="col l4 m6 s12 ">
+                          <span id="show_all_event" class="go_inside_event" >
+                                              <a class="list-quotes" href="#">               
+                                                              <img src={{event_cover_image}} alt="img" class="banner_image_for_all pointer">  
+                                                      <div class="quotes">
+                                                          <p><i class="fa fa-map-marker"></i> {{event_location}} </p>
+                                                          
+                                                      </div>
+                                                  </a>
+                                                  <div class="row listing_">
+                                                      <div class="col l2 m2 s2">
+                                                        <div class="tdtdss">
+                                                          <div class="sep24">
+                                                            <span class="month">{{datemnth}} </span><br> 
+                                                            <span class="date">{{datenm}}</span> <br> 
+                                                            <samp class="week">{{dateday}}</samp>
+                                                          </div>
+                                                        </div> 
+                                                      </div>
+                                                      <div class="col l10 m10 s10">
+                                                        <a class="event_name" href="#"> {{event_title}}</a> <br>
+                                                        <a href="event_type"><span class="event_type">{{event_type}}</span></a><br>
+                                                      </div>
+                                                   </div>
+                                                    <div class="row">
+                                                       <!--  <div class="col m12 s12 l12" style="padding: 0px;">
+                                                        <p class="join_btn">
+                                                          <a href="#" style="color: #fff !important;">
+                                                            {{#if display_event_response}}
+                                                                <p> Pending </p>
+                                                                        {{else if check_accept_status}}    
+                                                                  <p> Attending </p>
+
+                                                                {{else if check_reject_status}}    
+                                                                  <p> Not Attending </p>
+                                                                  {{else}}
+                                                                        <p> Attending </p>
+                                                                      {{/if}}
+
+                                                          </a></p>
+
+                                                        </div> -->
+                                                    </div> 
+                                                    </span>  
+                                              </div>
+
+                        {{else}}
+                          <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No event created on SN </p>
+                           </div>
+                        </div>
+                        {{/each}}
+                     </ul>
+                  </div>
+               </div>
+
+               <div class="tab-pane" id="request">
+                  <div class="row">
+                        <div class="col m12 l12 s12">
+                           <p class="heading_create">Blogs ({{request}})</p>
+                        </div>
+                  </div>
+                  <div class="row">
+                     <ul class="collection ">
+
+                      
+                  
+                  {{#each show_all_blogs}}
+                       <div class="col s12 m6 l4">
+                        <div class="card" style="padding-top: 0;">
+                         
+                           <div class="card-image">
+                              <img src="{{blog_image}}" class="banner_image_for_all pointer">
+                           </div>
+                           <div class="card-content">
+                              <span class="card-title event_name pointer">{{trim_content blog_title}} </span>
+                              <p class="event_type">{{changeDateFormat}}</p>
+                              <!--<p>I am a very simple card. I am good at containing small bits of information.
+                                 I am convenient because I require little markup to use effectively.</p>-->
+                           </div>
+                        <div class="card-action ">
+                              <ul class="collection">
+                                 <li><img class="circle visible-lg" src="{{blog_creator_image}}" style="width: 40px !important; height: 40px !important;"><span><a href="#"  style="margin-left: 6px !important; color: #23527C !important;" class="blog_writer_name event_type"><span class="hidden-lg"><b>Author: </b></span>{{blog_creator_name}}</a><br/>
+                                  <span style="margin-left: 6px !important;">Headline</span>
+                                 </span></li>
+                              </ul>
+                              <div class="card_padding_sp visible-lg" style="padding-bottom: 20px !important;">
+                                 <span class="pull-left">
+                                 <span style="margin-right: 10px;">
+                                 <i class="fa fa-comment-o" title="Comment"></i> {{fetch_count_total_level_zero_comments blog_id}} 
+                                 </span>
+                                 <span>
+                                 <i class="fa fa-thumbs-o-up" title="Like"></i> &nbsp; {{show_like_count blog_id}} 
+                                 </span>
+                                 </span>
+                                 <span class="pull-right">
+                                  {{#if check_for_blog_creator_and_current_login_user blog_creator_id}}
+                                 <span style="margin-right: 10px;">
+                                 <i class="fa fa-pencil edit_blog_btn pointer" title="Edit"></i> 
+                                 </span>
+                                  <span>
+                                 <i class="fa fa-trash remove_blog_btn pointer" title="Delete"></i>
+                                 </span>
+                                  {{/if}}
+                                
+                                 </span>
+                              </div>
+                            </div>
+                              <div class="clearfix"></div>
+                          
+                        </div>
+                     </div>
+
+                        {{else}}
+                          <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> You Blogs created on SN</p>
+                           </div>
+                        </div>
+                        {{/each}}
+                     </ul>
+                  </div>
+               </div>
+
+               <div class="tab-pane" id="blog_listing"> 
+                  <div class="row">
+                        <div class="col m12 l12 s12">
+                         <p class="heading_create">Blogs ({{ignore}})</p>
+                      </div>
+                  </div>
+                  <div class="row">
+                     <ul class="collection">
+                        {{#each show_ignored }}
+                        {{#each show_ignored2 }}
+                       
+                        <div class="col m6 l4 s12">
+                           <div class="card row_nomargin_padd text-center no_box_shadow" style="padding-top: 0px;">
+                               <div class="card-content">
+                              	<div class="text-center padding_image_right col m12 l12 s12">
+				                      	 	<img class="img_connection ui medium image pointer redirect_to_profile"  src={{profile_pic}} alt="No image" >
+				                      	 </div>
+                                 <span class="card-title activator event_name"><span class="pointer">{{name}}</span></span>
+                                 <p class="activator event_type">{{headline_online_only}}</p>
+                                 <p class="event_type activator"><i class="fa fa-map-marker"></i> {{location_country}} </p>
+                              </div>
+                              
+                              <div class="row  row_nomargin_padd card-action" style="padding: 0px !important;">
+                                 <!-- <div class="col m6 l6 s12 icon_for_site">Remove</div> -->
+                                 <div class="col m12 l12 s12 icon_for_site_not pointer request_accept_status accept_req" id="ignore_event-1348278818req-" >Accept</div>
+                              </div>
+                            
+                           </div>
+                        </div>
+                        {{/each}}
+                          {{else}}
+                          <div class="row">
+                           <div class="col m12 s12 l12">
+                              <p  class="noreq_screen none_listing"> No blogs created on SN</p>
+                           </div>
+                        </div>
+                        {{/each}}
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <!-- tab content -->
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown({
+                   inDuration: 300,
+                   outDuration: 225,
+                   constrainWidth: false, // Does not change width of dropdown to that of the activator
+                   hover: true, // Activate on hover
+                   gutter: 0, // Spacing from edge
+                   belowOrigin: false, // Displays dropdown below the button
+                   alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                   stopPropagation: false // Stops event propagation
+                 }
+               );
+                    
+               
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('open');
+            </script>
+            <script type="text/javascript">
+               $('.dropdown-button').dropdown('close');
+            </script>
+         </div>
+      </div>
+   </div>
+    <div class="col-xs-12 footer hidden-lg clearfix" data-role="footer" data-position="fixed" style="padding:0px; background-color: #333;">
+   <ul class="row nav navbar-nav" style="width: 100%; margin: 0px;">
+      <li class="col m4 s4 text-center total_number_bg_padding" id="all_connections">
+        <a class="total_number_bg">
+          <span class="numbr_below" >{{connection}}</span>
+         
+          <span href="#connection"   class="total_number_name">All</span>
+        </a>
+      </li>
+      <li class="col m4 s4 text-center total_number_bg_padding" id="request_connections" >
+        <a class="total_number_bg">
+         <span class="numbr_below">{{request}}</span>
+         
+         <span href="#request" class="total_number_name">Request</span>
+        </a>
+      </li>
+       <li class="col m4 s4 text-center total_number_bg_padding_last" id="ignore_connections">
+        <a class="total_number_bg">
+          <span class="numbr_below">{{ignore}}</span>
+          
+          <span href="#ignore"  class="total_number_name">Ignore</span>
+        </a>
+      </li>
+   </ul>
+</div>
+
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</template>
+

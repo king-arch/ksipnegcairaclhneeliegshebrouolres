@@ -1,0 +1,9 @@
+
+.emptyfield_focus{
+	border: 1px solid red ! important;
+}
+
+.show_or_hide{
+	display: none !important;
+}
+

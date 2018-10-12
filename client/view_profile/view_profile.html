@@ -1,0 +1,550 @@
+
+<template name="view_profile">
+{{>header}}
+
+<div class="row page_wh">
+{{> ticker}}
+         <div class="row visible-lg">
+         <div class="col s12 m12 ll2">
+            <div class="card" style="padding-top: 0px; margin-bottom: 0px !important;">
+               <div class="card-image">
+                  <img src={{uploaded_image}}  style="width: 100%;  height: 300px;" >  
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="col s12 m12 l3">
+         <div class="row section" >
+          <div class="">
+               <div class="card-image">
+                  <div class="profile-pic">
+                     <img src={{profilepic_image}}>
+                  </div>
+               </div>
+            </div>
+           
+            <div class="col s12">
+               {{#each display_leftpanel_info }}
+               <h3 class="text-center " style="margin-bottom: 0px;">{{name}}</h3>
+               <p class="login_forgot_pass text-center" >{{headline_trim}}</p>
+               <p class="login_forgot_pass text-center"> <i class="fa fa-map-marker"></i> {{location}}</p>
+               {{/each}}
+            </div>
+         </div>
+         <!-- <div class="row section">
+            <div class="col m12 s12 l12">
+               <div class="ui statistics">
+                  <div class="statistic">
+                     <div class="value2">
+                        22
+                     </div>
+                     <div class="label">
+                        Blogs
+                     </div>
+                  </div>
+                  <div class="statistic">
+                     <div class="value2">
+                        31,200
+                     </div>
+                     <div class="label">
+                        Connections
+                     </div>
+                  </div>
+                  <div class="statistic">
+                     <div class="value2">
+                        22
+                     </div>
+                     <div class="label">
+                        Groups
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div> -->
+            <div class="row section">
+            <div class="col m12 s12 l12">
+               <div class="ui statistics">
+
+                  <div class="statistic">
+                     <div class="value2">
+                      <a href="/blog_listing">
+                        {{show_blog_count}}
+                      </a>
+                     </div>
+               {{#if equals show_blog_count 0}}
+                     <div class="label">
+                        Blog
+                     </div>
+
+                {{else if equals show_blog_count 1}}
+                     <div class="label">
+                        Blog
+                     </div>
+                {{else}}
+                     <div class="label">
+                        Blogs
+                     </div>
+                {{/if}}
+
+                  </div>
+
+                  <div class="statistic">
+                     <div class="value2">
+                      <a href="/connection">
+                      {{show_connection_count}}
+                    </a>
+                     </div>
+
+                {{#if equals show_connection_count 0}}
+                     <div class="label">
+                        Connection
+                     </div>
+
+                {{else if equals show_connection_count 1}}
+                     <div class="label">
+                        Connection
+                     </div>
+                {{else}}
+                     <div class="label">
+                        Connections
+                     </div>
+                {{/if}}
+
+                  </div>
+
+                  <div class="statistic">
+                     <div class="value2">
+                      <a href="/grplisting">
+                        {{show_group_count}}
+                      </a>
+                     </div>
+                {{#if equals show_group_count 0}}
+                     <div class="label">
+                        Group
+                     </div>
+
+                {{else if equals show_group_count 1}}
+                     <div class="label">
+                        Group
+                     </div>
+                {{else }}
+                     <div class="label">
+                        Groups
+                     </div>
+                {{/if}}
+
+
+                  </div>
+
+               </div>
+            </div>
+         </div>
+{{#if passion_list}}
+         <div class="section" style="margin-bottom: 20px;">    
+      <h5 class="profile_fields_heading">I'm passionate about </h5>
+<div class="divider" style="margin-bottom: 20px !important;"></div>
+          {{#if equals passion_list ''}}
+            <p class="margin-top profile_margin_center_sections login_forgot_pass">  No Interests Added </p>
+          {{else}}
+              {{#each  passion_list }}
+              <span class="chip">{{tag}} </span>
+            {{/each}}
+      {{/if}}
+         </div>
+{{/if}}
+      </div>
+      <div class="col s12 m12 l6">
+         <!-- <p>{{> heading_view_profile}}</p> -->
+
+<!-- {{#if display_leftpanel_info}} -->
+            <div class="section">
+          <h5 class="profile_fields_heading">Headline</h5>
+            <div class="divider"></div>
+             {{#each display_leftpanel_info}}
+            <p class="profile_margin_center_sections login_forgot_pass"> {{headline}} </p>
+         {{/each}}
+          </div>
+<!-- {{/if}} -->
+        
+          {{#each display_summary}} 
+       <div class="section">
+      <h5>Summary </h5>
+      <div class="divider"></div>
+      <p class="profile_margin_center_sections login_forgot_pass" style="height:auto;" id="summary_display_3" > {{summery_helper_2 summary}} 
+{{#if show_Readless}}
+      <span id="show_readmore"  >
+         <a href="javascript:void(0);"  class="an_style read_more pointer " id="read_more_summary" style="color: #338ea7; padding: 5px 10px;" > Read more</a> 
+         <a href="javascript:void(0);"  class="an_style read_more hide_redmore pointer" id="read_less_summary" style="color: #338ea7; padding: 5px 10px;">Read less</a>                   
+         <input type="hidden" value={{summary}} id="hidden_summary">
+      </span>
+      {{/if}}
+      </p>
+      
+   </div>
+
+ <!--   {{else}}
+          <div class="section">
+      <h5>Summary </h5>
+      <div class="divider"></div>
+   <p class="profile_margin_center_sections login_forgot_pass"> Nothing to Display as Summary</p>
+    </div> -->
+
+   {{/each}}
+
+
+  {{#if show_profjr}}
+   <div class="section">
+      <h5>  Professional Details  
+      </h5>
+      <div class="divider"></div>
+      {{#each show_profjr}}
+      <div class="row profile_margin_center_sections login_forgot_pass">
+         <div class="col l11 m11 s11" style="padding: 0px !important;">
+            <h6 class="font18 colo_head_blue login_forgot_pass">{{company}}</h6>
+            <p  class="font15 p_margin_btom_none login_forgot_pass">{{title}} | {{start_month}}, {{start_year}} - 
+               {{#if end_month }}
+               {{end_month}}, {{end_year}}
+               {{else}}
+               Present
+               {{/if}}
+            </p>
+            <p class="login_forgot_pass"><i class="fa fa-map-marker"></i> {{location}}</p>
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">Skill(s) used: </p>
+            <p class="login_forgot_pass">{{skill}} </p>
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">Key Responsibilities: </p>
+            <p class="login_forgot_pass">{{key_responsibilities}} </p>
+         </div>
+         <div class="col l1 m1 s1 pull-right" style="padding-right: 0; text-align: right;">
+            <!-- <a class="waves-light modal-trigger" href="#modal_edit_prof" pid={{_id}} id="edit_5" ><i class="fa fa-pencil"></i></a>  -->
+         </div>
+      </div>
+     <!--  {{else}}
+      <p class="profile_margin_center_sections login_forgot_pass"> No Professional Details</p> -->
+      {{/each}}
+   </div>
+   {{/if}}
+
+         <!-- <p>{{> edudetails}}</p> -->
+
+{{#if show_education}}
+         <div class="section">
+      <h5>Educational Details </h5>
+      <div class="divider"></div>
+      {{#each show_education }}
+      <div class="row profile_margin_center_sections">
+         <div class="col l11 m11 s11" style="padding: 0px;">
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">{{course}}</p>
+            <p  class="login_forgot_pass" style="margin-bottom: 0px;">{{school}} | 
+               {{show_score score}}
+               {{score}}
+            </p>
+            <p class="login_forgot_pass">{{edu_start_month}}, {{edu_start_year}} - 
+               {{#if edu_end_month }}
+               {{edu_end_month}}, {{edu_end_year}}
+               {{else}}
+               Present
+               {{/if}}
+            </p>
+         </div>
+         <div class="col l1 m1 s1 pull-right" style="padding-right: 0; text-align: right;">
+            <!-- <a class="waves-light modal-trigger" href="#ediedudetails" eid={{_id}} id="edit_6" ><i class="fa fa-pencil"></i></a>  -->
+         </div>
+      </div>
+      <!-- {{else}} -->
+      <!-- <p class="profile_margin_center_sections login_forgot_pass"> No educational details Added</p> -->
+      {{/each}}
+   </div>
+{{/if}}
+
+
+         <!-- <p>{{> achievement}}</p> -->
+{{#if display_award}}
+         <div class="section">
+      <h5>Achievement </h5>
+      <div class="divider"></div>
+      {{#each display_award}}
+      <div class="row profile_margin_center_sections">
+         <div class="col m11 l11 s11" style="padding: 0px;">
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">Achievement: ({{type}})</p>
+            <p class="login_forgot_pass"><i class="fa fa-map-marker"></i> {{location}}</p>
+            <p class="p_margin_btom_none colo_head_blue login_forgot_pass">Description: </p>
+            <p class="login_forgot_pass">{{description}}</p>
+         </div>
+         <div class="col l1 m1 s1 pull-right" style="padding-right: 0; text-align: right;">
+            <!-- <a class="waves-light modal-trigger" href="#modaleditachieve" id="edit_4"><i class="fa fa-pencil"></i></a>  -->
+         </div>
+      </div>
+     <!--  {{else}}
+      <p class="profile_margin_center_sections login_forgot_pass"> No achievements Added</p> -->
+      {{/each}}
+   </div>
+{{/if}}
+
+         <!-- <p>{{> skill}}</p> -->
+
+{{#if show_skills}}
+          <div class="section">
+      <h5>Skill</h5>
+      <div class="divider"></div>
+      <div class="row profile_margin_center_sections">
+         {{#each show_skills}} 
+         <div class="col s12 m4 l3 text-center">
+            <p class="login_forgot_pass">{{skill_name}} </p>
+            <p class="text-center login_forgot_pass"><img src="{{skill_gif awd_expert}}" width="130" /></p>
+            <p class="login_forgot_pass">{{last_used}}</p>
+            <input type="hidden" value={{_id}} id="hidden_edit_skill_name">
+         </div>
+        <!--  {{else}}
+         <p class="profile_margin_center_sections login_forgot_pass"> No skills added</p> -->
+         {{/each}}
+      </div>
+   </div>
+{{/if}}
+
+
+       
+      </div>
+     
+
+
+
+     <div class="col s12 m12 l3 visible-lg">
+   {{#if user_is_admin}}
+   
+      {{else}}
+      <div class="section">
+        
+              {{#each check_status}}
+
+              {{#if equals req_status 0 }}
+
+                {{#if check_logged_in_user }}
+
+          <button class="waves-effect waves-light btn-large" disabled="disabled" style="width: 100%;" >Request Sent</button>
+
+                    {{else}}
+
+                    <button class="waves-effect waves-light btn-large request_accept_status" id="request_accept_status" style="width: 100%;" > Accept Request </button>
+
+                {{/if}}
+
+              {{/if}}
+
+              {{#if equals req_status 1 }}
+                  <button class="waves-effect waves-light btn-large" id="connect_now"  disabled="disabled" style="width: 100%;" >Connected</button>
+              {{/if}}
+
+              {{#if equals req_status 2 }}
+                  <button class="waves-effect waves-light btn-large" id="connect_now" disabled="disabled" style="width: 100%;" >{{Pending}}</button>
+              {{/if}}
+
+              {{#if equals req_status 3 }}
+                  <!-- <button class="waves-effect waves-light btn-large" id="connect_now" disabled="disabled" >Pending</button> -->
+
+                  <button class="waves-effect waves-light btn-large" id="connect_now" style="width: 100%;">Connect</button>
+              {{/if}}
+
+              {{else}}
+                  <div class="loading"  id="loading_div"></div>
+                  <button class="waves-effect waves-light btn-large" id="connect_now" style="width: 100%;" >Connect</button>
+              {{/each}}
+             </div>
+
+  {{/if}}
+
+          {{#each show_disablity}}
+           <div class="section visible-lg">
+              <h5>Special disABILITY</h5> 
+              <div class="divider"></div>
+                <p class="margin-top"  style="margin-bottom: 34px; ">
+                 {{#if equals hearing 'Yes'}}
+                 <img src="/uploads/disabilities/ear.svg" style="width: 30px; float: left; margin-top: 5px; margin-right: 20px;"/> 
+                 {{/if}}
+
+                {{#if equals physical 'Yes'}}
+                 <img src="/uploads/disabilities/disabled.svg" style="width: 30px; margin-top: 5px; float: left;   margin-right: 20px;"/>
+                {{/if}}
+
+               {{#if equals speech 'Yes'}}
+                 <img src="http://bitovn.com/feed/images/speech.png" style="width: 30px;float: left; margin-right: 20px;"/> 
+                {{/if}}
+
+                {{#if equals visual 'Yes'}}
+                 <img src="/uploads/disabilities/eye.svg" style="width: 30px; float: left; margin-top: 5px; margin-right: 20px;"/>
+              {{/if}}               
+              </p>
+         </div>
+           {{/each}}   
+       <div class="clearfix"></div>
+
+          <div class="section visible-lg">
+       <p class="font-14"> 
+            <span style="font-size:20px;"><strong>Donate to <!--<br/>--> SN <!--Special Neighborhood--></strong></span> 
+              <br> <br> 
+               <span style="font-size:18px; margin-top:10px !important;">
+                  Consider making a donation <br> to protect and sustain <br>Special Neighborhood</span><br>
+                </p>
+            <!--<button type="button" class="btn btn-md add-skill-btn btn-home bg-diff" data-toggle="modal" data-target="#medidetail43">Donate </button>
+ -->
+               <form style="text-align: center !important;"  action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="Y535F4PNF6BGC">
+              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+              <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+            </form>
+
+
+     
+  </div>
+
+ <div class="section visible-lg">
+  {{> picture_ticker}}
+</div>
+</div>
+
+</div>
+    
+   
+</template>
+
+<!-- <template name="others_profile"> 
+    <div class="col s12 m4 l6">
+          <div class="section">
+              <h5>Heading <span class="pull-right"></span></h5> 
+             <div class="divider"></div>
+              
+           </div>
+
+           <div class="section">
+                <h5>Summary </h5> 
+                    {{#each show_display_summary}} 
+                    <div class="divider"></div>
+                      <p> {{summary}} </p>
+                    {{/each}}
+                  <div class="divider"></div>
+              </div>
+
+           <div class="section">
+                  <h5>Professional Details</h5>  
+              {{#each show_show_profjr}}
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-lg-11 col-md-11 col-xs-12">
+              <h6 class="font18 colo_head_blue">{{company}}</h6>
+              <p  class="font15 p_margin_btom_none">{{title}} | {{start_month}}, {{start_year}} - {{end_month}}, {{end_year}}</p>
+              <p><i class="fa fa-map-marker"></i> {{location}}</p>
+              <p class="p_margin_btom_none colo_head_blue">Skill(s) used: </p>
+              <p>{{skill}} </p>
+              <p class="p_margin_btom_none colo_head_blue">Key Responsibilities: </p>
+              <p>{{key_responsibilities}} </p>
+            </div>
+          </div>
+            {{else}}
+            nothing
+          {{/each}}
+            </div> 
+
+           <div class="section">
+                <h5>Educational Details</h5>  
+            {{#each show_show_education }}
+                <div class="divider"></div>
+                <div class="row">
+                  <div class="col-lg-11 col-md-11 col-xs-12">
+                  <h6 class="font18 colo_head_blue">{{course}}</h6>
+                  <p  class="font15 p_margin_btom_none">{{school}} | 
+                  {{show_score score}}
+                      {{score}}
+
+                </p>
+                  <p>{{edu_start_month}}, {{edu_start_year}} - {{edu_end_month}}, {{edu_end_year}}</p>
+                     </div>
+                <div class="col-lg-1 col-md-1 col-xs-12 pull-right" style="padding-right: 0; text-align: right;">
+                </div>
+              </div>
+                  {{else}}
+                nothing
+              {{/each}}
+                </div>
+
+       
+             <div class="section">
+                  <h5>Achievement</h5>  
+                  <div class="divider"></div>
+                 
+                 {{#each show_display_award}}
+                 
+                  <div class="row">
+                    <div class="col-lg-11 col-md-11 col-xs-12">
+                    <h6 class="font18 colo_head_blue">Achievement ({{type}})
+              </h6>
+                    
+                    <p><i class="fa fa-map-marker"></i> {{location}}</p>
+                    <p class="p_margin_btom_none colo_head_blue">Description: </p>
+                    <p>{{description}}</p>
+                   </div>
+                  <div class="col-lg-1 col-md-1 col-xs-12 pull-right" style="padding-right: 0; text-align: right;"> 
+                  </div>
+                  </div>     
+                 
+                  {{/each}}
+
+                </div>
+
+
+             <div class="section">
+                  <h5>Skill </h5>  
+                  <div class="divider"></div>
+                  <div class="row">
+                 {{#each show_show_skills}} 
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                      <p class="font15 p_margin_btom_none text-center">{{skill_name}}</p>
+                       <p class="text-center"><img src="http://bitovn.com/feed/profile/images/middle.gif" width="130" /></p>
+                       <p>{{last_used}}</p>
+                    </div>
+                    
+                   {{/each}}
+                  </div>
+                </div>
+
+             <div class="section">
+                    <h5>Health Check </h5> 
+                {{#each show_display_health}}
+                <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+                    <div class="col s12 m4 l3"> <p>  Hearing Problem: </p></div>
+                    <div class="col s12 m4 l9"> <p> {{hearing}}</p></div>
+                    <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+                    
+                </div>
+                  
+                  <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+                    <div class="col s12 m4 l3"> <p> Physical Handicap: </p></div>
+                    <div class="col s12 m4 l9"> <p> {{handicap}}</p></div>
+                    <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+                </div>
+                     
+                     <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+                    <div class="col s12 m4 l3"> <p> Speech Issue</p></div>
+                    <div class="col s12 m4 l9"> <p> {{speech}}</p></div>
+                     <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+                </div>
+                     
+                      <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+                    <div class="col s12 m4 l3"> <p> Visually Impaired: </p></div>
+                    <div class="col s12 m4 l9"> <p> {{visual}}</p></div>
+                    <hr style="margin-top: 5px; margin-bottom: 5px;" />   
+                </div>
+                      
+                <div class="row section" style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+                    <div class="col s12 m4 l3"> <p>  Special Note : </p></div>
+                    <div class="col s12 m4 l9"> <p> {{special_note}} </p></div>
+                     <hr style="margin-top: 5px; margin-bottom: 5px;"/>   
+                </div>
+                
+                {{/each}}      
+                  </div>
+    </div>
+    
+  
+
+</template>  -->

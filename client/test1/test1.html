@@ -1,0 +1,112 @@
+<template name="test1">
+<script src="./node_modules/rtcmulticonnection/RTCMultiConnection.js"></script>
+<button id="btn-open-room">Open Room</button>
+<button id="btn-join-room">Join Room</button><hr>
+<div id="user_video"></div> 
+<script src="https://cdn.webrtc-experiment.com/getMediaElement.js"></script>
+<script type="text/javascript">
+var connection = new RTCMultiConnection();
+// this line is VERY_important
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+// connection.socketURL = 'https://bitovn.herokuapp.com:443/';
+// all below lines are optional; however recommended.
+// connection.resources.firebaseio = 'https://webrtc.firebaseIO.com/';
+connection.session = {
+    audio: true,
+    video: true
+};
+
+connection.sdpConstraints.mandatory = {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: true
+};
+
+/*connection.onstream = function(event) {
+    document.body.appendChild(event.mediaElement);
+};
+*/
+ connection.videosContainer = document.getElementById('user_video');
+            connection.onstream = function(event) {
+                var width = parseInt(connection.videosContainer.clientWidth) ;
+                alert(width);
+                var mediaElement = getMediaElement(event.mediaElement, {
+                    title: event.userid,
+                    buttons: ['full-screen'],
+                    width: width,
+                    showOnMouseEnter: false
+                });
+                connection.videosContainer.appendChild(mediaElement);
+                setTimeout(function() {
+                    mediaElement.media.play();
+                }, 5000);
+                mediaElement.id = event.streamid;
+               
+            };
+document.getElementById('btn-open-room').onclick = function() {
+connection.open("predefinedRoomId");
+    this.disabled = true;
+};
+
+document.getElementById('btn-join-room').onclick = function() {
+    this.disabled = true;
+    connection.join("predefinedRoomId");
+};
+/*
+// https://github.com/muaz-khan/RTCMultiConnection#1-link-the-library
+
+// channel-id
+var MODERATOR_CHANNEL_ID = 'ABCDEF-' + window.RMCDefaultChannel; 
+
+var MODERATOR_SESSION_ID = 'XYZ';    // room-id
+var MODERATOR_ID         = 'JKL';    // user-id
+var MODERATOR_SESSION    = {         // media-type
+    audio: true,
+    video: true
+};
+
+var MODERATOR_EXTRA      = {};       // empty extra-data
+
+// moderator
+document.getElementById('open-room').onclick = function() {
+    this.disabled = true;
+
+    var moderator = new RTCMultiConnection(MODERATOR_CHANNEL_ID);
+    moderator.session = MODERATOR_SESSION;
+    moderator.userid = MODERATOR_ID;
+    moderator.extra = MODERATOR_EXTRA;
+
+moderator.sdpConstraints.mandatory = {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: true
+};
+    moderator.open({
+        dontTransmit: true,
+        sessionid: MODERATOR_SESSION_ID
+    });
+};
+
+// participants
+
+
+document.getElementById('join-room').onclick = function() {
+    this.disabled = true;
+    var participants = new RTCMultiConnection(MODERATOR_CHANNEL_ID);
+   
+participants.sdpConstraints.mandatory = {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: true
+};
+ participants.join({
+        sessionid: MODERATOR_SESSION_ID,
+        userid: MODERATOR_ID,
+        extra: MODERATOR_EXTRA,
+        session: MODERATOR_SESSION
+    });
+ 
+};*/
+//};
+</script>
+
+
+
+</template>

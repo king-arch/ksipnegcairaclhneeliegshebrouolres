@@ -1,0 +1,348 @@
+
+<template name="editevent">
+  <head>
+  <title>messanging</title>
+  <style>
+  
+  .cropper-example-lena
+{
+  width:100% !important;
+}
+  </style>
+</head>
+<body>
+  {{> header}}
+  {{> eventedit}}
+ </body>
+</template>
+
+<template name="eventedit">
+  
+{{#each event_details}}
+<div class="page_wh">
+  {{> ticker}}
+  <div class="page_all_white">
+
+        <div class="row ">
+          <div class="col s12 m6 l6"><h5 class="heading_create"> Edit Event</h5> </div>
+          <div class="col s12 m6 l6"><h5> <i class="fa fa-times pull-right clicked_cancel"></i> </h5> </div>
+      </div>
+       <div class="row">
+          <div class="col s12 m12 ll2" style="padding: 0px;">
+             <div class="card" style="padding: 0px; box-shadow: none; margin-bottom: 0px;">
+            <div class="card-image" id="imagebox">
+             
+              <img id="my_image" src={{uploaded_image}} style="height: 300px;"  > 
+
+
+              <input type="hidden" name="cover_image" id="cover_image" value={{uploaded_image}} >
+               <label for="coverimage">
+              <span style="cursor: pointer; padding: 0px;" class="card-title cover_pic_dropdown">
+
+               <!--  <i class="fa fa-camera"></i> -->
+
+<input type="file" id="upload_cover" accept="image/*" style="display:none"/>
+
+<button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  padding: 10px;" ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                                      <ul class="dropdown-menu" role="menu" style="width: 100%; left: -120px !important;">
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" id="cover_image" > Upload</a></li>
+                                                        <li><a href="javascript:void(0)" style="text-align:center;" class="invitation_response" id="remove_cover"> Remove</a></li>
+                                                      </ul>
+              </span></label>
+<!--               <input type="file" name="cover_pic" id="coverimage" style="display:none !important;">
+              <span style="display: none;cursor: pointer;" id="removecoverpic" class="card-title sppan_icons_two"><i class="fa fa-trash sppan_icons_two"></i></span> -->
+  
+<!--             <div style="display: none;" class="card-image" id="divcrop">
+                <img id="my_image2">
+                <span style="cursor: pointer;" id="crop_image" class="card-title sppan_icons_one"><i class="fa fa-crop sppan_icons_one"></i></span>
+            </div>  -->
+
+
+            <input type="hidden" data-target="crop_cover_image" class="btn modal-trigger" id="cover_pic_modal" >
+
+            <div id="crop_cover_image" class="modal modal-fixed-footer">
+               <div class="modal-content">
+                  <h4>Crop cover Pic</h4>
+                  <div id="divcrop_cover"> <img id="my_image_cover"  > </div>
+               </div>
+               <div class="modal-footer"> 
+                  <button class="modal-action modal-close waves-effect waves-green btn-flat " id="crop_cover_image_selection" >Crop</button>
+               </div>
+            </div>
+
+          </div>
+
+          </div>
+          </div>
+      </div>
+      
+  <div class="row">
+      <div class="input-field col s12 m12 l12">
+              <p class="heading_create_inside">Event Name</p>
+  
+ <input value="{{event_name}}" type="text" name="event_name" id="event_name" class="validate frmt_inpt">         <!--      <input value="" id="grp_title" type="text" class="validate frmt_inpt"> -->
+              
+            </div>
+  </div>
+  <div class="row">
+            <div class="input-field col s12 m12 l6">
+              <p class="heading_create_inside">Location</p>
+              <form action="#">
+              <input value="{{event_location}}" id="location"  type="text" class="validate frmt_inpt">
+              <input name="lat" type="hidden" id="lat" value="{{event_lat}}">
+                  <input name="lng" type="hidden" id="long" value="{{event_long}}">
+                  <input name="country" type="hidden" id="country" value="">
+              </form>
+              
+            </div>
+            <div class="input-field col s12 m12 l6"><p class="heading_create_inside">Event Type</p>
+               
+               
+                     <div id="edit_edu_start_month" class="ui selection dropdown frmt_inpt">
+                                           <input type="hidden" name="eventtype" id="eventtype"/>
+                                           <div class="text">Select Event Type</div>
+                                           <i class="dropdown icon"></i>
+                                           <div class="menu ">
+                                              <div class="item" data-value="Academic">Academic</div>
+                                               <div class="item" data-value="Achievement">Achievement</div>
+                                               <div class="item" data-value="Admission">Admission</div>
+                                               <div class="item" data-value="Birthday">Birthday</div>
+                                               <div class="item" data-value="Celebration">Celebration</div>
+                                               <div class="item" data-value="Cultural">Cultural</div>
+                                               <div class="item" data-value="Examination">Examination</div>
+                                               <div class="item" data-value="Founding Day">Founding Day</div>
+                                               <div class="item" data-value="Holiday">Holiday</div>
+                                               <div class="item" data-value="Meeting">Meeting</div>
+                                               <div class="item" data-value="Personal">Personal</div>
+                                               <div class="item" data-value="Placement">Placement</div>
+                                               <div class="item" data-value="Professional">Professional</div>
+                                               <div class="item" data-value="Recreation">Recreation</div>
+                                               <div class="item" data-value="Sports">Sports</div>
+                                               <div class="item" data-value="Seminar">Seminar</div>
+                                               <div class="item" data-value="Training">Training</div>
+                                               <div class="item" data-value="Trip">Trip</div>
+                                               <div class="item" data-value="Workshop">Workshop</div>
+                                               <div class="item" data-value="Others">Others</div>
+                                            </div>
+                    
+
+            </div>
+
+            </div>
+  
+   </div>
+        <script type="text/javascript">
+          
+$("#edit_edu_start_month").dropdown("set selected","");
+        </script>
+    
+ <div class="row">
+            <div class="input-field col s12 m12 l6">
+              <p class="heading_create_inside">From Date</p>
+               <input type="text" class="datepicker frmt_inpt" value="{{event_start_date}}" id="start_date" name="start_date">
+            </div>
+            <div class="input-field col s12 m12 l6"><p class="heading_create_inside">To Date</p>
+               
+                      <input type="text" value="{{event_end_date}}" name="end_date" id="end_date" class="datepicker frmt_inpt">
+
+            </div>
+  
+   </div>
+     
+  <div class="row">
+      <div class="input-field col s12">
+         <p class="heading_create_inside">Description</p>
+          <textarea name="description" id="description" class="materialize-textarea frmt_inpt" placeholder="Description">{{description}}</textarea>
+      </div>
+  </div>
+  <div class="row" style="display: none" >
+      <div class="col s12 m12 l12">
+         <p class="heading_create_inside">Access Type</p>
+          <div class="row cr_blg">  
+                  <div class="col-md-3">
+                                      <p class="title_p_form heading_create_inside ">Send evite to</p>
+                    <input name="event_invite" checked='{{#if equals invite_type "Public"}} checked {{/if}}'  value="Public" id="invite_all" class="disabled css-checkbox" type="radio" >
+                    <label for="invite_all" class="css-label radGroup2 radio_btn">Public (Visible to everyone)</label>
+                    <div id="invite_friend_input" style="display: block; margin-top: 10px;">
+    <!--<input type="text" id="invite_friend_ids" name="invite_friend_ids" style="width:544px; height:31px;" value="">-->
+                     </div>
+                                       </div>
+                  
+                  <div class="col-md-6">
+                                  
+                  <p class="title_p_form">&nbsp;</p>
+                    <input id="friends_name" value="null" type="hidden">   
+                      <input name="event_invite" checked='{{#if equals invite_type "Private"}}checked{{/if}}' id="invite_friends" value="invite_friends" class="disabled css-checkbox" type="radio">   
+                      <label for="invite_friends" class="css-label radGroup3 radio_btn">Private (Only by invite)<br>   
+                                       <!-- <a data-toggle="modal" href="#" data-target="#invited"><span style="font-size:12px; color:#338ea7;">15 invited</span></a></label>-->
+                                       
+                                          <a id="invitemem" style='{{#if equals invite_type "Public"}}display:none; {{/if}}' class="waves-effect waves-light modal-trigger select_invitees" href="#modal1">+ Select invitees</a>  
+                                                             
+                                    </label>
+                                      <input type="hidden" name="emembers" id="emembers">
+                                      <input type="hidden" id="hidden_invite_list" value={{invite_list}} >
+                                    </div>
+              
+                                </div>
+                                  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+        <div class="modal-header modal_header_create_event">
+      <p style="margin-bottom: 0px;">Select invitees</p>
+
+        </div>
+    <div class="modal-content">
+       <ul class="collection">
+
+     {{#each frientlist}}
+     {{#each userinfo}}
+     
+    <li class="collection-item avatar" style="margin-bottom: 10px;">
+      <img src="{{profile_pic}}" alt="" style="width: 50px; height: 50px;" class="circle">
+      <span class="title">{{name}}</span>
+
+      <p>{{headline}}
+       <span style="float: right;">
+      <input type="checkbox" class="inviteuser" checked="{{#if(evetmem)}}checked{{/if}}" name="inviteuser[]" value="{{user_id}}" id="{{_id}}" />
+      <label for="{{_id}}"></label>
+    </span>
+      </p>
+     
+    </li>
+    
+    {{/each}}
+    {{else}}
+       <p> You have already invited Everyone </p>
+    {{/each}}   
+
+
+  </ul>
+
+    </div>
+    <div class="modal-footer">
+      <a href="#!" id="agreeto" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+<script type="text/javascript">
+ $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+     
+</script>
+      </div>
+  </div>
+ 
+ <div class="row">
+    <div class="col s12 m12 l8"> &nbsp;  </div>
+        <div class="col s12 m12 l2"><a class="waves-effect waves-light save_button" id="save_event" > Save</a> </div>
+
+    <div class="col s12 m12 l2"> <a class="waves-effect waves-light cncl_btm clicked_cancel" >Cancel</a> </div>
+  </div>
+
+  <script type="text/javascript">
+    $('.datepicker').pickadate({
+      min:new Date(),
+     // format:"DD-MM-YY",
+      format: 'yyyy-mm-dd',
+    formatSubmit: 'yyyy-mm-dd',
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('select').material_select();
+  });
+  </script>
+</div>
+</div>
+{{/each}}
+</template>
+<template name="new_header3">
+  
+  <nav class="navbar navbar-inverse navbar-static-top example6">
+
+   <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar6">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand text-hide" href="http://disputebills.com">Brand Text
+        </a>
+      </div>
+      <div id="navbar6" class="navbar-collapse collapse">
+         <ul class="nav navbar-nav navbar-left">
+<li><div class="ui right aligned category search">
+  <div class="ui icon input">
+    <input class="prompt" placeholder="Search animals..." type="text">
+  </div>
+  <div class="results"></div>
+</div></li>
+         </ul>
+        <ul class="nav navbar-nav navbar-right">
+          
+   
+          <li class="active"><a href="#">Home</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Collaborate <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Connection</a></li>
+              <li><a href="#">Group</a></li>
+              <li><a href="#">Event</a></li>
+              </ul>
+          </li>
+ <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Interest <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Blog</a></li>
+              
+              </ul>
+          </li>
+
+
+
+
+          <li><a href="#">Map</a></li>
+          <li><a href="#">Messaging</a></li>
+          <li><a href="#">Notification</a></li>
+            <li><a href="#">A <sup><i class="fa fa-plus"></i></sup></a></li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Me </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Setting</a></li>
+              <li><a href="#">Logout</a></li>
+              </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+ 
+  </nav>
+
+<!-- <script type="text/javascript">
+   
+  $('.datepicker').pickadate({
+    min:new Date(2018, 2, 16),
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    today: 'Today',
+    clear: 'Clear',
+    close: 'Ok',
+    closeOnSelect: false // Close upon selecting a date,
+  });
+        
+ </script> -->
+
+
+ </template>
+ 
