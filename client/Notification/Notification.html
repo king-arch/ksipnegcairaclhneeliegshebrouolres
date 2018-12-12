@@ -26,7 +26,13 @@
               <div class="section_noti ui feed margin_bottom section" style="margin-bottom: 0px !important;">
 
 <!-- *************** event notifications starts *******************   -->
-
+                {{#if equals notification_type 'abusive_content'}}
+                   <div class="event" style="margin-bottom: 0px !important;">
+                        <div class="label"> 
+                          Admin Removed your post with abusive content
+                        </div>
+                      </div>
+                {{/if}}
                     {{#if equals notification_type 'event_join'}}
                       <div class="event" style="margin-bottom: 0px !important;">
                         <div class="label"> 

@@ -361,8 +361,8 @@ window.onclick = function(event) {
   <div class="page_wh">
     {{> ticker}}
     <div class="row">
-      
-        <ul class="nav nav-pills nav-stacked col m3 l3 s12 left_row hidden-md hidden-xs visible-lg" id="group_container">
+      <div class="col m3 l3 s12">
+        <ul class="nav nav-pills nav-stacked  left_row hidden-md hidden-xs visible-lg" id="group_container">
           <h3>Group</h3>
           <li><p id="creategroup" class="create_event_btn">CREATE GROUP</p></li>
          
@@ -380,14 +380,9 @@ window.onclick = function(event) {
                <a class="btn-floating btn-large red floating_btn_all" href="/creategroup" style="margin-bottom:170% !important; width: 100px !important; height: 100px !important;">
                <i class="fa fa-plus fa-4x" style="font-size: 40px !important; line-height: 103px !important;"></i>
                </a>
-               <!--<ul>
-                  <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-                  <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-                  <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-                  <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-               </ul> -->
+               
             </div>
-
+          </div>
 
         <div class="col m12 l9 s12 tab-content right_row">
                 <div class="tab-pane active" id="allgrp">

@@ -37,6 +37,9 @@ Meteor.startup(function() {
 
 setTimeout(function(){ 
     var logged_in_User =  Session.get("userId");
+
+    Meteor.subscribe("user_info_based_on_id",logged_in_User);
+
     var result = UserInfo.find({user_id: logged_in_User}).fetch();
 if(result[0]){
     if(result[0].theme_value == '1'){
@@ -87,7 +90,10 @@ Template.eventcreate.helpers({
 	frientlist:function()
 	{
 		var userid=Session.get('userId');
-		 var friends=FriendRequest.find({ 
+
+    Meteor.subscribe("all_user_friends_in_messaging",userid);
+
+		 var friends= FriendRequest.find({ 
 				        $and: [ { $or: 
 				          [ { 
 				            sent_to: userid 
@@ -98,6 +104,7 @@ Template.eventcreate.helpers({
 				          { $and: 
 				            [ { req_status: 1 }] 
 				             } ] }).fetch();
+
 		 return friends;
 	},
 
@@ -131,6 +138,8 @@ Template.eventcreate.helpers({
 			var sent_too=this.sent_by;
 		}
 		//alert(sent_too);
+    Meteor.subscribe("user_info_based_on_id",sent_too);
+
 		return UserInfo.find({user_id:sent_too}).fetch();
 	},
 });
@@ -166,8 +175,15 @@ Template.eventcreate.events({
 
 	'click #save_event':function()
 	{
-		var ename=$("#event_name").val();
-		if(ename=='')
+		var event_name = $("#event_name").val();
+    var location = $("#location").val();
+    var eventtype = $("#eventtype").val();
+
+    var  start_date = Session.get("changed_format_date_start_date");
+    var end_date = Session.get("changed_format_date_end_date");
+    var description = $("#description").val();
+
+    if(event_name == null || event_name == "")
 		{
 			$("#event_name").addClass('emptyfield');
 			$("#event_name").focus();
@@ -176,8 +192,8 @@ Template.eventcreate.events({
 		{
 			$("#event_name").removeClass('emptyfield');
 		}
-		var location=$("#location").val();
-		if(location=='')
+		
+		if(location == null || location == "")
 		{
 			$("#location").addClass('emptyfield');
 			$("#location").focus();
@@ -186,18 +202,19 @@ Template.eventcreate.events({
 		{
 			$("#location").removeClass('emptyfield');
 		}
-		var eventtype=$("#eventtype").val();
-		if(eventtype=='')
+
+		
+		if(eventtype == null || eventtype == "")
 		{
-			$("#eventtype").addClass('emptyfield');
-			$("#eventtype").focus();
+			$("#select_event").addClass('emptyfield');
+			$("#select_event").focus();
 			return false;
 		}else
 		{
-			$("#eventtype").removeClass('emptyfield');
+			$("#select_event").removeClass('emptyfield');
 		}
-		var start_date = Session.get("changed_format_date_start_date");
-		if(start_date=='')
+		
+		if(start_date == null || start_date == "")
 		{
 			$("#start_date").addClass('emptyfield');
 			$("#start_date").focus();
@@ -206,8 +223,8 @@ Template.eventcreate.events({
 		{
 			$("#start_date").removeClass('emptyfield');
 		}
-		var end_date = Session.get("changed_format_date_end_date");
-		if(end_date=='')
+
+		if(end_date == null || end_date == "")
 		{
 			$("#end_date").addClass('emptyfield');
 			$("#end_date").focus();
@@ -221,8 +238,8 @@ Template.eventcreate.events({
 		{
 			$("#end_date").removeClass('emptyfield');
 		} 
-		var description=$("#description").val();	
-		if(description=='')
+
+		if(description == null || description == "")
 		{
 			$("#description").addClass('emptyfield');
 			$("#description").focus();
@@ -231,7 +248,7 @@ Template.eventcreate.events({
 		{
 			$("#description").removeClass('emptyfield');
 		}
-		
+
 		var userid=Session.get('userId');
 		var cover_image=$("#cover_image").val();
 		var lat=$("#lat").val();
@@ -249,10 +266,12 @@ Template.eventcreate.events({
 		var event_invite =$("input[name='event_invite']:checked").val();
 		if(event_invite == 'invite_all'){
 					var sent_to = Session.get("userId");
+          Meteor.subscribe("all_user_friends_in_messaging",sent_to);
+
 	    var freinds = FriendRequest.find({ $or: [ { $and: [ { sent_to: sent_to },{ req_status: 1 } ] }, { $and: [{ sent_by: sent_to },{ req_status: 1 } ] } ] }).fetch();
 	 	
-	 	console.log('friends');
-	 	console.log(freinds);
+	 	// console.log('friends');
+	 	// console.log(freinds);
 
 	 	var invite_list = 0
 	 	if(freinds.length){
@@ -294,9 +313,10 @@ Template.eventcreate.events({
 		if(invite_type == 'Public'){
 			invite_list = "";
 		}
-		
+		// alert('cool');
+// return false;
 
-		 Meteor.call('save_event',event_id,userid,ename,location,eventtype,start_date,end_date,cover_image,lat,long,description,invite_list,invite_type,function(error,result){
+		 Meteor.call('save_event',event_id,userid,event_name,location,eventtype,start_date,end_date,cover_image,lat,long,description,invite_list,invite_type,function(error,result){
               if(error){
                 console.log("Some error occured.");
               }else{
@@ -417,7 +437,7 @@ function upload_image(e,template){
    var base64data="";
    reader.readAsDataURL(file);
    reader.onload = function () {
-   console.log(reader.result);
+   // console.log(reader.result);
    base64data = reader.result;
 
         var settings = {
@@ -434,7 +454,7 @@ function upload_image(e,template){
 }
 // alert(base64data);
 $.ajax(settings).done(function (response) {
-  console.log(response);
+  // console.log(response);
     $("#loading_div").addClass("loader_visiblity_block");
   var new_image_url = 'http://beta.bitovn.com/testing/' + response.substr(1, response.length);
   // console.log(new_image_url);
@@ -481,7 +501,7 @@ function upload_cover_pic(e,template){
    var base64data="";
    reader.readAsDataURL(file);
    reader.onload = function () {
-   console.log(reader.result);
+   // console.log(reader.result);
    base64data = reader.result;
 
 //         var settings = {
@@ -554,18 +574,44 @@ function crop_image_cover(){
    // event.preventDefault();
    // alert('vlll');
   var croppedPhoto = $('#my_image_cover').cropper('getCroppedCanvas');
-    console.log(croppedPhoto);
+    // console.log(croppedPhoto);
     // croppedPhoto.toBlob(function (blob) {
 var dataURL = croppedPhoto.toDataURL('image/jpeg', 0.5);
 var blob = dataURItoBlob(dataURL);
-console.log(blob);
-var file = new FormData(document.forms[0]);
-file.append("canvasImage", blob);
-// alert(dataURL);
-base64data = dataURL;
-console.log(base64data);
-  Session.setPersistent("imagePath_gp_create_event",base64data);
-  
+// console.log(blob);
+// var file = new FormData(document.forms[0]);
+// file.append("canvasImage", blob);
+
+var form = new FormData();
+form.append("files", blob);
+
+var uploading_url = "https://specialneighborhood.com/upload_files";
+
+var settings = {
+ "async": true,
+ "crossDomain": true,
+ "url": uploading_url,
+ "method": "POST",
+ "headers": {
+   "cache-control": "no-cache"
+ },
+ "processData": false,
+ "contentType": false,
+ "mimeType": "multipart/form-data",
+ "data": form
+}
+
+$.ajax(settings).done(function (response){
+ var image_url ="http://52.66.153.82:4300/files/"+response;
+ console.log(image_url);
+      // alert(image_url);
+      Session.set("imagePath_gp_create_event",image_url);
+      
+         $("#loader_class").hide();
+         $("#post_image").attr("src",image_url);
+});
+
+  // }
 //        var settings = {
 //   "async": true,
 //   "crossDomain": true,
@@ -641,7 +687,6 @@ function dataURItoBlob(dataURI) {
         byteString = atob(dataURI.split(',')[1]);
     else
         byteString = unescape(dataURI.split(',')[1]);
-
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
 
@@ -650,6 +695,5 @@ function dataURItoBlob(dataURI) {
     for (var i = 0; i < byteString.length; i++) {
         ia[i] = byteString.charCodeAt(i);
     }
-
     return new Blob([ia], {type:mimeString});
 }

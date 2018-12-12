@@ -15,15 +15,14 @@ var ads_listing;
 var ads_listing_picture;
 var ads_listing_ticker;
 
- Template.ticker.onDestroyed(function(){
-  ads_listing_ticker.stop();
- });
-
+ // Template.ticker.onDestroyed(function(){
+ //  ads_listing_ticker.stop();
+ // });
 
 var interval_ticker;
 
-
 Template.ticker.onDestroyed(function(){
+    ads_listing_ticker.stop();
    clearInterval(interval_ticker);
 });
 
@@ -35,6 +34,7 @@ function tick() {
         $(this).appendTo($('#ticker')).slideDown();
     });
 }
+
 interval_ticker = setInterval(function() {
     tick()
 }, 5000);	
@@ -131,9 +131,8 @@ var str2 = str.split("-").join(" ");
 
 Template.picture_ticker.helpers({
 
+	change_picture_ads(){ 
 
-	change_picture_ads(){
-    
     var mydate=new Date();
     str=moment(mydate).format('YYYY-MM-DD');
     // console.log('str: '+str);

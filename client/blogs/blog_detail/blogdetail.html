@@ -1,10 +1,8 @@
 
 <template name="blogdetail">
    {{> header}}
-  <div class="row page_wh"> 
     
     {{> blogdetails}}
-  </div>
 
 
 
@@ -12,7 +10,7 @@
 
 <template name="blogdetails"> 
   {{#each detailed_blog_array}}
-     <div class="page_wh">
+     <div class="row page_wh">
         {{> ticker}}
               <div class="row">
                       <div class="col m12 l12 s12 top_row row_margin_btn" style="padding: 0px !important;"> 

@@ -345,81 +345,43 @@ function crop_image_cover(){
     // croppedPhoto.toBlob(function (blob) {
 var dataURL = croppedPhoto.toDataURL('image/jpeg', 0.5);
 var blob = dataURItoBlob(dataURL);
-console.log(blob);
-var file = new FormData(document.forms[0]);
-file.append("canvasImage", blob);
-// alert(dataURL);
-base64data = dataURL;
-console.log(base64data);
-  Session.setPersistent("imagePath_gp_create_group",base64data);
+// console.log(blob);
+// var file = new FormData(document.forms[0]);
+// file.append("canvasImage", blob);
+// // alert(dataURL);
+// base64data = dataURL;
+// console.log(base64data);
+//   Session.setPersistent("imagePath_gp_create_group",base64data);
 
-  
-//        var settings = {
-//   "async": true,
-//   "crossDomain": true,
-//   "url": "http://beta.bitovn.com/testing/image_upload.php",
-//   "method": "POST",
-//   "headers": {
-//     "content-type": "application/x-www-form-urlencoded"
-//   },
-//   "data": {
-//     "image": base64data,
-//   }
-// }
-// // alert(base64data);
-// $.ajax(settings).done(function (response) {
-//   console.log(response);
-//   // alert(response);
-//   var imagePath = 'http://beta.bitovn.com/testing/' + response.substr(1, response.length);
-//   console.log(imagePath);
-//   Session.setPersistent("imagePath_gp_create_group",imagePath);
+//******************************* Start API code**************************
+var form = new FormData();
+form.append("files", blob);
 
-//      var user_id = Session.get("userId");
-//      // var user_id = Session.get("userId");
-//      // alert(user_id +' & ' +imagePath);
+var uploading_url = "https://specialneighborhood.com/upload_files";
 
-//    // Meteor.call("upload_cover_image",user_id,imagePath,function(error,result){
-//    //      if(error){
-//    //        console.log("Error");
-//    //      }else{
-//    //          console.log("cover Pic Changed");
-//    //           // toastr.success(Sucess, cover Pic Changed);
-//            $('#divcrop_cover').removeClass('cropper-example-lena');
-//         // }
-//         template.currentUpload.set(false);
-//    //  });
+var settings = {
+ "async": true,
+ "crossDomain": true,
+ "url": uploading_url,
+ "method": "POST",
+ "headers": {
+   "cache-control": "no-cache"
+ },
+ "processData": false,
+ "contentType": false,
+ "mimeType": "multipart/form-data",
+ "data": form
+}
 
-// });
-//         var uploadInstance = Images.insert({
-//                       file: file,
-//                         streams: 'dynamic',
-//                           chunkSize: 'dynamic'
-//                     });
-//         // alert(file);
+$.ajax(settings).done(function (response){
+ var image_url ="http://52.66.153.82:4300/files/"+response;
+ console.log(image_url);
+      // alert(image_url);
+      Session.setPersistent("imagePath_gp_create_group",image_url);
+});
 
-//         uploadInstance.on('start', function() {
-//           // template.currentUpload.set(this);
-//         });
-//         uploadInstance.on('end', function(error, fileObj) {
-//           // alert('3');
-//           if (error) {
-//              alert("Error");
-//             window.alert('Error during upload: ' + error.reason);
-//           } else {
-//             var new_cover_image_url = Session.get("imagePath_gp_create_group");
-//              var imagePath = new_cover_image_url;
+//******************************* End API code**************************
 
-//              $("#crop_image").hide();
-//              $("#divcrop").hide();
-//              $('#divcrop').removeClass('cropper-example-lena');
-//              $("#defaultbox").show();
-//              $("#my_image").attr("src",imagePath);             
-//             $("#my_image_cover").attr("src","");  
-//             $("#my_image_cover").attr("srcset","");  
-//              $("#my_image2").attr("src","");
-   
-//           }
-//         });
 }
 
 function dataURItoBlob(dataURI) {

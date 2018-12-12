@@ -25,6 +25,7 @@ Template.Group_member.onCreated(function Group_memberOnCreated() {
 
 setTimeout(function(){ 
     var logged_in_User =  Session.get("userId");
+        Meteor.subscribe("user_info_based_on_id",logged_in_User);
     var result = UserInfo.find({user_id: logged_in_User}).fetch();
 if(result[0]){
     if(result[0].theme_value == '1'){
@@ -46,6 +47,7 @@ if(result[0]){
         $('.page_wh').removeClass("make_bg_2");
         $('.page_wh').removeClass("body_bg");
      }
+
   else  if(result[0].theme_value == '3'){
        $('body').addClass("body_bg");
        $('body').removeClass("make_bg_2");
@@ -81,6 +83,7 @@ Template.Group_member.helpers({
 
      ignore(){
 	 var sent_to = Session.get("userId");
+	     Meteor.subscribe("all_friend_users");
 	 var count2 = FriendRequest.find({sent_to: sent_to,req_status: 2}).count();
 	 return count2;
 	}, 
@@ -103,6 +106,8 @@ Template.Group_member.helpers({
 	 show_pending(){
 	 var sent_to = Session.get("userId");
 	 var grp_id = Session.get("grp_id_for_Group_member");
+
+	     Meteor.subscribe("group_information_based_on_group_id",grp_id);
 	 var show_pending = UserGroup.find({grp_id: grp_id}).fetch();
 	 var length = show_pending.length;
 	 // //alert('Length: '+length);
@@ -114,12 +119,14 @@ Template.Group_member.helpers({
 	 show_pending2(){
 	 var use_id = this.requestee_list; 
 	 // //alert(use_id);	
+	         Meteor.subscribe("user_info_based_on_id",use_id);
 	 var pending_details = UserInfo.find({user_id: use_id}).fetch();
      return pending_details;
 	},
 
 	 show_ignored(){
 	 var sent_to = Session.get("userId");
+	 	     Meteor.subscribe("all_friend_users");
 	 var show_pending = FriendRequest.find({sent_to: sent_to,req_status: 2}).fetch();
 	 var length = show_pending.length;
 	 // //alert('Length: '+length);
@@ -131,6 +138,8 @@ Template.Group_member.helpers({
 	 show_ignored2(){
 	
 	 var use_id = this.sent_by; 
+	 	         Meteor.subscribe("user_info_based_on_id",use_id);
+
 	 var pending_details = UserInfo.find({user_id: use_id}).fetch();
 	 return pending_details;
 	
@@ -142,6 +151,7 @@ Template.Group_member.helpers({
 
 	 // //alert(sent_to); 
 	 // db.friend.find({sent_to: 'user_1224544',req_status: 0}).pretty()
+	 	     Meteor.subscribe("all_friend_users");
 	 var show_pending = FriendRequest.find({ $or: [ { $and: [ { sent_to: sent_to },{ req_status: 1 } ] }, { $and: [{ sent_by: sent_to },{ req_status: 1 } ] } ] }).fetch();
 	 // var show_pending = FriendRequest.find({sent_to: sent_to,req_status: 1}).fetch();
 	 var length = show_pending.length;
@@ -164,6 +174,7 @@ Template.Group_member.helpers({
 		var sent_by = this.user_id;
 	 // //alert(sent_to); 
 	 // db.friend.find({sent_to: 'user_1224544',req_status: 0}).pretty()
+	 	     Meteor.subscribe("all_friend_users");
 	 var show_pending = FriendRequest.find({ $or: [ { $and: [ { sent_to: sent_to },{sent_by: sent_by},{ req_status: 1 } ] }, { $and: [{ sent_by: sent_to },{sent_to: sent_by},{ req_status: 1 } ] } ] }).fetch();
 	 // var show_pending = FriendRequest.find({sent_to: sent_to,req_status: 1}).fetch();
 	 var length = show_pending.length;
@@ -182,6 +193,7 @@ Template.Group_member.helpers({
      show_requests(){
 
 	 var grp_id = Session.get("grp_id_for_Group_member");
+	     Meteor.subscribe("group_information_based_on_group_id",grp_id);
 	 var head = UserGroup.find({grp_id: grp_id}).fetch();
 	 // var accepted_users = head[0].invite_accepted;
 	 if(head[0]){
@@ -190,6 +202,7 @@ Template.Group_member.helpers({
             var users_array = accepted_users.split(",");	 
      var all_users= new Array();
      for(var i=0;i<users_array.length;i++){
+     	 	         Meteor.subscribe("user_info_based_on_id",users_array[i]);
 	    var users = UserInfo.find({"user_id":users_array[i]}).fetch();
 	    all_users.push(users[0]);
      }
@@ -219,6 +232,7 @@ Template.Group_member.helpers({
      show_group_members(){
 
 	 var grp_id = Session.get("grp_id_for_Group_member");
+	      Meteor.subscribe("group_information_based_on_group_id",grp_id);
 	 var head = UserGroup.find({grp_id: grp_id}).fetch();
 	 var accepted_users = head[0].invite_accepted;
 	 // var accepted_users = head[0].requestee_list;
@@ -226,6 +240,7 @@ Template.Group_member.helpers({
             var users_array = accepted_users.split(",");	 
      var all_users= new Array();
      for(var i=0;i<users_array.length;i++){
+     	     	 	         Meteor.subscribe("user_info_based_on_id",users_array[i]);
 	    var users = UserInfo.find({"user_id":users_array[i]}).fetch();
 	    all_users.push(users[0]);
      }	
@@ -332,6 +347,7 @@ Template.Group_member.events({
 	 var sent_by = this.user_id;
 	 var sent_to = Session.get("userId");
 	 // //alert(userId);
+    Meteor.subscribe("all_friend_users");
 	 var show_button = FriendRequest.find({ sent_to: sent_to , sent_by: sent_by , req_status: 0 }).fetch();
       // var length = show_button.length;
       var req_id = show_button[0].req_id;
@@ -376,6 +392,7 @@ Template.Group_member.events({
 	 var logged_in_user = Session.get("userId");
 	 var check_user_id = this.user_id;
 
+    Meteor.subscribe("all_friend_users");
 	 var result = FriendRequest.find({ $or: [ { $and: [ { sent_to: logged_in_user },{ sent_by: check_user_id },{ req_status: 1 } ] }, { $and: [{ sent_by: logged_in_user },{ sent_to: check_user_id },{ req_status: 1 } ] } ] }).fetch();
 	 // var length = show_button.length;
 	 

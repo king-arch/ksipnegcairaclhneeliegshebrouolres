@@ -1,5 +1,3 @@
-
-
 <template name="hub">
    <body class="body_bg">
       {{> header}}
@@ -11,7 +9,6 @@
       </div>
    </body>
 </template>
-
 <template name="hub_left">
    <div class="col s12 m3 l3 visible-lg sidenav side_bar_hub" >
       <div class="section">
@@ -94,7 +91,6 @@
       </div>
    </div>
 </template>
-
 <template name="hub_center">
    <a class="waves-light modal-trigger" href="#heading_modal" id="edit_1"></a>
    <div class="col s12 m12 l6 main mrgn_fix" id="parent_container">
@@ -167,7 +163,7 @@
                <div class="content width_hub_content">
                   <div class="summary text">
                      <a class="user"> <span class="pointer  redirect_to_profile">{{name}}</span> </a> created an Event 
-                      <a class="user" href="{{convert_event_post_id_to_base_64 event_id}}">{{event_name}}</a> 
+                     <a class="user" href="{{convert_event_post_id_to_base_64 event_id}}">{{event_name}}</a> 
                      <div class="date">
                         {{changeDateFormat event_start_date}}
                      </div>
@@ -190,7 +186,6 @@
             <!-- {{/each}} -->
          </div>
          {{/each}}
-         
          {{else if equals post_type 'image'}} 
          <div class="ui feed margin_bottom section">
             <div class="event">
@@ -220,10 +215,20 @@
                      </ul>
                   </div>
                </span>
+               {{else}}
+               <span class="card-title pull-right" >
+                  <div class="btn-group show-on-hover" >
+                     <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                     <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                        <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_post_abuse" id="{{../post_id}}" > Report as abuse</a></li>
+                     </ul>
+                  </div>
+               </span>
                {{/if}}
                {{/each}}
             </div>
             <div class="summary new_headline_hub_para" >
+               {{#if check_for_abusive_comment_id post_id}}
                <p class="h5_hub_para" id="visible_hub_post_{{post_id}}" >
                   {{#if check_summary_for_br_tag}}
                   {{#each BreakAsArrayfull}}
@@ -244,9 +249,13 @@
                {{#if check_for_edited comment_id}}
                (Edited) 
                {{/if}}
+               {{else}}
+               <span class="comment_txt pull-left">This content has been marked as abused</span>
+               {{/if}}
             </div>
             <hr class="hr_mrgin" />
             <div class="meta new_headline_hub_like">
+               {{#if check_for_abusive_comment_id post_id}}
                {{#if equals check_for_user_already_liked 'Like'}} 
                <a class="like like_event pointer" > Like  </a>   <span><a class="modal_kholo get_all_liked_users">({{total_liked_on_post post_id}})</a></span>
                &nbsp;  &nbsp;
@@ -254,16 +263,17 @@
                <a class="like like_event pointer"> Liked </a><span><a class="modal_kholo get_all_liked_users">({{total_liked_on_post post_id}})</a></span> &nbsp;  &nbsp;
                {{/if}}
                <a class="like comment_on_post_lvl_0 pointer"  > Comment ({{fetch_count_total_level_zero_comments post_id}}) </a>
-           
+               {{else}}
+               <div class="clearfix"></div>
+               {{/if}}
             </div>
-            <div class="ui comments"  >
-          
+            <div class="ui comments"   >
                {{#if equals check_for_load_more_comments "Previous comments"}}
                <a href="#" id="load_more_comments" class=" load_more_comments text h5_hub_para">{{check_for_load_more_comments}}</a>
                {{/if}}
-               <div class="comment">
+               <div class="comment" >
                   {{#each get_all_commented_users_information}}
-                   <div style="margin: 10px 0px !important;" class="parent_div">
+                  <div style="margin: 10px 0px !important;" class="parent_div">
                      <a class="avatar " >
                      <img src="{{get_commentator_profile_pic comment_by}}" class="pointer redirect_to_profile_on_nested_comments width_hub_comment_dp">
                      </a>
@@ -274,13 +284,18 @@
                            </span>
                         </div>
                         <br/>
-                        <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px; ">
+                        <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px;">
+                           {{#if check_for_abusive_comment_id comment_id}}
                            <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">{{comment_txt}} 
-                           <span class="metadata reply">{{#if check_for_edited comment_id}}
+                           <span class="metadata reply">
+                           {{#if check_for_edited comment_id}} 
                            (Edited) 
                            {{/if}}
                            </span>
                            </span>
+                           {{else}}
+                           <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">This content has been marked as abused</span>
+                           {{/if}}
                            {{#if check_if_commented_by_is_user comment_by }}
                            <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
                               <div class="btn-group show-on-hover" >
@@ -292,14 +307,26 @@
                                  </ul>
                               </div>
                            </span>
+                           {{else}}
+                           <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+                              <div class="btn-group show-on-hover" >
+                                 <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                 <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_comment_as_abuse" id="{{comment_id}}" > Report as abuse</a></li>
+                                 </ul>
+                              </div>
+                           </span>
                            {{/if}}
-                           <span><textarea data-toggle="modal" class="loader_visiblity_block hidden_comment" 
+                           <span>
+                           <textarea data-toggle="modal" class="loader_visiblity_block hidden_comment" 
                               value={{comment_txt}}  id="hidden_comment_{{comment_id}}"
-                              data-target="#modalhubtop" resize="none" placeholder="Edit ..." style="    padding: 5px;
+                              data-target="#modalhubtop" resize="none" placeholder="Edit ..." style="padding: 5px;
                               border: 1px solid #e4e4e4;
-                              border-radius: 5px;" ></textarea></span>
+                              border-radius: 5px;" ></textarea>
+                           </span>
                         </div>
                         <div class="actions">
+                           {{#if check_for_abusive_comment_id comment_id}}
                            {{#if equals check_for_user_liked_on_level_one_comments 'Like'}} 
                            <a class="reply like_comment_level_1" id="like_child_1_{{comment_id}}">Like </a> 
                            <span><a class="modal_kholo2  reply get_all_liked_users" href="javascript:void(0)">({{count_for_user_liked_on_level_one_comments}})</a></span> &nbsp; &nbsp;
@@ -313,6 +340,7 @@
                            ({{show_comment_reply_count}})
                            </span>
                            </a>
+                           {{/if}}
                         </div>
                      </div>
                   </div>
@@ -327,13 +355,17 @@
                            <div class="metadata">
                               <span class="reply date">{{calculate_time_difference createdAt }}</span>
                            </div>
-                           <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px; margin-top: -6px;">
+                           <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px;">
+                              {{#if check_for_abusive_comment_id comment_id}}
                               <span class="comment_txt pull-left" id="show_comment_level_2_{{comment_id}}">{{comment_txt}} 
                               <span class="metadata reply">{{#if check_for_edited comment_id}}
                               (Edited) 
                               {{/if}}
                               </span>
                               </span>
+                              {{else}}
+                              <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">This content has been marked as abused</span>
+                              {{/if}}  
                               {{#if check_if_commented_by_is_user comment_by }}
                               <span class="card-title pull-right" style="display: none;" id="level_2_commenting_three_dots_{{comment_id}}">
                                  <div class="btn-group show-on-hover" >
@@ -342,6 +374,15 @@
                                        <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response level_2_edit_comment" id="{{comment_id}}" > Edit</a></li>
                                        <li><a href="javascript:void(0)" style="text-align:left !important;"  
                                           class="level_2_remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                    </ul>
+                                 </div>
+                              </span>
+                              {{else}}
+                              <span class="card-title pull-right" style="display: none;" id="level_2_commenting_three_dots_{{comment_id}}">
+                                 <div class="btn-group show-on-hover" >
+                                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                    <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                       <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_comment_as_abuse" id="{{comment_id}}" > Report as abuse</a></li>
                                     </ul>
                                  </div>
                               </span>
@@ -354,20 +395,29 @@
                                  border-radius: 5px;" ></textarea>
                               </span>
                            </div>
-                          
                            {{#if check_if_commented_by_is_user comment_by }}
                            <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
                               <div class="btn-group show-on-hover" >
                                  <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
                                  <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
                                     <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
-                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;" 
                                        class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                 </ul>
+                              </div>
+                           </span>
+                           {{else}}
+                           <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+                              <div class="btn-group show-on-hover" >
+                                 <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                 <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_comment_as_abuse" id="{{comment_id}}" > Report as abuse</a></li>
                                  </ul>
                               </div>
                            </span>
                            {{/if}}
                            <div class="actions margin_bottom_0" >
+                              {{#if check_for_abusive_comment_id comment_id}}
                               {{#if equals check_for_user_liked_on_level_two_comments 'Like'}} 
                               <a class=" like_for_last_level reply">Like </a>  
                               <span><a class="modal_kholo3 reply" href="javascript:void(0)">({{count_for_user_liked_on_level_two_comments}})</a></span> &nbsp; &nbsp;
@@ -375,18 +425,19 @@
                               <a class=" like_for_last_level reply">Liked </a>
                               <span><a class="reply modal_kholo3" href="javascript:void(0)">({{count_for_user_liked_on_level_two_comments}})</a></span> &nbsp; &nbsp;
                               {{/if}}
+                              {{/if}}
                            </div>
                         </div>
                      </div>
                   </div>
                   {{/each}}
-                  <div style="margin: 10px;" id="last_commenting_level_{{comment_id}}" ank={{comment_txt}} class="ui fluid icon input last_commenting_level secomdcomment_hub div_hide_class">
-                     <input class="secomdcomment child_comment reply_input"  id="last_commenting_level_text_area_{{comment_id}}" placeholder="Enter your reply here ..." type="text">
+                  <div style="margin-top: 10px;" id="last_commenting_level_{{comment_id}}" ank={{comment_txt}} class="ui fluid icon input last_commenting_level secomdcomment_hub div_hide_class">
+                     <input class="secomdcomment reply_input" id="last_commenting_level_text_area_{{comment_id}}" placeholder="Enter your reply here ..." type="text">
                      <button class="last_commenting_level_button div_hide_class">click</button>
                   </div>
                   {{/each}}
                   <div class="ui fluid icon input secomdcomment_hub">
-                     <input class="secomdcomment comment_input_first" id="commented_text_{{post_id}}" placeholder="Enter your comment here ..." type="text">
+                     <input class="secomdcomment comment_input_first " id="commented_text_{{post_id}}" placeholder="Enter your comment here ..." type="text">
                      <button class="insert_comment_level_1 div_hide_class" id="commented_text_btn_{{post_id}}">click</button>
                   </div>
                </div>
@@ -421,9 +472,19 @@
                      </ul>
                   </div>
                </span>
+               {{else}}
+               <span class="card-title pull-right" >
+                  <div class="btn-group show-on-hover" >
+                     <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                     <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                        <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_post_abuse" id="{{../post_id}}" > Report as abuse</a></li>
+                     </ul>
+                  </div>
+               </span>
                {{/if}}
                {{/each}}
             </div>
+            {{#if check_for_abusive_comment_id post_id}}
             <a href="{{posted_url}}" target="_blank" >
                <div class="summary new_headline_hub_para" style="border:1px solid #ccc !important;">
                   <img src="{{featured_image}}" class="link_image" >
@@ -431,20 +492,25 @@
                   <p class="h5_hub_para" style="margin: 10px 10px 10px 0px !important; text-align: left !important;"> {{source}}</p>
                </div>
             </a>
+            {{else}}
+            <p class="comment_txt pull-left increased_height">This content has been marked as abused</p>
+            <div class="clearfix"></div>
+            <div class="clearfix"></div>
+            {{/if}}
             <div class="clearfix"></div>
             <div class="meta new_headline_hub_like">
+               {{#if check_for_abusive_comment_id post_id}}
                {{#if equals check_for_user_already_liked 'Like'}} 
                <a class="like like_event pointer"> Like </a> <span><a class="modal_kholo get_all_liked_users" href="#">({{total_liked_on_post post_id}})</a></span> &nbsp;  &nbsp;
                {{else }}
                <a class="like like_event pointer"> Liked </a> <span><a class="modal_kholo get_all_liked_users" href="#">({{total_liked_on_post post_id}})</a></span> &nbsp;  &nbsp;
                {{/if}}
-
                <a class="like comment_on_post_lvl_0 pointer"   > Comment ({{fetch_count_total_level_zero_comments post_id}}) </a>
-               
+               {{else}}
+               <div class="clearfix"></div>
+               {{/if}}
             </div>
-
             <div class="ui comments"   >
-              
                {{#if equals check_for_load_more_comments "Previous comments"}}
                <a href="#" id="load_more_comments" class=" load_more_comments text h5_hub_para">{{check_for_load_more_comments}}</a>
                {{/if}}
@@ -462,20 +528,34 @@
                         </div>
                         <br/>
                         <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px;">
+                           {{#if check_for_abusive_comment_id comment_id}}
                            <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">{{comment_txt}} 
-                           <span class="metadata reply">{{#if check_for_edited comment_id}}
+                           <span class="metadata reply">
+                           {{#if check_for_edited comment_id}} 
                            (Edited) 
                            {{/if}}
                            </span>
                            </span>
+                           {{else}}
+                           <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">This content has been marked as abused</span>
+                           {{/if}}
                            {{#if check_if_commented_by_is_user comment_by }}
                            <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
                               <div class="btn-group show-on-hover" >
                                  <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
                                  <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
-                                    <li><a href="javascript:void(0)" sttyle="text-align:left !important;"  class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
-                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;" 
                                        class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                 </ul>
+                              </div>
+                           </span>
+                           {{else}}
+                           <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+                              <div class="btn-group show-on-hover" >
+                                 <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                 <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_comment_as_abuse" id="{{comment_id}}" > Report as abuse</a></li>
                                  </ul>
                               </div>
                            </span>
@@ -489,6 +569,7 @@
                            </span>
                         </div>
                         <div class="actions">
+                           {{#if check_for_abusive_comment_id comment_id}}
                            {{#if equals check_for_user_liked_on_level_one_comments 'Like'}} 
                            <a class="reply like_comment_level_1" id="like_child_1_{{comment_id}}">Like </a> 
                            <span><a class="modal_kholo2  reply get_all_liked_users" href="javascript:void(0)">({{count_for_user_liked_on_level_one_comments}})</a></span> &nbsp; &nbsp;
@@ -502,6 +583,7 @@
                            ({{show_comment_reply_count}})
                            </span>
                            </a>
+                           {{/if}}
                         </div>
                      </div>
                   </div>
@@ -517,12 +599,16 @@
                               <span class="reply date">{{calculate_time_difference createdAt }}</span>
                            </div>
                            <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px;">
+                              {{#if check_for_abusive_comment_id comment_id}}
                               <span class="comment_txt pull-left" id="show_comment_level_2_{{comment_id}}">{{comment_txt}} 
                               <span class="metadata reply">{{#if check_for_edited comment_id}}
                               (Edited) 
                               {{/if}}
                               </span>
                               </span>
+                              {{else}}
+                              <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">This content has been marked as abused</span>
+                              {{/if}}  
                               {{#if check_if_commented_by_is_user comment_by }}
                               <span class="card-title pull-right" style="display: none;" id="level_2_commenting_three_dots_{{comment_id}}">
                                  <div class="btn-group show-on-hover" >
@@ -531,6 +617,15 @@
                                        <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response level_2_edit_comment" id="{{comment_id}}" > Edit</a></li>
                                        <li><a href="javascript:void(0)" style="text-align:left !important;"  
                                           class="level_2_remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                    </ul>
+                                 </div>
+                              </span>
+                              {{else}}
+                              <span class="card-title pull-right" style="display: none;" id="level_2_commenting_three_dots_{{comment_id}}">
+                                 <div class="btn-group show-on-hover" >
+                                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                    <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                       <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_comment_as_abuse" id="{{comment_id}}" > Report as abuse</a></li>
                                     </ul>
                                  </div>
                               </span>
@@ -543,26 +638,36 @@
                                  border-radius: 5px;" ></textarea>
                               </span>
                            </div>
-             
                            {{#if check_if_commented_by_is_user comment_by }}
                            <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
                               <div class="btn-group show-on-hover" >
                                  <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
                                  <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
                                     <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
-                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;" 
                                        class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                 </ul>
+                              </div>
+                           </span>
+                           {{else}}
+                           <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+                              <div class="btn-group show-on-hover" >
+                                 <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                 <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_comment_as_abuse" id="{{comment_id}}" > Report as abuse</a></li>
                                  </ul>
                               </div>
                            </span>
                            {{/if}}
                            <div class="actions margin_bottom_0" >
+                              {{#if check_for_abusive_comment_id comment_id}}
                               {{#if equals check_for_user_liked_on_level_two_comments 'Like'}} 
                               <a class=" like_for_last_level reply">Like </a>  
                               <span><a class="modal_kholo3 reply" href="javascript:void(0)">({{count_for_user_liked_on_level_two_comments}})</a></span> &nbsp; &nbsp;
                               {{else }}
                               <a class=" like_for_last_level reply">Liked </a>
                               <span><a class="reply modal_kholo3" href="javascript:void(0)">({{count_for_user_liked_on_level_two_comments}})</a></span> &nbsp; &nbsp;
+                              {{/if}}
                               {{/if}}
                            </div>
                         </div>
@@ -581,7 +686,6 @@
                </div>
             </div>
          </div>
-        
          {{else if equals post_type 'text' }}
          <div class="ui feed margin_bottom section">
             <div class="event">
@@ -607,16 +711,24 @@
                         <li>
                            <a href="javascript:void(0)" style="text-align:left !important;" 
                               class="remove_post" id="{{../post_id}}"> Delete</a>
-                           <!-- <input type="hidden" akh="con="{{../post_id}}" id="getIdForPostId_"{{User_id}} > -->
                         </li>
+                     </ul>
+                  </div>
+               </span>
+               {{else}}
+               <span class="card-title pull-right" >
+                  <div class="btn-group show-on-hover" >
+                     <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                     <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                        <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_post_abuse" id="{{../post_id}}" > Report as abuse</a></li>
                      </ul>
                   </div>
                </span>
                {{/if}}
                {{/each}}
             </div>
-            
             <div class="summary new_headline_hub_para">
+               {{#if check_for_abusive_comment_id post_id}}
                {{#if post_length_less_than_400 post_text}}
                <p class="h5_hub_para" id="show_less_{{post_id}}">
                   {{#if check_summary_for_br_tag}}
@@ -644,7 +756,6 @@
                </p>
                {{/if}}
                <p class="h5_hub_para loader_visiblity_block" id="show_more_{{post_id}}">
-        
                   {{#if check_summary_for_br_tag}}
                   {{#each BreakAsArrayfull}}
                   {{tag}}<br/>
@@ -660,17 +771,22 @@
                   border: 1px solid #e4e4e4;
                   border-radius: 5px;" ></textarea>
                </span>
+               {{else}}
+               <span class="comment_txt pull-left increased_height" >This content has been marked as abused</span>
+               {{/if}}
             </div>
             <hr class="hr_mrgin" />
             <div class="meta new_headline_hub_like">
+               {{#if check_for_abusive_comment_id post_id}}
                {{#if equals check_for_user_already_liked 'Like'}} 
                <a class="like like_event pointer"> Like </a> <span><a class="modal_kholo get_all_liked_users" href="#">({{total_liked_on_post post_id}})</a></span>&nbsp;  &nbsp;
                {{else }}
                <a class="like like_event pointer"> Liked </a> <span><a class="modal_kholo get_all_liked_users" href="#">({{total_liked_on_post post_id}})</a></span>&nbsp;  &nbsp;
                {{/if}}
-            
                <a class="like comment_on_post_lvl_0 pointer"   > Comment ({{fetch_count_total_level_zero_comments post_id}}) </a>
-           
+               {{else}}
+               <div class="clearfix"></div>
+               {{/if}}
             </div>
             <div class="ui comments"   >
                {{#if equals get_all_commented_users_information_count  0}}
@@ -697,8 +813,17 @@
                         </div>
                         <br/>
                         <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px;">
+                           <!--  <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">{{comment_txt}} 
+                              <span class="metadata reply">{{#if check_for_edited comment_id}}
+                              (Edited) 
+                              {{/if}}
+                              </span>
+                              </span>
+                              -->
+                           {{#if check_for_abusive_comment_id comment_id}}
                            <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">{{comment_txt}} 
-                           <span class="metadata reply">{{#if check_for_edited comment_id}}
+                           <span class="metadata reply">
+                           {{#if check_for_edited comment_id}} 
                            (Edited) 
                            {{/if}}
                            </span>
@@ -707,10 +832,19 @@
                            <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
                               <div class="btn-group show-on-hover" >
                                  <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
-                                 <ul class="dropdown-menu" role="menu" style="width: 100% !important; text-align: left !important; left: 0 !important;">
-                                    <li><a href="javascript:void(0)" style="text-align:left !important;" class="invitation_response edit_comment" id="{{comment_id}}" >  Edit</a> </li>
+                                 <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
                                     <li><a href="javascript:void(0)" style="text-align:left !important;" 
                                        class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                 </ul>
+                              </div>
+                           </span>
+                           {{else}}
+                           <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+                              <div class="btn-group show-on-hover" >
+                                 <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                 <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_comment_as_abuse" id="{{comment_id}}" > Report as abuse</a></li>
                                  </ul>
                               </div>
                            </span>
@@ -719,9 +853,14 @@
                               value={{comment_txt}}  id="hidden_comment_{{comment_id}}"
                               data-target="#modalhubtop" resize="none" placeholder="Edit ..." style="    padding: 5px;
                               border: 1px solid #e4e4e4;
-                              border-radius: 5px;" ></textarea></span>
+                              border-radius: 5px;" ></textarea>
+                           </span>
+                           {{else}}
+                           <span class="comment_txt pull-left increased_height" id="show_comment_{{comment_id}}">This content has been marked as abused</span>
+                           {{/if}}
                         </div>
                         <div class="actions">
+                           {{#if check_for_abusive_comment_id comment_id}}
                            {{#if equals check_for_user_liked_on_level_one_comments 'Like'}} 
                            <a class="reply like_comment_level_1" id="like_child_1_{{comment_id}}">Like </a> 
                            <span><a class="modal_kholo2  reply get_all_liked_users" href="javascript:void(0)">({{count_for_user_liked_on_level_one_comments}})</a></span> &nbsp; &nbsp;
@@ -735,6 +874,7 @@
                            ({{show_comment_reply_count}})
                            </span>
                            </a>
+                           {{/if}}
                         </div>
                      </div>
                   </div>
@@ -749,13 +889,17 @@
                            <div class="metadata">
                               <span class="reply date">{{calculate_time_difference createdAt }}</span>
                            </div>
-                           <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px; margin-top: -6px;">
+                           <div class="text commented_reply_text profile-pic col m12 s12 l12" style="padding: 0px;">
+                              {{#if check_for_abusive_comment_id comment_id}}
                               <span class="comment_txt pull-left" id="show_comment_level_2_{{comment_id}}">{{comment_txt}} 
                               <span class="metadata reply">{{#if check_for_edited comment_id}}
                               (Edited) 
                               {{/if}}
                               </span>
                               </span>
+                              {{else}}
+                              <span class="comment_txt pull-left" id="show_comment_{{comment_id}}">This content has been marked as abused</span>
+                              {{/if}}  
                               {{#if check_if_commented_by_is_user comment_by }}
                               <span class="card-title pull-right" style="display: none;" id="level_2_commenting_three_dots_{{comment_id}}">
                                  <div class="btn-group show-on-hover" >
@@ -764,6 +908,15 @@
                                        <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response level_2_edit_comment" id="{{comment_id}}" > Edit</a></li>
                                        <li><a href="javascript:void(0)" style="text-align:left !important;"  
                                           class="level_2_remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                    </ul>
+                                 </div>
+                              </span>
+                              {{else}}
+                              <span class="card-title pull-right" style="display: none;" id="level_2_commenting_three_dots_{{comment_id}}">
+                                 <div class="btn-group show-on-hover" >
+                                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                    <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                       <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_comment_as_abuse" id="{{comment_id}}" > Report as abuse</a></li>
                                     </ul>
                                  </div>
                               </span>
@@ -776,26 +929,36 @@
                                  border-radius: 5px;" ></textarea>
                               </span>
                            </div>
-                         
                            {{#if check_if_commented_by_is_user comment_by }}
                            <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
                               <div class="btn-group show-on-hover" >
                                  <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
                                  <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
-                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response edit_comment" id="{{comment_id}}" ><i class="fa fa-pencil"> </i>Edit</a></li>
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response edit_comment" id="{{comment_id}}" > Edit</a></li>
                                     <li><a href="javascript:void(0)" style="text-align:left !important;" 
-                                       class="remove_comment" id="{{comment_id}}"><i class="fa fa-trash"> </i> Delete</a></li>
+                                       class="remove_comment" id="{{comment_id}}"> Delete</a></li>
+                                 </ul>
+                              </div>
+                           </span>
+                           {{else}}
+                           <span class="card-title pull-right" style="display: none;" id="three_dots_{{comment_id}}">
+                              <div class="btn-group show-on-hover" >
+                                 <button type="button" class="dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;  border: 0px !important; background-color: #fff;  " ><i class="fa fa-ellipsis-v" style="color:#000 !important; margin-right: 0px; margin-top: 0px;"> </i></button>
+                                 <ul class="dropdown-menu" role="menu" style="width: 100%; left: 0 !important;">
+                                    <li><a href="javascript:void(0)" style="text-align:left !important;"  class="invitation_response report_comment_as_abuse" id="{{comment_id}}" > Report as abuse</a></li>
                                  </ul>
                               </div>
                            </span>
                            {{/if}}
                            <div class="actions margin_bottom_0" >
+                              {{#if check_for_abusive_comment_id comment_id}}
                               {{#if equals check_for_user_liked_on_level_two_comments 'Like'}} 
                               <a class=" like_for_last_level reply">Like </a>  
                               <span><a class="modal_kholo3 reply" href="javascript:void(0)">({{count_for_user_liked_on_level_two_comments}})</a></span> &nbsp; &nbsp;
                               {{else }}
                               <a class=" like_for_last_level reply">Liked </a>
                               <span><a class="reply modal_kholo3" href="javascript:void(0)">({{count_for_user_liked_on_level_two_comments}})</a></span> &nbsp; &nbsp;
+                              {{/if}}
                               {{/if}}
                            </div>
                         </div>
@@ -823,7 +986,6 @@
          {{/each}}
       </div>
    </div>
-        
    <a class="waves-effect waves-light modal-trigger get_all_liked_users abb_khulja" href="#modal1" id="abb_khulja" style="display:none !important" >sss</a>  
    <div id="modal1" class="modal modal-fixed-footer modal_invitees modal_content_height profile_modal_header_top">
       <div class="modal-header profile_modal_header">
@@ -922,15 +1084,50 @@
          $('.modal').modal();
        });
    </script>
+   <a class="waves-effect waves-light modal-trigger report_as_abuse_modal" href="#modal4" id="report_as_abuse_modal" style="display:none !important" >sss</a>  
+   <div id="modal4" class="modal profile_modal_header_top">
+      <div class="modal-content" style="padding: 0px;">
+         <div class="modal-header profile_modal_header">
+            <h5 class="modal-title">Reason for Abuse</h5>
+         </div>
+         <div class="modal-body">
+            <form >
+               <div class="row">
+                  <!-- <div class="col-sm-3">Test 1 - Bootstrap</div> -->
+                  <div class="col-sm-12">
+                     <div class="btn-group verical-abuse" data-toggle="buttons">
+                        <label class="btn btn-default abuse-reason" id="reason_1" >
+                        <input type="radio"  checked="true" name="reason_1"    value="reason_1" /> Reason 1
+                        </label> 
+                        <label class="btn btn-default abuse-reason" id="reason_2">
+                        <input type="radio" name="reason_2"  value="reason_2" /> Reason 2
+                        </label> 
+                        <label class="btn btn-default abuse-reason" id="reason_3">
+                        <input type="radio" name="reason_3" value="reason_3" /> Reason 3
+                        </label> 
+                        <label class="btn btn-default abuse-reason" id="reason_4">
+                        <input type="radio" name="reason_4"  value="reason_4" /> Reason 4
+                        </label> 
+                        <label class="btn btn-default abuse-reason" id="reason_5">
+                        <input type="radio" name="reason_5" value="reason_5" /> Reason 5
+                        </label>
+                     </div>
+                  </div>
+               </div>
+               <button id="reason_selector"  class="btn btn-success pull-right">Submit</button>
+            </form>
+         </div>
+      </div>
+   </div>
 </template>
 <template name="hub_right">
    <div class="col s12 m3 l3 visible-lg">
       <div class="section visible-lg">
          <p class="font-14">
             <span style="font-size:20px;">
-               <strong>
-                  Donate to SN 
-               </strong>
+            <strong>
+            Donate to SN 
+            </strong>
             </span>
             <br> <br> 
             <span style="font-size:18px; margin-top:10px !important;">
@@ -958,8 +1155,8 @@
             <li class="collection-item avatar">
                <img src="{{blog_image}}"  alt="" class="circle blog_detail_redirect">
                <span class="title blog_detail_redirect"   ><a style="color: #333 !important;
-                  font-size: 16px !important;">{{blog_title}}</a>  </span>
-               <p> <a href="" id="redirect_click_1" valu="Ankit arora">{{fetch_blog_creator blog_creator_id}}</a><br>
+                  font-size: 15px !important; font-weight: 400; letter-spacing: normal; text-transform: none;">{{blog_title}}</a>  </span>
+               <p> <a href="" id="redirect_click_1" valu="Ankit arora">{{trim_content fetch_blog_creator blog_creator_id}}</a><br>
                </p>
             </li>
             {{else}}
@@ -971,5 +1168,4 @@
          {{> picture_ticker}}
       </div>
    </div>
-  
 </template>

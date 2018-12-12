@@ -40,7 +40,7 @@
   <form class="ui reply form">
     <div class="field">
       <textarea class="textarea" placeholder="Enter discussion title" style="margin-bottom:10px; min-height: 50px !important; " id="discussion_title" ></textarea>
-      <textarea class="textarea" placeholder="Add some details here" id="discussion_detail" ></textarea>
+      <textarea class="textarea" placeholder="Add some details here" id="discussion_detail" style="height: 130px;"></textarea>
 
       <div class="summary new_headline_hub_para div_hide_class" id="url_metadata_div" style="border:1px solid #ccc !important;">
                      <img id="metadata_info_image"  class="link_image" >
@@ -107,13 +107,13 @@
                       </span>
                       {{/if}}
       <div class="text justify blog_description">
-        <p style="margin-top: 20px;"><a href="javascript:void(0)" class="author grps_dis_titl go_to_discussion_detail_page ">{{discussion_title}}</a>  </p>
+        <p class="grps_dis_descr"><a href="javascript:void(0)" style="color: rgba(0,0,0,.87) !important" class="author go_to_discussion_detail_page ">{{discussion_title}}</a>  </p>
 
       <p class="grps_dis_descr">
       {{#if check_discussion_detail_for_br_tag}}
         <!-- sssss -->
           {{#each BreakAsArray}}
-             {{tag}}<br/>
+             {{tag}}
           {{/each}}
         
         {{else}}
@@ -254,7 +254,7 @@
                           {{#each all_memeber}}       
                                   <img src={{profile_pic}} style="" alt="No Image" class="circle pointer img_member member_groups redirect_click_1" >    
                                  {{else}}    
-                                  <h4><p>No members Yet</p> </h4>  
+                                  <h4><p align="center">No members Yet</p> </h4>  
                           {{/each}}  
                       </span> 
                 </div>  

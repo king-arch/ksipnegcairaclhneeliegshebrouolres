@@ -41,7 +41,8 @@ let all_user_friends;
 
 Template.search_content.onRendered(function(){ 
 all_users =   Meteor.subscribe("all_users_with_searched_keyword",Session.get("userId"),Session.get("search_keyword"));
-all_groups =   Meteor.subscribe("all_groups_with_searched_keyword",Session.get("search_keyword"));
+// all_groups =   Meteor.subscribe("all_groups_with_searched_keyword",Session.get("search_keyword"));
+all_groups =   Meteor.subscribe("all_groups");
 all_events =   Meteor.subscribe("all_events_with_searched_keyword",Session.get("search_keyword"));
 all_blogs =   Meteor.subscribe("all_blogs_with_searched_keyword",Session.get("search_keyword"));
 all_user_friends =   Meteor.subscribe("all_friend_users");
@@ -252,6 +253,7 @@ Template.search_content.events({
     event.preventDefault();  
       var grp_id = this.grp_id;  
       var logged_in_user = Session.get("userId");  
+
       var result = UserGroup.find({grp_id: grp_id,status: {$ne: 'Inactive'}}).fetch();  
       var invite_accepted = result[0].invite_accepted; 
       grp_id= Base64.encode(grp_id); 
@@ -397,6 +399,8 @@ Template.search_content.events({
 
     var userId = Session.get("userId");
     var grp_id = this.grp_id;
+
+
     var result = UserGroup.find({grp_id: grp_id,status: {$ne: 'Inactive'}}).fetch();
 
         var grp_type = result[0].grp_type;
@@ -453,6 +457,7 @@ Template.search_content.events({
     var userId = Session.get("userId");
     var grp_id = this.grp_id;
     // invite_accepted,grp_id
+
         var result = UserGroup.find({grp_id: grp_id, status: {$ne: 'Inactive'} }).fetch();
     // var admin = get_admin_id[0].admin;
 
@@ -818,6 +823,7 @@ Template.search_content.helpers({
          join_status_check_array(){  
     var sent_by = Session.get("userId");
     var grp_id = this.grp_id;
+
     var Group_array = UserGroup.find({grp_id: grp_id ,status: {$ne: 'Inactive'} }).fetch();
     // alert(count);
     if( sent_by == Group_array[0].admin ){
@@ -1097,7 +1103,6 @@ else{
       // alert('sent_to:'+sent_to+' sent_by:'+sent_by);
 
       var reqID = 'req_'+Math.floor((Math.random() * 2465789) + 1);
-
       var show_button = FriendRequest.find({ $or: [ { $and: [ { sent_to: sent_to }, { sent_by: sent_by } ] }, { $and: [ { sent_to: sent_by }, { sent_by: sent_to } ] } ] },{sort: {requestedAt: -1},limit: 1 }).fetch();
       // var length = show_button.length;
       console.log('show_button');
@@ -1110,6 +1115,7 @@ else{
 		var search_keyword = Session.get("search_keyword");
 		const query = new RegExp(search_keyword,'i');   
 		// 1. Display All Open + Public Groups
+    
 		var all_open_group =  UserGroup.find({$and:[{grp_title: query},{ status: {$ne: 'Inactive'} },{$or:[{grp_type: "Open" },{ "grp_type": "Public" }]}]}).fetch();
 		// 2.  Display Where I am member of that Group
 
@@ -1139,6 +1145,7 @@ else{
 	},
 
 	get_total_discussions(){
+    Meteor.subscribe("discussions_based_on_discussion_ids",this.grp_id);
   	return Discussion.find({"grp_id":this.grp_id}).count();
 	},
 	Show_grp_image(){

@@ -171,9 +171,12 @@ Template.notifi.helpers({
   all_notifications:function(){
 
     var userId = Session.get("userId");
-    return Notifications.find({"notification_for":userId , "notification_by" :  {$ne:userId} },{sort: {created_at: -1} }).fetch();
+    console.log(userId);
+    var all_notifications =  Notifications.find({"notification_for":userId , "notification_by" :  {$ne:userId} },{sort: {created_at: -1} }).fetch();
     // return Notifications.find({"notification_for":userId, is_read: 0},{sort: {created_at: -1} }).fetch();
-
+    console.log("all_notificationsall_notifications");
+    console.log(all_notifications);
+    return all_notifications;
   },
 
   fetch_user_information:function(){

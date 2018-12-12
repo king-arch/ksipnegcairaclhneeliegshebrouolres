@@ -1024,7 +1024,7 @@ text-align: center !important; font-size: 18px;
 .color_head_signup_left{
 color: #fff;
 font-weight: 800;
-padding:  100px 2%;
+padding:  50px 2%;
 font-size: 35px !important;
 vertical-align: middle !important;
 
@@ -1366,7 +1366,6 @@ padding: 10px !important;
 }
 } 
 
-/* Mobile phones/Tablets/Phablets ------- */
    @media only screen and (min-width : 600px) {
 
 .section h5{
@@ -1404,8 +1403,8 @@ font-size: 40px !important;
 width: 100%;
   text-transform: none !important;
 
-/*  padding: 8px;
-*/  height: 94px !important;
+/*  padding: 8px;*/  
+height: 94px !important;
 }
 .height_sub{
   padding: 6px;
@@ -1432,7 +1431,8 @@ height: 100% !important;
 margin:0px !important; 
 padding: 0px !important;
 max-width: 100% !important;
-}.map_user_img{
+}
+.map_user_img{
 height:60px !important;
 width:60px !important; 
 border-radius:100px !important;
@@ -1534,7 +1534,7 @@ padding: 10px !important;
 }
 
 } 
-/* Tablets/Phablets ----------- */
+/* Tablets/Phablets */
     @media only screen and (min-width : 800px) {
       .imag_con{
       width: 10% !important;
@@ -1564,7 +1564,7 @@ margin-right: 24px !important;
     font-size: 45px;
   }
     .grps_dis_descr{
-  }
+  
   font-size: 22px !important; margin-bottom: 10px !important;
 }
   .ui.dropdown .menu > .item {
@@ -2692,11 +2692,11 @@ background-color: #fff;
   min-height: 400px !important
 }
 
-   @media only screen and (min-width : 850px) {
+/*   @media only screen and (min-width : 850px) {
 
 .section h5{
     font-size: 50px !important;
-}
+}*/
 }
 /* Desktop/Laptops ----------- */
     @media only screen and (min-width : 1024px) {
@@ -2999,7 +2999,11 @@ margin-right: 0px !important;
     text-decoration: underline !important;
   }
   .grps_dis_descr{
-  font-size: 13px !important; margin-bottom: 10px !important;
+  font-size: 13px !important; 
+  margin-bottom: 10px !important;
+  text-transform: none !important;
+  font-weight: normal;
+  letter-spacing: normal;
 }
    .ui.dropdown .menu > .item {
     position: relative;
@@ -3033,7 +3037,7 @@ margin-right: 0px !important;
       }
 
   .ui.comments .comment .author{
-        font-size: 16px !important;
+        font-size: 13px !important;
       }
   .hr_mrgin{
         margin: 10px 0 !important;
@@ -3185,7 +3189,7 @@ color: #F56445 !important;
 }
 .ui.comments .reply.form textarea {
     font-size: 15px !important;
-    min-height: 50px !important;
+    min-height: 130px !important;
 }
  .ui.button{
 font-size: 15px !important;
@@ -3230,7 +3234,7 @@ font-size: 22px !important;
 }
       .brand-logo {
         width: 142px !important;
-        padding:6px !important;
+        padding:11px 6px  !important;
         margin: 0;  
       }
   .pac-item-query { font-size: 16px; }
@@ -3238,7 +3242,7 @@ font-size: 22px !important;
     .pac-item-container { font-size: 16px; }
     .pac-item-matched { font-size: 16px; }
 .main_body_bg{
-     background: #333 url(/images/backnew.png) !important; 
+     background: #333 url(/images/backnew.jpg) !important; 
      background-repeat:no-repeat !important;
            margin-bottom: 0px !important;
            background-size:cover !important;
@@ -4112,10 +4116,10 @@ margin: 10px 0px 10px 0px !important; font-size: 13px !important;
 /* hub end*/
 /* group detail start*/
 .member_groups{
-  width: 50px !important;
-  float: left !important; 
-  margin-right: 10px !important;
-  height: 50px !important;
+ width: 38px!important;
+  float: left!important;
+  margin-right: 3px!important;
+  height: 38px!important;
 }
 .member_img {vertical-align: middle;}
 
@@ -4786,10 +4790,18 @@ box-shadow: none !important;
 
 .main_body_bg {
 
-    background: #333 url(/images/backnew.png)!important;
+    background: #333 url(/images/backnew.jpg)!important;
     background-repeat: no-repeat!important;
     margin-bottom: 0!important;
 }
+}
+
+
+.small{font:12px !important;
+  font-weight: normal !important;
+  font-family: none !important;
+  text-transform: none !important;
+  letter-spacing: 0px;
 }
 
 
@@ -4995,7 +5007,7 @@ box-shadow: none !important;
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- */.ui.comments{margin:10px 0;max-width:650px}.ui.comments:first-child{margin-top:0}.ui.comments:last-child{margin-bottom:0}.ui.comments .comment{position:relative;background:0 0;margin:.5em 0 0;padding:.5em 0 0;border:none;border-top:none;line-height:1.2}.ui.comments .comment:first-child{margin-top:0;padding-top:0}.ui.comments .comment .comments{margin-top:10px;padding:0px; margin-bottom: 10px !important;}.ui.comments .comment .comments:before{position:absolute;top:0;left:0}.ui.comments .comment .comments .comment{border:none;border-top:none;background:0 0}.ui.comments .comment .avatar{display:block;width:2.5em;height:2.5em;float:left;margin:.2em 0 0}.ui.comments .comment .avatar img,.ui.comments .comment img.avatar{display:block;margin:0 auto;width:100%;height:100%;border-radius:.25rem}.ui.comments .comment>.content{display:block}.ui.comments .comment>.avatar~.content{margin-left:3.5em}.ui.comments .comment .author{font-size:13px;color:rgba(0,0,0,.87);font-weight:400}.ui.comments .comment a.author{cursor:pointer}.ui.comments .comment a.author:hover{color:#1e70bf}.ui.comments .comment .metadata{display:inline-block;margin-left:.5em;color:rgba(0,0,0,.4);font-size:.875em}.ui.comments .comment .metadata>*{display:inline-block;margin:0 .5em 0 0}.ui.comments .comment .metadata>:last-child{margin-right:0}.ui.comments .comment .text{margin:.25em 0 .2.h5_hub_para5em;font-size:1em;word-wrap:break-word;color:rgba(0,0,0,.87);line-height:1.3}.ui.comments .comment .actions{font-size:.875em}.ui.comments .comment .actions a{cursor:pointer;display:inline-block;margin:0 0 0 0;color:rgba(0,0,0,.4)}.ui.comments .comment .actions a:last-child{margin-right:0}.ui.comments .comment .actions a.active,.ui.comments .comment .actions a:hover{color:rgba(0,0,0,.8)}.ui.comments>.reply.form{margin-top:1em}.ui.comments .comment .reply.form{width:100%;margin-top:1em}.ui.comments .reply.form textarea{font-size:1em;height:12em}.ui.collapsed.comments,.ui.comments .collapsed.comment,.ui.comments .collapsed.comments{display:none}.ui.threaded.comments .comment .comments{margin:-1.5em 0 -1em 1.25em;padding:3em 0 2em 2.25em;-webkit-box-shadow:-1px 0 0 rgba(34,36,38,.15);box-shadow:-1px 0 0 rgba(34,36,38,.15)}.ui.minimal.comments .comment .actions{opacity:0;position:absolute;top:0;right:0;left:auto;-webkit-transition:opacity .2s ease;transition:opacity .2s ease;-webkit-transition-delay:.1s;transition-delay:.1s}.ui.minimal.comments .comment>.content:hover>.actions{opacity:1}.ui.mini.comments{font-size:.78571429rem}.ui.tiny.comments{font-size:.85714286rem}.ui.small.comments{font-size:.92857143rem}.ui.comments{font-size:1rem}.ui.large.comments{font-size:1.14285714rem}.ui.big.comments{font-size:1.28571429rem}.ui.huge.comments{font-size:1.42857143rem}.ui.massive.comments{font-size:1.71428571rem}/*!
+ */.ui.comments{margin:10px 0;max-width:650px}.ui.comments:first-child{margin-top:0}.ui.comments:last-child{margin-bottom:0}.ui.comments .comment{position:relative;background:0 0;margin:.5em 0 0;padding:.5em 0 0;border:none;border-top:none;line-height:1.2}.ui.comments .comment:first-child{margin-top:0;padding-top:0}.ui.comments .comment .comments{margin-top:10px;padding:0px; margin-bottom: 10px !important;}.ui.comments .comment .comments:before{position:absolute;top:0;left:0}.ui.comments .comment .comments .comment{border:none;border-top:none;background:0 0}.ui.comments .comment .avatar{display:block;width:2.5em;height:2.5em;float:left;margin:.2em 0 0}.ui.comments .comment .avatar img,.ui.comments .comment img.avatar{display:block;margin:0 auto;width:100%;height:100%;border-radius:.25rem}.ui.comments .comment>.content{display:block}.ui.comments .comment>.avatar~.content{margin-left:3.5em}.ui.comments .comment .author{font-size:13px;color:rgba(0,0,0,.87);font-weight:400}.ui.comments .comment a.author{cursor:pointer}.ui.comments .comment a.author:hover{color:#1e70bf}.ui.comments .comment .metadata{display:inline-block;margin-left:.5em;color:rgba(0,0,0,.4);font-size:.875em}.ui.comments .comment .metadata>*{display:inline-block;margin:0 .5em 0 0}.ui.comments .comment .metadata>:last-child{margin-right:0}.ui.comments .comment .text{margin:.25em 0 .25em;font-size:1em;word-wrap:break-word;color:rgba(0,0,0,.87);line-height:1.3}.ui.comments .comment .actions{font-size:.875em}.ui.comments .comment .actions a{cursor:pointer;display:inline-block;margin:0 0 0 0;color:rgba(0,0,0,.4)}.ui.comments .comment .actions a:last-child{margin-right:0}.ui.comments .comment .actions a.active,.ui.comments .comment .actions a:hover{color:rgba(0,0,0,.8)}.ui.comments>.reply.form{margin-top:1em}.ui.comments .comment .reply.form{width:100%;margin-top:1em}.ui.comments .reply.form textarea{font-size:1em;height:12em}.ui.collapsed.comments,.ui.comments .collapsed.comment,.ui.comments .collapsed.comments{display:none}.ui.threaded.comments .comment .comments{margin:-1.5em 0 -1em 1.25em;padding:3em 0 2em 2.25em;-webkit-box-shadow:-1px 0 0 rgba(34,36,38,.15);box-shadow:-1px 0 0 rgba(34,36,38,.15)}.ui.minimal.comments .comment .actions{opacity:0;position:absolute;top:0;right:0;left:auto;-webkit-transition:opacity .2s ease;transition:opacity .2s ease;-webkit-transition-delay:.1s;transition-delay:.1s}.ui.minimal.comments .comment>.content:hover>.actions{opacity:1}.ui.mini.comments{font-size:.78571429rem}.ui.tiny.comments{font-size:.85714286rem}.ui.small.comments{font-size:.92857143rem}.ui.comments{font-size:1rem}.ui.large.comments{font-size:1.14285714rem}.ui.big.comments{font-size:1.28571429rem}.ui.huge.comments{font-size:1.42857143rem}.ui.massive.comments{font-size:1.71428571rem}/*!
  * # Semantic UI - Feed
  * http://github.com/semantic-org/semantic-ui/
  *

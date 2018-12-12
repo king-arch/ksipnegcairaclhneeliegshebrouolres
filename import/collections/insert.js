@@ -30,4 +30,6 @@ export const Notifications = new Mongo.Collection('notifications');
 export const advertisement = new Mongo.Collection('advertisement');                                   
 export const PollOption = new Mongo.Collection('PollOption');                                   
 export const Privacy = new Mongo.Collection('privacy');                                   
+export const AbusiveContent= new Mongo.Collection('abusive_content');                                   
+
 

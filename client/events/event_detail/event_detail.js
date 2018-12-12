@@ -25,8 +25,16 @@ let all_comments;
 let all_friend_users;
 
 Template.eventdetail.onRendered(function(){
+  
+         var url = window.location.href;
+        var new_url = url.split("/");
+        url = new_url[new_url.length-1];
+        var event_id = Base64.decode(url); 
 
-  detailed_event_subscription = Meteor.subscribe("detailed_event_subscription",Session.get("show_event_id"));  
+        Session.set("show_event_id",event_id);
+        
+  detailed_event_subscription = Meteor.subscribe("detailed_event_subscription",event_id); 
+
  all_likes = Meteor.subscribe("all_likes");
 all_comments = Meteor.subscribe("all_comments");
 all_friend_users = Meteor.subscribe("all_friend_users");
@@ -53,6 +61,8 @@ all_friend_users = Meteor.subscribe("all_friend_users");
 
   setTimeout(function(){ 
     var logged_in_User =  Session.get("userId");
+    Meteor.subscribe("user_info_based_on_id",logged_in_User);
+
     var result = UserInfo.find({user_id: logged_in_User}).fetch();
 if(result[0]){
     if(result[0].theme_value == '1'){
@@ -599,6 +609,7 @@ return moment(this.event_end_date).format('MMM DD, YYYY');
                      for(var i=0;i<new_invite_accepted.length;i++){
                       Meteor.subscribe("user_info_based_on_id",new_invite_accepted[i]);
                      }
+                     
                      for(var i=0;i<new_invite_accepted.length;i++){
                       // if(i==0){
                       //   var users = UserInfo.find({"user_id": this.user_id}).fetch();

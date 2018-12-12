@@ -70,6 +70,8 @@ Template.header.onRendered(function(){
           active_panel ="notification";
         }else if(url.includes("ads")){
           active_panel = "ads";
+        }else if(url.includes("abusive_content")){
+          active_panel = "abusive_content";
         }
        Session.set("active_panel",active_panel);
 
@@ -77,7 +79,7 @@ Template.header.onRendered(function(){
 
     Meteor.call("update_last_activity",logged_in_User,function(error,result){
       if(result){
-        console.log(result);
+        // console.log(result);
       }else{ 
         console.log("Update while Last activity" + ERROR);
       }
@@ -330,14 +332,15 @@ all_blogs =   Meteor.subscribe("all_blogs_with_searched_keyword",search_text);
           },
 
 'click #logout': function(){
+  // console.log("Sign-out");
             var login_status = 0;
               var userId = Session.get("userId");
               
 
-                              var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
+    // var auth2 = gapi.auth2.getAuthInstance();
+    // auth2.signOut().then(function () {
+    //   // console.log('User signed out.');
+    // });
     
               Meteor.call("update_login_status",login_status,userId,function(error,result){
               if(error){
@@ -345,7 +348,7 @@ all_blogs =   Meteor.subscribe("all_blogs_with_searched_keyword",search_text);
                  console.log('error');
               }
               else{
-                 console.log('result');
+                 // console.log('result');
                  Meteor.logout();
                 var t1 = Session.get("check_onlyonce");
                 if(t1 == 0){
@@ -354,10 +357,10 @@ all_blogs =   Meteor.subscribe("all_blogs_with_searched_keyword",search_text);
                 }
                 Session.clear("userId");
 
-                 var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
+    //              var auth2 = gapi.auth2.getAuthInstance();
+    // auth2.signOut().then(function () {
+    //   // console.log('User signed out.');
+    // });
 
                 Session.clear("check_source");
                 Router.go('/logout');
@@ -389,7 +392,7 @@ $('html, label').addClass('increase_font');
 
           }else{
               // sAlert.success('Sucessfully commented',"123");
-              console.log('Font increase setting Sucessfully saved');
+              // console.log('Font increase setting Sucessfully saved');
               }
       });
 
@@ -418,7 +421,7 @@ $('html, label').removeClass('increase_font');
               console.log('error');
           }else{
               // sAlert.success('Sucessfully commented',"123");
-              console.log('Font increase setting Sucessfully saved');
+              // console.log('Font increase setting Sucessfully saved');
               }
       });
 
@@ -443,7 +446,7 @@ Session.setPersistent("searched_text","");
          if(error){
               console.log('error');
           }else{
-              console.log('Notification status Sucessfully Updated');
+              // console.log('Notification status Sucessfully Updated');
               }
       });
     }

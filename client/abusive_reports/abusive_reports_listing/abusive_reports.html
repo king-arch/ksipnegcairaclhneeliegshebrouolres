@@ -1,0 +1,184 @@
+<template name="abusive_reports">
+
+    <head>
+        <title>Event Listing</title>
+    </head>
+
+    <!-- <body style="background-color: #F5F5F5 !important;"> -->
+
+    <body>
+
+        {{> header}}
+        {{> abusiveReports}}
+    </body>
+</template>
+
+<template name="abusiveReports">
+
+    <div class="page_wh">
+        <div class="">
+
+            <div class="row">
+                <div class="col m3 l3 s12">
+                    <ul class="nav nav-pills nav-stacked  left_row hidden-md hidden-xs visible-lg">
+                        <h3>Marked as abusive Content </h3>
+                        <!-- <li><p class="create_event_btn" id="create_event"> Marked as Abusive Content </p> </li> -->
+                        <!--       <li><a href="/create_event"><p class="create_event_btn">CREATE EVENT</p></a></li>
+ -->
+                        <!-- <li class="active"><a href="#Dashboard" data-toggle="pill"> Dashboard </a></li> -->
+                        <ul id="tree1" class="active">
+                            <li><a href="#" style="background-color: transparent !important;">Posts</a>
+                                <ul>
+                                    <li><a href="#pictorial_promotion_active" data-toggle="pill" id="active_abusive_posts"  style="background-color: transparent !important;">Active ({{new_marked_as_abusive_posts}})</a></li>
+                                    <li><a href="#pictorial_promotion_archived" data-toggle="pill" id="deleted_abusive_post" style="background-color: transparent !important;"> Deleted ({{old_marked_as_abusive_posts}})</a> </li>
+                                </ul>
+                            </li>
+                            <li>Comments
+                                <ul>
+                                    <li><a href="#ticker_active" data-toggle="pill" style="background-color: transparent !important;" id="active_abusive_comments"> Active({{new_marked_as_abusive_comments}})</a></li>
+                                    <li><a href="#ticker_archived" data-toggle="pill" style="background-color: transparent !important;" id="deleted_abusive_comment"> Deleted ({{all_archived_ticker_count}})</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <script type="text/javascript">
+                            $.fn.extend({
+                                treed: function(o) {
+
+                                    var openedClass = 'glyphicon-minus-sign';
+                                    var closedClass = 'glyphicon-plus-sign';
+
+                                    if (typeof o != 'undefined') {
+                                        if (typeof o.openedClass != 'undefined') {
+                                            openedClass = o.openedClass;
+                                        }
+                                        if (typeof o.closedClass != 'undefined') {
+                                            closedClass = o.closedClass;
+                                        }
+                                    };
+
+                                    //initialize each of the top levels
+                                    var tree = $(this);
+                                    tree.addClass("tree");
+                                    tree.find('li').has("ul").each(function() {
+                                        var branch = $(this); //li with children ul
+                                        branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
+                                        branch.addClass('branch');
+                                        branch.on('click', function(e) {
+                                            if (this == e.target) {
+                                                var icon = $(this).children('i:first');
+                                                icon.toggleClass(openedClass + " " + closedClass);
+                                                $(this).children().children().toggle();
+                                            }
+                                        })
+                                        branch.children().children().toggle();
+                                    });
+                                    //fire event from the dynamically added icon
+                                    tree.find('.branch .indicator').each(function() {
+                                        $(this).on('click', function() {
+                                            $(this).closest('li').click();
+                                        });
+                                    });
+                                    //fire event to open branch if the li contains an anchor instead of text
+                                    tree.find('.branch>a').each(function() {
+                                        $(this).on('click', function(e) {
+                                            $(this).closest('li').click();
+                                            e.preventDefault();
+                                        });
+                                    });
+                                    //fire event to open branch if the li contains a button instead of text
+                                    tree.find('.branch>button').each(function() {
+                                        $(this).on('click', function(e) {
+                                            $(this).closest('li').click();
+                                            e.preventDefault();
+                                        });
+                                    });
+                                }
+                            });
+
+                            //Initialization of treeviews
+
+                            $('#tree1').treed();
+
+                            $('#tree2').treed({
+                                openedClass: 'glyphicon-folder-open',
+                                closedClass: 'glyphicon-folder-close'
+                            });
+
+                            $('#tree3').treed({
+                                openedClass: 'glyphicon-chevron-right',
+                                closedClass: 'glyphicon-chevron-down'
+                            });
+                        </script>
+                    </ul>
+
+                    <div class="fixed-action-btn horizontal hidden-lg">
+                        <a class="btn-floating btn-large red floating_btn_all" href="/create_event" style="margin-bottom:170% !important; width: 100px !important; height: 100px !important;"> <i class="fa fa-plus fa-4x" style="font-size: 40px !important; line-height: 103px !important;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col m12 l9 s12 tab-content right_row">
+
+                    <div class="tab-pane active" id="Dashboard">
+
+                        <div id="row custom-search-input">
+                            <div class="col m12 l7 s12">
+
+                                <p class="heading_create">Dashboard {{active_abusive_panel}}</p>
+                            </div>
+                  {{#if fetch_abusive_content}}
+                  <table class="zui-table">
+                    <thead>
+                        <tr>
+                            <th>Post</th>
+                            <th>Post Type</th>
+                            <th>Created at</th>
+                            <th>Reason</th>
+                            <th>Marked abused by # Persons</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {{#each fetch_abusive_content}}
+                        <tr>
+                            <td>{{fetch_comment_content post_id}}<a href="" class="visit_page">Visit Page</a></td>
+                            <td>{{abusive_content_type}}</td>
+                            <td>{{calculate_time_difference created_at}}</td>
+                            <td>{{abuse_reason}}</td>
+                            <td>{{fetch_total_times_abused post_id}}</td>
+                        </tr>
+                       {{/each}}
+                    </tbody>
+                </table>
+                {{else}}
+<div class="clearfix"></div>
+                No Data Found
+                {{/if}}
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrainWidth: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Deactivate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left', // Displays dropdown with edge aligned to the left of button
+            stopPropagation: false // Stops event propagation
+        });
+    </script>
+    <script type="text/javascript">
+        $('.dropdown-button').dropdown('open');
+    </script>
+    <script type="text/javascript">
+        $('.dropdown-button').dropdown('close');
+    </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</template>

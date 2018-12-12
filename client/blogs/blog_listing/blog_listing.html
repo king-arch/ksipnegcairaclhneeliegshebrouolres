@@ -307,7 +307,8 @@
    <div class="page_wh row">
       
             {{> ticker}}
-            <ul class="nav nav-pills nav-stacked col m3 l3 s12 left_row hidden-md hidden-xs visible-lg" id="blog_container">
+            <div class="col m3 l3 s12 ">
+            <ul class="nav nav-pills nav-stacked left_row hidden-md hidden-xs visible-lg" id="blog_container">
                <h3>BLOG</h3>
                <li>
                   <p class="create_event_btn" id="create_blog_btn">CREATE BLOG</p>
@@ -319,6 +320,7 @@
                <li><a href="#followers" data-toggle="pill"> Followers ({{followers_count}})</a></li>
                <li><a href="#following" data-toggle="pill"> Following ({{following_count}})</a></li>
             </ul>
+         </div>
             <!--  <div class="fixed-action-btn horizontal hidden-lg">
                <a class="btn-floating btn-large red floating_btn_all">
                <i class="fa fa-plus fa-2x"></i>

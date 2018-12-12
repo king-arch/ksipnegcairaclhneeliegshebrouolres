@@ -126,11 +126,12 @@
 
       <div class="text justify blog_description" id="show_comment_{{comment_id}}">
         <p>{{comment_txt}}</p>
-
-                     <span class="metadata reply">{{#if check_for_edited comment_id}}
+                    {{#if check_for_edited comment_id}}
+                     <span class="metadata reply">
                           (Edited) 
-                        {{/if}}
+                      
                         </span>
+                          {{/if}}
 
       </div>
 
@@ -310,7 +311,7 @@
                           {{#each all_memeber}}       
                                   <img src={{profile_pic}} style="" alt="No Image" class="circle pointer  redirect_click_1 img_member member_groups" >    
                                  {{else}}    
-                                  <h4><p>No members Yet</p> </h4>  
+                                  <h4><p align="center">No members Yet</p> </h4>  
                           {{/each}}  
                       </span> 
                 </div>  

@@ -32,11 +32,74 @@ import { Notifications } from './../import/collections/insert.js';
 import { Privacy } from './../import/collections/insert.js';
 import { advertisement } from './../import/collections/insert.js';
 import { PollOption } from './../import/collections/insert.js';
+import { AbusiveContent } from './../import/collections/insert.js';
 import urlMetadata from 'url-metadata';
 
+import express from 'express';
+
+const fileUpload = require('express-fileupload');
+
+const app = express();
+
+app.use(fileUpload());
+
+// app.use(function(req,res) {
+//     res.setHeader('access-control-allow-origin', '*');
+// });
+
+
+// var form = new FormData();
+// form.append("files", "/home/vayuz/Downloads/IMG_20181128_141652.jpg");
+
+// var settings = {
+//   "async": true,
+//   "crossDomain": true,
+//   "url": "https://specialneighborhood.com/upload_files",
+//   "method": "POST",
+//   "headers": {
+//     "Accept": "image/jpeg",
+//     "Cache-Control": "no-cache",
+//     "Postman-Token": "babb0f9d-b3e4-4091-be70-7ff80b894d9a"
+//   },
+//   "processData": false,
+//   "contentType": false,
+//   "mimeType": "multipart/form-data",
+//   "data": form
+// }
+
+// $.ajax(settings).done(function (response) {
+//   console.log(response);
+// });
+
+
+
+app.post('/upload_files', function(req, res) {
+ if (!req.files)
+   return res.status(400).send('No files were uploaded.');
+
+ let sampleFile = req.files.files;
+var image = 'image'+Math.floor((Math.random() * 2465789) + 1);
+    var path ="/var/www/html/uploading_server/files";
+
+ sampleFile.mv(path+"/"+ image, function(err) {
+   if (err)
+     return res.status(500).send(err);
+   res.send(image);
+ });
+});
+
+WebApp.connectHandlers.use(app);
 
   
-     Meteor.publish('like_based_on_comments_id', function(comment_id) {
+     Meteor.publish('fetch_all_abusive_content_mark_by_current_user', function(user_id) {
+      return AbusiveContent.find({mark_by_abuse_user_id: user_id});
+    });
+    
+    Meteor.publish('fetch_abusive_content', function(user_id) {
+      return AbusiveContent.find({});
+    });
+    
+    Meteor.publish('like_based_on_comments_id', function(comment_id) {
       return Like.find({comment_id: comment_id});
     });
 
@@ -56,6 +119,11 @@ import urlMetadata from 'url-metadata';
      Meteor.publish('like_based_on_event_id_and_comment', function(event_id,comment_id) {
       return Like.find({like_type: 'event_comment',event_id: event_id,comment_id: comment_id});
     });    
+     
+    Meteor.publish('all_user_friends_in_messaging', function(sent_to) {
+      return FriendRequest.find({ $or: [ { $and: [ { sent_to: sent_to },{ req_status: 1 } ] }, { $and: [{ sent_by: sent_to },{ req_status: 1 } ] } ] });
+    });
+     
     Meteor.publish('all_user_friends_in_messaging', function(sent_to) {
       return FriendRequest.find({ $or: [ { $and: [ { sent_to: sent_to },{ req_status: 1 } ] }, { $and: [{ sent_by: sent_to },{ req_status: 1 } ] } ] });
     });
@@ -126,8 +194,7 @@ import urlMetadata from 'url-metadata';
       return UserInfo.find({"email":email}); 
     });
 
-    Meteor.publish('get_user_info_to_send_mail', function(user_id) {
-      return UserInfo.find({"user_id":user_id}); 
+    Meteor.publish('get_user_info_to_send_mail', function(user_id) {      return UserInfo.find({"email":user_id}); 
     });
 
     Meteor.publish('user_info_for_connections', function() {
@@ -310,6 +377,11 @@ import urlMetadata from 'url-metadata';
        var result = Comment.find({comment_id: comment_id,commentActivityStatus: 0});
        return result;
     });
+
+     Meteor.publish("comment_based_on_comment_id",function(comment_id){
+       var result = Comment.find({comment_id: comment_id});
+       return result;
+    });
     Meteor.publish("all_blog_data",function(detailed_blog_id){
       return Blog.find({blog_id: detailed_blog_id});            ;
     })
@@ -372,7 +444,7 @@ import urlMetadata from 'url-metadata';
     })  
 
      Meteor.publish("detailed_event_subscription",function(event_id){  
-          return Event.find({event_id:event_id});
+          return Event.find({event_id: event_id});
     })
     
      Meteor.publish("event_based_on_event_id",function(event_id){  
@@ -396,6 +468,7 @@ import urlMetadata from 'url-metadata';
                     ]
                  });
     });
+
     // TO be removed  
      Meteor.publish("all_users",function(){  
        return  UserInfo.find({});
@@ -1109,6 +1182,18 @@ update_user_token:function(userToken, userId){
     }
   return "true";
 },    
+update_user_token_and_platform:function(userToken, userId, platform){
+  var newUser = UserInfo.find({"user_id":userId}).fetch();
+    if(newUser[0]){
+    var result =  UserInfo.update({
+        _id: newUser[0]._id,
+      }, {
+        $set: {"user_token": userToken,"platform":platform}
+      });
+    }
+  return "true";
+},   
+
 insert_contact_no: function (userId,contactno,ccode) {
     
     /*var newUser = UserInfo.find({"phone":contactno,"countrycode":ccode}).fetch();
@@ -3512,6 +3597,13 @@ if(invite_type == 'Private'){
                       is_read: 0,
                       created_at: Date.now(),
                     });
+          var receiver_name = UserInfo.find({user_id:invite_accepted_2[i]}).fetch();
+                var sender_name = UserInfo.find({"user_id":logged_in_user}).fetch(); 
+                var notification_text = sender_name[0].name + " has invited you to Private Event";
+                if(receiver_name[0].user_token){
+                  send_notification(all_commented_users[i],"Private Event Invite",notification_text,receiver_name[0].user_token); 
+                }
+
 
    }
    }  
@@ -3593,7 +3685,63 @@ if(invite_type == 'Private'){
           
           return result;
       },
+      event_comments_for_app:function(comment_id,event_id,comment_txt,comment_by,parent){
+            update_last_activity_time(comment_by);
+            var result = Event.find({
+                        event_id: event_id}).fetch();
 
+    if(result.length > 0){
+
+      // var check_string = comment_by;
+
+    // for(var i=0; i < newUser.length ; i++){
+        var notification_id = 'Notify_'+ Math.floor((Math.random() * 2465789) + 1);
+        if(result[0].event_admin != comment_by){
+
+                    var result_2 = Notifications.insert({
+                    notification_id: notification_id,
+                      notification_by: comment_by,
+
+                      notification_for: result[0].event_admin,
+                      notification_type: 'event_comment_lvl0',
+                      event_id: event_id,
+
+                      comment_txt: comment_txt,
+                      comment_id: comment_id,
+
+                      redirect_component: event_id,
+                      is_read: 0,
+                      created_at: Date.now(),
+                    });
+                  var receiver_name = UserInfo.find({user_id:result[0].event_admin}).fetch();
+                var sender_name = UserInfo.find({"user_id":comment_by}).fetch(); 
+                var notification_text = sender_name[0].name + " has commented on your Event";
+
+                if(receiver_name[0]){
+                  send_notification(result[0].event_admin,"Comments on Events ",notification_text,receiver_name[0].user_token); 
+                }
+              }
+          // if(check_string == ""){ 
+          //    check_string = newUser[i].comment_by;
+          //  }
+          //  else if(!check_string.includes(newUser[i].comment_by) ){
+          //    check_string = check_string +','+newUser[i].comment_by;
+          //    }
+        // }
+      }
+          var result =  Comment.insert({
+                      comment_id:comment_id,
+                      event_id: event_id,
+                      comment_type: 'orignal',
+                      comment_txt: comment_txt,
+                      comment_by: comment_by,
+                      parent: parent,
+                      commentActivityStatus: 0,
+                      createdAt: Date.now() 
+                    });
+          return result;
+
+      },
         event_comments:function(comment_id,event_id,comment_txt,comment_by,parent){
         //alert(userid);
               
@@ -3628,10 +3776,11 @@ if(invite_type == 'Private'){
                 var receiver_name = UserInfo.find({user_id:result[0].event_admin}).fetch();
                 var sender_name = UserInfo.find({"user_id":comment_by}).fetch(); 
                 var notification_text = sender_name[0].name + " has commented on your Event";
-                if(receiver_name[0].user_token){
+
+                if(receiver_name[0]){
                   send_notification(result[0].event_admin,"Comments on Events ",notification_text,receiver_name[0].user_token); 
                 }
-                  }
+              }
 
           // if(check_string == ""){ 
           //    check_string = newUser[i].comment_by;
@@ -5726,11 +5875,81 @@ if(results[0].user_token){
   }
       // ssssssssssssssssssssssssssssssssssssssssssssssssss
       
-      // return ;
-      },
 
 
   //********************EndMEteor call for find ( removing Dejavu effect )***********************************
+        // return ;
+      },
+      mark_as_abusive_content(user_id,post_type,post_id,abusive_parent_post,reason){
+        var abusive_content_id = "abusive_content_id_"+new Date().getTime();
+        var postCreator = "";  
+        if(post_type == "post"){
+         postCreator =  Hub.find({post_id:post_id}).fetch();
+         postCreator = postCreator[0].post_creator_id;
+        }else{
+          postCreator =  Comment.find({comment_id : post_id }).fetch();
+          postCreator =  postCreator[0].comment_by;
+        }
+        var result =  AbusiveContent.insert({
+            abusive_content_id:abusive_content_id,
+            mark_by_abuse_user_id:user_id,
+            abusive_content_type:post_type,
+            post_id:post_id,
+            abusive_parent_post:abusive_parent_post,
+            abuse_reason:reason,
+            abusive_post_creator:postCreator,
+            is_active:1,
+            created_at:new Date().getTime()
+        });
+        return result;
+      },
+      mark_content_as_abused:function(current_post_id,post_id){
+        if(current_post_id != "post"){
+         var allAbusiveEnteries =  AbusiveContent.find({post_id:current_post_id}).fetch();
+        }else{
+         var allAbusiveEnteries =  AbusiveContent.find({post_id:post_id}).fetch();
+          
+        }
+         console.log(allAbusiveEnteries);
+         var abusive_post_creator = allAbusiveEnteries[0].abusive_post_creator;
+
+        for(var i=0;i<allAbusiveEnteries.length;i++){
+          AbusiveContent.update({"_id":allAbusiveEnteries[i]._id},{$set:{is_active:0}});
+        }
+        // Post type  = post
+        if(current_post_id == "post"){
+           var result = Hub.update({ 
+            post_id: post_id,
+            }, {  
+            $set: {                
+                     postActivityStatus: 0,
+                }
+          });
+
+        }else{ //Post type  == comment
+          var remove_commment = Comment.update({ 
+            comment_id: current_post_id,
+          }, {  
+            $set: {                
+                     commentActivityStatus: 1,
+                }
+          });
+
+        }
+
+         Notifications.insert({
+                 "notifications_id":"notifications_id_"+new Date().getTime(),
+                  "notification_by":"user_admin",
+                  "notification_for":abusive_post_creator,
+                  "notification_type":"abusive_content",
+                  "redirect_page":"",
+                  "created_at":Date.now(),
+                  "redirect_component_id":"",
+                  "is_read":"0",
+                  });
+
+      }
+
 
 
 
@@ -5752,7 +5971,7 @@ function update_last_activity_time(userId){
   }
 
 
-function send_notification(userId,title,text,deviceToken){
+/*function send_notification(userId,title,text,deviceToken){
       Push.send({
           title,
           text,
@@ -5763,4 +5982,33 @@ function send_notification(userId,title,text,deviceToken){
           }
         });
       console.log("Notification Fired for " + userId);
+}*/
+function send_notification(userId,title,text,deviceToken){
+     var newUser  =  UserInfo.find({"user_id":userId}).fetch();
+      if (newUser[0]){
+       if(newUser[0].platform == "iOS"){
+       Push.send({
+            title,
+            text,
+            from: 'push',
+            badge: 1,
+            query: {
+              token: {'apn' : deviceToken}
+            }
+          });  
+      }else{
+        Push.send({
+              title,
+              text,
+              from: 'push',
+              badge: 1,
+              query: {
+                token: {'gcm' : deviceToken}
+              }
+            });    
+          console.log("Notification Fired for " + userId);
+        }   
+      }
+     
+    
 }

@@ -140,7 +140,7 @@ if(result[0].firstTimeUser == 1){
           alert("Error");
         }else{
          // alert('cools');
-         console.log("sucessfull update for first time user");
+         // console.log("sucessfull update for first time user");
         }
          
     });
@@ -265,7 +265,7 @@ Template.summary.events({
             console.log('error');
           }
           else{
-            console.log('Sucess');
+            // console.log('Sucess');
           }
         });
 
@@ -296,7 +296,7 @@ Template.heading.events({
               console.log('error');
             }else{
               // alert('Sucess');
-              console.log('Sucess');
+              // console.log('Sucess');
             }
         });
         // UserInfo.update({'_id': user_id},{$set: {'heading': heading_text}});
@@ -358,8 +358,8 @@ Template.passion.helpers({
         content.push({tag:new_passion[i]})
       }
 
-    console.log('passion');
-    console.log(content);
+    // console.log('passion');
+    // console.log(content);
 
    return content;
   },
@@ -405,8 +405,8 @@ Template.summary.helpers({
   BreakAsArray(){
     var discussion_detail = this.summary;
     var new_discussion_detail = discussion_detail.split("<br/>");
-    console.log('new_discussion_detail: ');
-    console.log(new_discussion_detail);
+    // console.log('new_discussion_detail: ');
+    // console.log(new_discussion_detail);
     var discussion_detail_array =new Array();
     for(var i=0;i<new_discussion_detail.length;i++){
 
@@ -419,8 +419,8 @@ Template.summary.helpers({
     var discussion_detail = this.summary;
         discussion_detail = discussion_detail.slice(0,460);
     var new_discussion_detail = discussion_detail.split("<br/>");
-    console.log('new_discussion_detail: ');
-    console.log(new_discussion_detail);
+    // console.log('new_discussion_detail: ');
+    // console.log(new_discussion_detail);
     var discussion_detail_array =new Array();
     for(var i=0;i<new_discussion_detail.length;i++){
 
@@ -805,7 +805,7 @@ Template.personalinfo.events({
              console.log('error');
           }else{
              // alert('failure');
-             console.log('failure');
+             // console.log('failure');
           }
         });
         // alert('User Info Updated');
@@ -838,7 +838,7 @@ geocoder.geocode( { 'address': address}, function(results, status) {
       if(error){
         console.log("Error while updating lat long");
       }else{
-        console.log("Lat long updated");
+        // console.log("Lat long updated");
       }
     })
   } 
@@ -1199,7 +1199,7 @@ Template.professional.helpers({
       // alert('coolz');
       var user_id = Session.get("userId");
        var result =  UserProfJr.find({user_id: user_id});
-       console.log(result);
+       // console.log(result);
        // alert(result);
        return result;
     },
@@ -1217,8 +1217,8 @@ Template.professional.helpers({
   BreakAsArray(){
     var key_responsibilities = this.key_responsibilities;
     var new_key_responsibilities = key_responsibilities.split("<br/>");
-    console.log('new_key_responsibilities: ');
-    console.log(new_key_responsibilities);
+    // console.log('new_key_responsibilities: ');
+    // console.log(new_key_responsibilities);
     var key_responsibilities_array =new Array();
     for(var i=0;i<new_key_responsibilities.length;i++){
 
@@ -1238,7 +1238,7 @@ Template.edudetails.events({
    if(confirmation == true){
           Meteor.call("remove_education",edu_id,function(error,result){
                  if(result){
-                     console.log('education Removed');
+                     // console.log('education Removed');
                      // console.log('Skill Removed');
                   }else{
                      console.log('failure');
@@ -1469,7 +1469,7 @@ if(document.getElementById('check_education_edu_2').checked){
           }else{
               // alert('result');
               window.location.reload();
-              console.log('error in updating education');
+              // console.log('error in updating education');
           }
         });
         // alert('education inserted');
@@ -1594,7 +1594,7 @@ Template.skill.events({
                      console.log('error');
                   }else{
                      // alert('failure');
-                     console.log('Skill Sucessfully insert');
+                     // console.log('Skill Sucessfully insert');
                   }          
         });
 
@@ -1703,7 +1703,7 @@ Template.skill.events({
         Meteor.call('update_skill',edit_id,awd_expert,last_used,skill_name,function(error,result){
                  if(result){
                      // alert('Skill Sucessfully insert');
-                     console.log('Skill Sucessfully insert');
+                     // console.log('Skill Sucessfully insert');
                   }else{
                      // alert('failure');
                      console.log('error');
@@ -1722,7 +1722,7 @@ Template.skill.events({
    if(confirmation == true){
     Meteor.call("remove_skill",skill_id,function(error,result){
                  if(result){
-                     console.log('Skill Removed');
+                     // console.log('Skill Removed');
                      // console.log('Skill Removed');
                   }else{
                      console.log('failure');
@@ -1801,7 +1801,7 @@ Template.achievement.events({
             // alert('error');
             console.log('error');
           }else{
-            console.log('Suceesfully inserted');
+            // console.log('Suceesfully inserted');
           }
           });  
 
@@ -1886,7 +1886,7 @@ Template.achievement.events({
             console.log('error');
           }else{
             // alert('Suceesfully updated');
-            console.log('Suceesfully updated');
+            // console.log('Suceesfully updated');
           }
           });  
         $('.modal').modal('close');  
@@ -1901,7 +1901,7 @@ Template.achievement.events({
    if(confirmation == true){
         Meteor.call("remove_award",awd_id,function(error,result){
                  if(result){
-                     console.log('award Removed');
+                     // console.log('award Removed');
                      // console.log('Skill Removed');
                   }else{
                      console.log('failure');
@@ -2044,7 +2044,7 @@ Template.health.events({
             console.log('error');
           }else{
             // alert('Sucees');
-            console.log('Sucees');
+            // console.log('Sucees');
           }  
         });
       
@@ -2274,7 +2274,7 @@ Template.professional.events({
                   // alert('error');
                 }else{
                   // alert('update professional jr');
-                  console.log('update professional jr');
+                  // console.log('update professional jr');
          // alert('Done bro');
          window.location.reload();
          // alert('update professional jr');
@@ -2351,7 +2351,7 @@ Template.professional.events({
    if(confirmation == true){
           Meteor.call("remove_profjr",profjr_id,function(error,result){
                  if(result){
-                     console.log('professional Removed');
+                     // console.log('professional Removed');
                      // console.log('Skill Removed');
                   }else{
                      console.log('failure');
@@ -2778,7 +2778,7 @@ var edit_cgpa_out_of = $('#edit_cgpa_out_of').dropdown('get value');
           }else{
             // alert('sucessfully updated education');
              window.location.reload();
-            console.log(result + 'sucessfully updated education');
+            // console.log(result + 'sucessfully updated education');
           }
         });
         
@@ -2964,9 +2964,9 @@ viewMode: 1,
 },
 
 
-'change #profile_pic_modal': function() {
-            $('#divcrop_profile').addClass('cropper-example-lena');
-             $('.cropper-example-lena > img').cropper({
+'change #profile_pic_modal': function(){
+  $('#divcrop_profile').addClass('cropper-example-lena');
+  $('.cropper-example-lena > img').cropper({
              aspectRatio: 8 / 8,
 viewMode: 1,
   dragMode: 'move',
@@ -2976,7 +2976,6 @@ viewMode: 1,
   autoCropArea: 1
             });
 },             
-
 
 'click #remove_cover': function(){
     // alert('Remove clicked');
@@ -2990,7 +2989,7 @@ viewMode: 1,
             if(error){
               console.log('error');
             }else{
-              console.log('Sucess');
+              // console.log('Sucess');
             }
   });
     }
@@ -3010,7 +3009,7 @@ viewMode: 1,
               console.log('error');
             }else{
               // alert('Sucess');
-              console.log('Sucess');
+              // console.log('Sucess');
             }
   });
   },
@@ -3052,7 +3051,8 @@ function upload_cover_image(e,template){
    var base64data="";
    reader.readAsDataURL(file);
    reader.onload = function () {
-   console.log(reader.result);
+
+   // console.log(reader.result);
    base64data = reader.result;
 
         var settings = {
@@ -3069,9 +3069,10 @@ function upload_cover_image(e,template){
 }
 // alert(base64data);
 $.ajax(settings).done(function (response) {
-  console.log(response);
+ 
+  // console.log(response);
   var new_image_url = 'http://beta.bitovn.com/testing/' + response.substr(1, response.length);
-  console.log(new_image_url);
+  // console.log(new_image_url);
   Session.setPersistent("new_image_url",new_image_url);
 
   $('#loader').removeClass('display_hide');
@@ -3183,7 +3184,7 @@ Template.header.events({
               }
               else{
                 // alert('user is now offline');
-                 console.log('result');
+                 // console.log('result');
                  Meteor.logout();
 var t1 = Session.get("check_onlyonce");
 // alert(t1);
@@ -3246,7 +3247,7 @@ function upload_profile_pic(e,template){
    var base64data="";
    reader.readAsDataURL(file);
    reader.onload = function () {
-   console.log(reader.result);
+   // console.log(reader.result);
    base64data = reader.result;
 
 //         var settings = {
@@ -3322,102 +3323,54 @@ var imagePath = base64data;
      }  }} 
 
 function crop_image(){
-  // alert('12345');
-   // event.preventDefault();
-   // alert('vlll');
-  var croppedPhoto = $('#my_image_profile').cropper('getCroppedCanvas');
-    console.log(croppedPhoto);
-    // croppedPhoto.toBlob(function (blob) {
+
+var croppedPhoto = $('#my_image_profile').cropper('getCroppedCanvas');
 var dataURL = croppedPhoto.toDataURL('image/jpeg', 0.5);
 var blob = dataURItoBlob(dataURL);
-console.log(blob);
-var file = new FormData(document.forms[0]);
-file.append("canvasImage", blob);
-// alert(dataURL);
-base64data = dataURL;
-console.log(base64data);
-Session.setPersistent("new_profile_image_url",base64data);
+// var file = new FormData(document.forms[0]);
+// file.append("canvasImage", blob);
+// base64data = dataURL;
+
+//******************************* Start API code**************************
+var form = new FormData();
+form.append("files", blob);
+
+var uploading_url = "https://specialneighborhood.com/upload_files";
+
+var settings = {
+ "async": true,
+ "crossDomain": true,
+ "url": uploading_url,
+ "method": "POST",
+ "headers": {
+   "cache-control": "no-cache"
+ },
+ "processData": false,
+ "contentType": false,
+ "mimeType": "multipart/form-data",
+ "data": form
+}
+
+$.ajax(settings).done(function (response){
+ var image_url ="http://52.66.153.82:4300/files/"+response;
+ console.log(image_url);
+Session.setPersistent("new_profile_image_url",image_url);
+
 var user_id = Session.get("userId");
-   Meteor.call("upload_profile_image",user_id,base64data,function(error,result){
+   Meteor.call("upload_profile_image",user_id,image_url,function(error,result){
         if(error){
           console.log("Error");
         }else{
-            console.log("Profile Pic Changed");
+            // console.log("Profile Pic Changed");
              // toastr.success(Sucess, Profile Pic Changed);
            $('#divcrop_profile').removeClass('cropper-example-lena');
         }
         template.currentUpload.set(false);
     });
+});
 
-//        var settings = {
-//   "async": true,
-//   "crossDomain": true,
-//   "url": "http://beta.bitovn.com/testing/image_upload.php",
-//   "method": "POST",
-//   "headers": {
-//     "content-type": "application/x-www-form-urlencoded"
-//   },
-//   "data": {
-//     "image": base64data,
-//   }
-// }
+//******************************* End API code**************************
 
-  
-
-// // alert(base64data);
-// $.ajax(settings).done(function (response) {
-//   console.log(response);
-//   // alert(response);
-//   var imagePath = 'http://beta.bitovn.com/testing/' + response.substr(1, response.length);
-//   console.log(imagePath);
-//   Session.setPersistent("new_profile_image_url",imagePath);
-
-//      var user_id = Session.get("userId");
-//      // var user_id = Session.get("userId");
-//      // alert(user_id +' & ' +imagePath);
-
-//    Meteor.call("upload_profile_image",user_id,imagePath,function(error,result){
-//         if(error){
-//           console.log("Error");
-//         }else{
-//             console.log("Profile Pic Changed");
-//              // toastr.success(Sucess, Profile Pic Changed);
-//            $('#divcrop_profile').removeClass('cropper-example-lena');
-//         }
-//         template.currentUpload.set(false);
-//     });
-
-// });
-//         var uploadInstance = Images.insert({
-//                       file: file,
-//                         streams: 'dynamic',
-//                           chunkSize: 'dynamic'
-//                     });
-//         // alert(file);
-
-//         uploadInstance.on('start', function() {
-//           // template.currentUpload.set(this);
-//         });
-//         uploadInstance.on('end', function(error, fileObj) {
-//           // alert('3');
-//           if (error) {
-//              alert("Error");
-//             window.alert('Error during upload: ' + error.reason);
-//           } else {
-//             var new_profile_image_url = Session.get("new_profile_image_url");
-//              var imagePath = new_profile_image_url;
-
-//              $("#crop_image").hide();
-//              $("#divcrop").hide();
-//              $('#divcrop').removeClass('cropper-example-lena');
-//              $("#defaultbox").show();
-//              $("#my_image").attr("src",imagePath);             
-//             $("#my_image_profile").attr("src","");  
-//             $("#my_image_profile").attr("srcset","");  
-//              $("#my_image2").attr("src","");
-   
-//           }
-//         });
 }
 
 
@@ -3471,7 +3424,7 @@ Template.passion.events({
             console.log('error');
           }
           else{
-            console.log('Sucess');
+            // console.log('Sucess');
           }
         });
         
@@ -3578,7 +3531,7 @@ function upload_cover_pic(e,template){
    var base64data="";
    reader.readAsDataURL(file);
    reader.onload = function () {
-   console.log(reader.result);
+   // console.log(reader.result);
    base64data = reader.result;
 
 //         var settings = {
@@ -3651,30 +3604,53 @@ function crop_image_cover(){
    // event.preventDefault();
    // alert('vlll');
   var croppedPhoto = $('#my_image_cover').cropper('getCroppedCanvas');
-    console.log(croppedPhoto);
+    // console.log(croppedPhoto);
     // croppedPhoto.toBlob(function (blob) {
 var dataURL = croppedPhoto.toDataURL('image/jpeg', 0.5);
 var blob = dataURItoBlob(dataURL);
-// console.log(blob);
-var file = new FormData(document.forms[0]);
-file.append("canvasImage", blob);
-// alert(dataURL);
-base64data = dataURL;
-console.log(base64data);
 
-  Session.setPersistent("new_cover_image_url",base64data);
+// base64data = dataURL;
 
-  var user_id = Session.get("userId");
-   Meteor.call("upload_cover_image",user_id,base64data,function(error,result){
+//******************************* Start API code**************************
+var form = new FormData();
+form.append("files", blob);
+
+var uploading_url = "https://specialneighborhood.com/upload_files";
+
+var settings = {
+ "async": true,
+ "crossDomain": true,
+ "url": uploading_url,
+ "method": "POST",
+ "headers": {
+   "cache-control": "no-cache"
+ },
+ "processData": false,
+ "contentType": false,
+ "mimeType": "multipart/form-data",
+ "data": form
+}
+
+$.ajax(settings).done(function (response){
+ var image_url ="http://52.66.153.82:4300/files/"+response;
+ console.log(image_url);
+      // alert(image_url);
+      Session.setPersistent("new_cover_image_url",image_url);
+        var user_id = Session.get("userId");
+        
+        Meteor.call("upload_cover_image",user_id,image_url,function(error,result){
         if(error){
           console.log("Error");
         }else{
-            console.log("cover Pic Changed");
+            // console.log("cover Pic Changed");
              // toastr.success(Sucess, cover Pic Changed);
            $('#divcrop_cover').removeClass('cropper-example-lena');
         }
         template.currentUpload.set(false);
     });
+});
+
+//******************************* End API code**************************
 
 
 //        var settings = {

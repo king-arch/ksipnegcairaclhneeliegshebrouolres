@@ -605,7 +605,8 @@
 
             <div class="row">
                 {{> ticker}}
-                <ul class="nav nav-pills nav-stacked col m3 l3 s12 left_row hidden-md hidden-xs visible-lg" id="event_container">
+                <div class="col m3 l3 s12">
+                <ul class="nav nav-pills nav-stacked  left_row hidden-md hidden-xs visible-lg" id="event_container">
                     <h3>Event</h3>
                     <li>
                         <p class="create_event_btn" id="create_event">CREATE EVENT</p>
@@ -618,6 +619,7 @@
                     <li class="event_created_by_me"><a href="#bymeevent" data-toggle="pill"> Created by me ({{event_created_by_me}})</a></li>
 
                 </ul>
+              </div>
 
                 <div class="fixed-action-btn horizontal hidden-lg">
                     <a class="btn-floating btn-large red floating_btn_all" href="/create_event" style="margin-bottom:170% !important; width: 100px !important; height: 100px !important;">

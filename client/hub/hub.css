@@ -130,3 +130,19 @@ color: #333 !important;
 }
 
 }
+
+.abuse-reason{
+  line-height: 50px;
+   width:100% !important;
+   height:50px;
+}
+
+.verical-abuse
+{
+  display: block !important;
+ 
+}
+.increased_height
+{
+  height: 30px !important;  
+}

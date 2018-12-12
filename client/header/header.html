@@ -67,6 +67,8 @@
 
                
 <li class="hover_underline"><a href="https://www.google.com/analytics/#?modal_active=none" title="Google analytics" alt="" style="color: white !important;" target="_blank" ><i class="fa fa-bar-chart" style="color: white; margin-top: 2px !important; font-size: 10px !important;"></i></a></li>
+
+
                 {{/if}}
                 {{else}}
                 {{#if logged_in_user_isadmin}}
@@ -85,7 +87,22 @@
                 {{/if}}
               {{/if}}
 
+
 {{#if logged_in_user_isadmin}}
+               {{#if equals active_panel "abusive_content"}} 
+                <li class="hover_underline active blue_border"><a href="/abusive_reports" title="Abusive Reports"  style="color: #fff !important;"><i  class="icon_header_top fa fa fa-flag-checkered"></i></a>
+                </li>
+
+              {{else}}
+              <li class="hover_underline"><a href="/abusive_reports" title="Abusive Reports"  style="color: #fff !important;"><i  class="icon_header_top fa fa fa-flag-checkered"></i></a>
+            </li>
+
+              {{/if}}
+{{/if}}
+
+
+
+              {{#if logged_in_user_isadmin}}
                {{#if equals active_panel "connection"}} 
                 <li class="hover_underline active blue_border"><a href="/connection" title="User Management"  style="color: #fff !important;"><i id="connections_click" class="icon_header_top fa fa-handshake-o"></i> 
 

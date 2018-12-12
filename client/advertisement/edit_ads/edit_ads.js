@@ -422,40 +422,45 @@ function upload_image(e,template){
      var file = e.currentTarget.files[0];
       if (file) {
    
-        var reader = new FileReader();
-   var base64data="";
-   reader.readAsDataURL(file);
-   reader.onload = function () {
-   console.log(reader.result);
-   base64data = reader.result;
-  Session.setPersistent("imagePath_admin_ads",base64data);
-//         var settings = {
-//   "async": true,
-//   "crossDomain": true,
-//   "url": "http://beta.bitovn.com/testing/image_upload.php",
-//   "method": "POST",
-//   "headers": {
-//     "content-type": "application/x-www-form-urlencoded"
-//   },
-//   "data": {
-//     "image": base64data,
-//   }
-// }
-// // alert(base64data);
-// $.ajax(settings).done(function (response) {
-//   console.log(response);
-//     $("#loading_div").addClass("loader_visiblity_block");
-//   var new_image_url = 'http://beta.bitovn.com/testing/' + response.substr(1, response.length);
-//   // console.log(new_image_url);
-//   Session.setPersistent("imagePath_admin_ads",new_image_url);
-// });
-//    reader.onerror = function (error) {
-//      console.log('Error: ', error);
-//    };
-      }   
-  }
+  //       var reader = new FileReader();
+  //  var base64data="";
+  //  reader.readAsDataURL(file);
+  //  reader.onload = function () {
+  //  console.log(reader.result);
+  //  base64data = reader.result;
+  // Session.setPersistent("imagePath_admin_ads",base64data);
+
+//******************************* Start API code**************************
+var form = new FormData();
+form.append("files", file);
+
+var uploading_url = "https://specialneighborhood.com/upload_files";
+
+var settings = {
+ "async": true,
+ "crossDomain": true,
+ "url": uploading_url,
+ "method": "POST",
+ "headers": {
+   "cache-control": "no-cache"
+ },
+ "processData": false,
+ "contentType": false,
+ "mimeType": "multipart/form-data",
+ "data": form
 }
 
+$.ajax(settings).done(function (response){
+ var image_url ="http://52.66.153.82:4300/files/"+response;
+ console.log(image_url);
+      // alert(image_url);
+      Session.setPersistent("imagePath_admin_ads",image_url);
+});
+
+//******************************* End API code**************************
+
+      }   
+  }
 }
 
 Template.createevent.onRendered(function(){

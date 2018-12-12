@@ -605,6 +605,11 @@ check_for_edited(comment_id){
     }
   },
 check_if_commented_by_is_user(comment_by){
+    console.log("check_if_commented_by_is_user");
+    console.log(comment_by);
+    console.log(Session.get("userId"));
+
+    
     if(Session.get("userId") == comment_by){
       return true;
     }
@@ -614,6 +619,8 @@ check_if_commented_by_is_user(comment_by){
       // alert('cool');
     if(Session.get("userId") == user_id){
       return true;
+    }else{
+      return false;
     }
   },
 
@@ -935,6 +942,7 @@ Meteor.subscribe("user_info_based_on_id",Session.get("userId"));
 // all_likes = Meteor.subscribe("all_likes");
 // all_comments = Meteor.subscribe("all_comments");
 // blogs_for_hub_section = Meteor.subscribe("blogs_for_hub_section",Session.get("userId"));
+Meteor.subscribe("fetch_all_abusive_content_mark_by_current_user",Session.get("userId"));
 Meteor.subscribe("today_s_event",Session.get("userId"));
 Meteor.subscribe("group_count_for_current_user",Session.get("userId"));
 Meteor.subscribe("connection_count_for_current_user",Session.get("userId"));
@@ -1318,6 +1326,51 @@ Template.hub_center.events({
     $("#hidden_comment_"+this.comment_id).removeClass("loader_visiblity_block");
     $("#show_comment_"+this.comment_id).addClass("loader_visiblity_block ");
 
+  }, 'click .report_comment_as_abuse':function(){
+      console.log(this);
+      Session.set("abusive_post_type","comment");
+      Session.set("abusive_post_id",this.comment_id);
+      Session.set("abusive_parent_post",this.post_id);
+      document.getElementById('report_as_abuse_modal').click();
+
+  },'click .report_post_abuse':function(){
+      console.log(this);
+      var post_id = event.target.id;
+      Session.set("abusive_post_type","post");
+      Session.set("abusive_post_id",post_id);      
+      Session.set("abusive_parent_post",post_id);
+      document.getElementById('report_as_abuse_modal').click();
+  },'click #reason_selector':function(event){
+      event.preventDefault();
+      var reason = "";
+      if($("#reason_1").hasClass("active")){
+       reason = "Reason 1";
+      }
+
+      if($("#reason_2").hasClass("active")){
+       reason = "Reason 2";
+      }
+
+      if($("#reason_3").hasClass("active")){
+       reason = "Reason 3";
+      }
+
+      if($("#reason_4").hasClass("active")){
+       reason = "Reason 4";
+      }
+
+      if($("#reason_5").hasClass("active")){
+       reason = "Reason 5";
+      }
+  
+        Meteor.call("mark_as_abusive_content",Session.get("userId"),Session.get("abusive_post_type"),Session.get("abusive_post_id"),
+        Session.get("abusive_parent_post"),reason,function(error,result){
+          if(error){
+
+          }else{
+             $('#modal4').modal().hide();
+          }
+        })
   },
 
     'click .editHubPost':function(event){
@@ -1463,12 +1516,11 @@ Template.hub_center.events({
         }
         });  
       }else{
-
-         Meteor.call('save_metadata_post',postId,hub_posting_text,Session.get("metadata_image"),Session.get("metadata_title"),Session.get("metadata_source")
+        Meteor.call('save_metadata_post',postId,hub_posting_text,Session.get("metadata_image"),Session.get("metadata_title"),Session.get("metadata_source")
         ,Session.get("metadata_url"),userId,commenting_status,function(error,result){
         if(error){
           alert("error");
-        }else{
+        }else{ 
            $("#hub_posting_text").val("");
           $("#url_metadata_div").addClass("div_hide_class");
           // alert("success");
@@ -1739,7 +1791,6 @@ Template.hub_center.events({
    }
   
 },
-
 'click .redirect_to_blog':function(event){
   event.preventDefault();
   var url = $(".redirect_to_blog").attr("ank");
@@ -1767,6 +1818,7 @@ function handle_like_event(post_id){
               add_like(like_id,post_id,liked_by);
             }
 }
+
 function remove_like(like_id){
    Meteor.call('remove_blog_likes',like_id, function(error,result){
               if(error){
@@ -1790,71 +1842,53 @@ function add_like(like_id,post_id,liked_by)
 }
 
 function upload_image(e, template) {
-    // e.preventDefault();
-    // var files = e.currentTarget.files;
-    $("#loader_class").removeClass("div_hide_class");
-    if (e.currentTarget.files && e.currentTarget.files[0]) {
-        var file = e.currentTarget.files[0];
-        if (file) {
-            var reader = new FileReader();
-            var base64data = "";
-            reader.readAsDataURL(file);
-            reader.onload = function() {
-                // console.log(reader.result);
-                base64data = reader.result;
-                // Session.set("post_image_url",base64data);
-                // $("#loader_class").hide();
-                // $("#post_image").attr("src",base64data);
-                
-            $("#image_div").removeClass("div_hide_class");
-            Session.set("post_type","image");
-            Session.set("post_image_url",base64data);
-         $("#loader_class").hide();
-            $("#post_image").attr("src",base64data);
-            // var imagePath = Session.get("new_image_url");
 
-    //             var settings = {
-    //                 "async": true,
-    //                 "crossDomain": true,
-    //                 "url": "https://www.vayuz.com/testing/image_upload.php",
-    //                 "method": "POST",
-    //                 "headers": {
-    //                     "content-type": "application/x-www-form-urlencoded"
-    //                 },
-    //                 "data": {
-    //                     "image": base64data,
-    //                 }
-    //             }
-    //             $.ajax(settings).done(function (response) {
-        //   // console.log(response);
-        //   $("#image_div").removeClass("div_hide_class");
-        //    var post_image_url = 'https://www.vayuz.com/testing/' + response.substr(1, response.length);
-        //    Session.set("post_type","image");
-    //         Session.set("post_image_url",post_image_url);
-        //  $("#loader_class").hide();
-        //     $("#post_image").attr("src",post_image_url);
-        //     var imagePath = Session.get("new_image_url");
-        //   var user_id = Session.get("userId");
-        // });
-        };
+ $("#loader_class").removeClass("div_hide_class");
+ 
+ if (e.currentTarget.files && e.currentTarget.files[0]) {
+ var file = e.currentTarget.files[0];
 
+var url = "https://specialneighborhood.com/upload_files";
 
-          
-        }
+var form = new FormData();
+form.append("files", file);
 
-    }
+var uploading_url = url;
+
+var settings = {
+ "async": true,
+ "crossDomain": true,
+ "url": uploading_url,
+ "method": "POST",
+ "headers": {
+   "cache-control": "no-cache"
+ },
+ "processData": false,
+ "contentType": false,
+ "mimeType": "multipart/form-data",
+ "data": form
 }
 
+$.ajax(settings).done(function (response){
+ console.log(response);
+ var image_url ="http://52.66.153.82:4300/files/"+response;
 
+
+            $("#image_div").removeClass("div_hide_class");
+            Session.set("post_type","image");
+            Session.set("post_image_url",image_url);
+         $("#loader_class").hide();
+            $("#post_image").attr("src",image_url);
+
+});
+  }
+}
 
 function sendWelcomeEmail(){
-
-        userId= Base64.encode(Session.get("userId"));
+   userId= Base64.encode(Session.get("userId"));
       // alert(userId);  
-      
 var c1 = UserInfo.find({"user_id": Session.get("userId")}).fetch();
       var userEmail = c1[0].email;
-
 
 var name = c1[0].name;
 var div_style= "width:600px;height:auto;margin:auto;font-family:sans-serif;font-weight:normal;font-size:12px; border:10px solid red";
@@ -1909,12 +1943,3 @@ var htmlCode="<html><head><title>Email</title></head><body><div style="+div_styl
         }
     });
 }
-
-
-
-
-
-
-
-
-

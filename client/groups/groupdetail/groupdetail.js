@@ -189,6 +189,8 @@ Template.grpdetail.helpers({
     join_status_check_array(){  
     var sent_by = Session.get("userId");
     var grp_id = Session.get("show_grp_id");
+
+        Meteor.subscribe("group_information_based_on_group_id",grp_id);
     var Group_array = UserGroup.find({grp_id: grp_id }).fetch();
     // alert(count);
     if( sent_by == Group_array[0].admin ){
@@ -411,6 +413,8 @@ else{
    var grp_id = Session.get("show_grp_id");
    
    // var grp_id = Session.get("grp_id_for_Group_member");
+
+       Meteor.subscribe("group_information_based_on_group_id",grp_id);
    var head = UserGroup.find({grp_id: grp_id}).fetch();
    var accepted_users = head[0].invite_accepted;
    // var accepted_users = head[0].requestee_list;
@@ -418,6 +422,9 @@ else{
             var users_array = accepted_users.split(",");   
      var all_users= new Array();
      for(var i=0;i<users_array.length;i++){
+      
+
+          Meteor.subscribe("user_info_based_on_id",users_array[i]);
       var users = UserInfo.find({"user_id":users_array[i]}).fetch();
       all_users.push(users[0]);
      }  
@@ -455,6 +462,7 @@ else{
 
      get_discussion_count(){
        var grp_id= Session.get("show_grp_id");
+    Meteor.subscribe("all_discussions_based_on_group",this.grp_id);
        return Discussion.find({"grp_id":this.grp_id}).count();
     },
 
@@ -465,7 +473,8 @@ else{
 
     frientlist:function()
   {                                          
-    var userid=Session.get('userId');       
+    var userid=Session.get('userId');   
+        Meteor.subscribe("all_friend_users");    
      var friends=FriendRequest.find({        
                 $and: [ { $or:                
                   [ {                         
@@ -482,6 +491,7 @@ else{
      Session.set("allFriends",friends.length);
 
    var grp_id = Session.get("show_grp_id");
+    Meteor.subscribe("group_information_based_on_group_id",grp_id);   
    var head = UserGroup.find({grp_id: grp_id}).fetch();
    
    var invite_accepted = head[0].invite_accepted;
@@ -502,6 +512,7 @@ else{
     }  
 
       if(invite_accepted.includes(user_id_to_check)){
+            Meteor.subscribe("user_info_based_on_id",user_id_to_check);
         all_members_and_friends_users.push( UserInfo.find({user_id:user_id_to_check} ).fetch()[0]);
       }
    }
@@ -519,6 +530,7 @@ else{
       frientlist_for_invite_modal:function()
   {
     var userid=Session.get('userId');
+        Meteor.subscribe("all_friend_users");
      var friends=FriendRequest.find({ 
                 $and: [ { $or: 
                   [ { 
@@ -553,6 +565,7 @@ else{
       var sent_too=this.sent_by;
     }
     //alert(sent_too);
+     Meteor.subscribe("user_info_based_on_id",sent_too);   
     return UserInfo.find({user_id:sent_too}).fetch();
   },
 
@@ -575,6 +588,7 @@ else{
     var grp_id= Session.get("show_grp_id");
     // alert(userid+' & '+grp_id);
     //console.log(Emembers.find({e_user_id:userid,event_id:event_id}).fetch());
+        Meteor.subscribe("group_information_based_on_group_id",grp_id);
     var result =UserGroup.find({grp_id: grp_id}).fetch();
     if(result){
     if(result[0].grp_type == 'Private'){
@@ -601,6 +615,7 @@ else{
     var grp_id= Session.get("show_grp_id");
     // alert(userid+' & '+grp_id);
     //console.log(Emembers.find({e_user_id:userid,event_id:event_id}).fetch());
+        Meteor.subscribe("group_information_based_on_group_id",grp_id);
     var result = UserGroup.find({grp_id: grp_id}).fetch();
     if(result[0].grp_visibility == 'Private'){
     var invite_list = result[0].invite_list;
@@ -620,6 +635,7 @@ else{
        all_group_list(){
         // var logged_in_user = Session.get("userId");
         // alert(logged_in_user);
+            Meteor.subscribe("all_groups");
         var UserGroup2 = UserGroup.find({}).fetch();
         // alert(UserGroup2);
         // console.log(UserGroup2);
@@ -630,7 +646,7 @@ else{
 
               var userid=this.user_id;
               var grp_id= Session.get("show_grp_id");
-
+    Meteor.subscribe("group_information_based_on_group_id",grp_id);
               var result = UserGroup.find({grp_id: grp_id}).fetch();
               },
 
@@ -703,6 +719,7 @@ Template.grpdetail.events({
 'click #Join_group': function(){
     var userId = Session.get("userId");
     var grp_id = Session.get("show_grp_id");
+        Meteor.subscribe("group_information_based_on_group_id",grp_id);
     var result = UserGroup.find({grp_id: grp_id}).fetch();
 
         var grp_type = result[0].grp_type;
@@ -759,6 +776,7 @@ Template.grpdetail.events({
     var userId = Session.get("userId");
     var grp_id = Session.get("show_grp_id");
     // invite_accepted,grp_id
+        Meteor.subscribe("group_information_based_on_group_id",grp_id);
         var result = UserGroup.find({grp_id: grp_id}).fetch();
     // var admin = get_admin_id[0].admin;
 
@@ -847,6 +865,7 @@ else {
     var grp_id= Session.get("show_grp_id");
     // alert(userid+' & '+grp_id);
     //console.log(Emembers.find({e_user_id:userid,event_id:event_id}).fetch());
+        Meteor.subscribe("group_information_based_on_group_id",grp_id);
     var result =UserGroup.find({grp_id: grp_id}).fetch();
 
      var invite_list = result[0].invite_list;
@@ -913,6 +932,7 @@ location.reload();
     var logged_in_user = Session.get("userId");
     var grp_id = Session.get("show_grp_id");
     // invite_accepted,grp_id
+        Meteor.subscribe("group_information_based_on_group_id",grp_id);
         var result = UserGroup.find({grp_id: grp_id}).fetch();
         var grp_type = result[0].grp_type;
 
